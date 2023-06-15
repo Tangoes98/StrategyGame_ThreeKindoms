@@ -12,7 +12,7 @@ public class UnitMovement : MonoBehaviour
     float _rotateSpeed;
     [SerializeField]
     float _stopDistance;
-    public Vector3 _targetPosition;
+    Vector3 _targetPosition;
 
 
     void Start()
@@ -22,12 +22,6 @@ public class UnitMovement : MonoBehaviour
 
     void Update()
     {
-        // get mouse to world position
-        if (Input.GetMouseButtonDown(0))
-        {
-            _targetPosition = MouseToWorld.instance.GetMouseWorldPosition();
-        }
-
         Move(_targetPosition);
     }
 
@@ -45,4 +39,6 @@ public class UnitMovement : MonoBehaviour
             transform.forward = Vector3.Lerp(transform.forward, targetDirection, Time.deltaTime * _rotateSpeed);
         }
     }
+
+    public void SetTargetPosition(Vector3 targetPosition) => _targetPosition = targetPosition;
 }

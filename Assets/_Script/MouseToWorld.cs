@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class MouseToWorld : MonoBehaviour
 {
-    public static MouseToWorld instance;
+    public static MouseToWorld Instance;
+    
     [SerializeField]
     LayerMask _mouseLayerMask;
 
     void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Debug.LogError("Multiple instances occured");
-            Destroy(instance);
+            Destroy(Instance);
         }
-        instance = this;
+        Instance = this;
     }
 
     void Update()
