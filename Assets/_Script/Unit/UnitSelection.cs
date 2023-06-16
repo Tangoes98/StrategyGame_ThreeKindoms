@@ -50,7 +50,7 @@ public class UnitSelection : MonoBehaviour
         {
             if (_selectedUnit != null)
             {
-                
+
                 _selectedUnit.GetComponentInChildren<UnitSelectedVisual>().OnSelected(false);
             }
             _selectedUnit = null;
@@ -73,8 +73,15 @@ public class UnitSelection : MonoBehaviour
         // try to get Unitmovement class from selected unit
         if (_selectedUnit.TryGetComponent<UnitMovement>(out UnitMovement unitMovement))
         {
-            unitMovement.SetTargetPosition(MouseToWorld.Instance.GetMouseWorldPosition());
+            unitMovement.SetTargetPosition(TargetMovePosition());
         }
         else return;
+    }
+
+    // Set target MovePosition to gridPosition
+    Vector3 TargetMovePosition()
+    {
+        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
+        return LevelGrid.Instance.GetWorldPosition(gridPosition);
     }
 }

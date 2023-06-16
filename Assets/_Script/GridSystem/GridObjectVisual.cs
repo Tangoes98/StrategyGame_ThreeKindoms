@@ -11,6 +11,10 @@ public class GridObjectVisual : MonoBehaviour
 
     void Start()
     {
+
+    }
+    void Update()
+    {
         SetGridText();
     }
 
@@ -21,6 +25,6 @@ public class GridObjectVisual : MonoBehaviour
 
     void SetGridText()
     {
-        _gridPositionText.text = _gridObject.GetGridPosition().ToString();
+        _gridPositionText.text = _gridObject.ToString();
     }
 }

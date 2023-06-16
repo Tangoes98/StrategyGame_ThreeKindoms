@@ -4,12 +4,8 @@ using UnityEngine;
 
 public class TestingScript : MonoBehaviour
 {
-    GridSystem _gridSystem;
-    [SerializeField] Transform _gridObjectVisual;
     void Start()
     {
-        _gridSystem = new GridSystem(10, 10, 2);
-        _gridSystem.CreateGridObjectVisual(_gridObjectVisual);
 
     }
 
