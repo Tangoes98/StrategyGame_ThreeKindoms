@@ -8,6 +8,10 @@ public class LevelGrid : MonoBehaviour
     GridSystem _gridSystem;
     [SerializeField] Transform _gridObjectVisual;
 
+    [SerializeField] int _gridWidth;
+    [SerializeField] int _gridHeight;
+    [SerializeField] float _gridCellSize;
+
 
     void Awake()
     {
@@ -18,7 +22,7 @@ public class LevelGrid : MonoBehaviour
         }
         Instance = this;
 
-        _gridSystem = new GridSystem(10, 10, 2);
+        _gridSystem = new GridSystem(_gridWidth, _gridHeight, _gridCellSize);
         _gridSystem.CreateGridObjectVisual(_gridObjectVisual);
     }
     void Start()
@@ -41,5 +45,9 @@ public class LevelGrid : MonoBehaviour
     public GridPosition GetGridPosition(Vector3 worldposition) => _gridSystem.GetGridPosition(worldposition);
     public Vector3 GetWorldPosition(GridPosition gridPosition) => _gridSystem.GetWorldPosition(gridPosition);
     public GridObject GetGridObject(GridPosition gridPosition) => _gridSystem.GetGridObject(gridPosition);
+    public bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
+    public int GetWidth() => _gridWidth;
+    public int GetHeight() => _gridHeight;
+    public float GetCellSize() => _gridCellSize;
 
 }

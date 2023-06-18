@@ -27,4 +27,6 @@ public class GridObjectVisual : MonoBehaviour
     {
         _gridPositionText.text = _gridObject.ToString();
     }
+
+
 }

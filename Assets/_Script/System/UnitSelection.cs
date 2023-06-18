@@ -28,7 +28,7 @@ public class UnitSelection : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             GetUnitSelection();
-
+            ShowReachableGridPosition();
         }
 
         // Right mouse click to move
@@ -65,8 +65,10 @@ public class UnitSelection : MonoBehaviour
 
     public Transform GetSelectedUnit()
     {
+        if (_selectedUnit == null) return null;
         return _selectedUnit;
     }
+
 
     void SelectedUnitMovement()
     {
@@ -82,6 +84,33 @@ public class UnitSelection : MonoBehaviour
     Vector3 TargetMovePosition()
     {
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
+
+        List<GridPosition> validGridPositionList = _selectedUnit.GetComponent<UnitMovement>().GetValidGridPositionList();
+
+        if (!validGridPositionList.Contains(gridPosition)) return _selectedUnit.position;
+
         return LevelGrid.Instance.GetWorldPosition(gridPosition);
     }
+
+    void ShowReachableGridPosition()
+    {
+        if (_selectedUnit == null) return;
+
+        List<GridPosition> gridPositionList = _selectedUnit.GetComponent<UnitMovement>().GetValidGridPositionList();
+
+        GridSystemVisual.Instance.ShowGridPositionVisuals(gridPositionList);
+
+
+        // foreach (GridPosition gridPos in gridPositionList)
+        // {
+        //     Debug.Log(gridPos);
+        // }
+    }
+
+    public bool UnitIsSelected()
+    {
+        if (_selectedUnit == null) return false;
+        return true;
+    }
 }
+

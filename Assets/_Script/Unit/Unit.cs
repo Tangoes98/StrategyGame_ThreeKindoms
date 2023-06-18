@@ -25,4 +25,6 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.AddUnitToGridObject(_unitGridPosition, this);
         }
     }
+
+    public GridPosition GetUnitGridPosition() => _unitGridPosition;
 }
