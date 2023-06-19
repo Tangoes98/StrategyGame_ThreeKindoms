@@ -21,17 +21,47 @@ public class GridSystem
             for (int z = 0; z < _height; z++)
             {
                 GridPosition gridPosition = new GridPosition(x, z);
-                _gridObjectArray[x, z] = new GridObject(this, gridPosition);
 
-                //Debug.DrawLine(GetWorldPosition(gridPosition), GetWorldPosition(gridPosition) + Vector3.up * 5f, Color.white, 100f);
+                int raycastOffset = 2;
+                RaycastHit[] raycastHits = Physics.RaycastAll(GetWorldPosition(gridPosition) + Vector3.down * raycastOffset,
+                                                                Vector3.up, float.MaxValue,
+                                                                LayerMask.GetMask("EnvironmentGameObject"));
+
+                //Debug.DrawLine(GetWorldPosition(gridPosition) + Vector3.down * raycastOffset, GetWorldPosition(gridPosition) + Vector3.up * int.MaxValue, Color.white, 900f);
+
+                int floor = raycastHits.Length;
+
+                _gridObjectArray[x, z] = new GridObject(this, gridPosition, floor);
+
+
 
             }
         }
+
+        // GridPosition gridPos = new GridPosition(1, 1);
+
+        // Debug.DrawLine(GetWorldPosition(gridPos), GetWorldPosition(gridPos) + Vector3.up * int.MaxValue, Color.white, 900f);
+
+        // RaycastHit[] raycastHits = Physics.RaycastAll(GetWorldPosition(gridPos), Vector3.up, float.MaxValue);
+        // for (int i = 0; i < raycastHits.Length; i++)
+        // {
+        //     Debug.Log(raycastHits[i].collider);
+        // }
+
+
+
     }
 
     public Vector3 GetWorldPosition(GridPosition gridPosition)
     {
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize;
+    }
+
+    public Vector3 GetGridObjectWorldPosition(GridPosition gridPosition, int floor)
+    {
+        int floorHeight = 2;
+        return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize
+        + new Vector3(0, floor * floorHeight, 0);
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition)
@@ -47,7 +77,7 @@ public class GridSystem
             {
                 GridPosition gridPosition = new GridPosition(x, z);
 
-                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
+                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GetGridObjectWorldPosition(gridPosition, GetGridFloorHeight(gridPosition)), Quaternion.identity);
                 GridObject gridObject = GetGridObject(gridPosition);
                 gridObjectPrefab.GetComponent<GridObjectVisual>().SetGridObeject(gridObject);
             }
@@ -64,5 +94,10 @@ public class GridSystem
                 gridPos.z >= 0 &&
                 gridPos.x < _width &&
                 gridPos.z < _height;
+    }
+
+    int GetGridFloorHeight(GridPosition gridPos)
+    {
+        return _gridObjectArray[gridPos.x, gridPos.z].GetFloorNumber();
     }
 }

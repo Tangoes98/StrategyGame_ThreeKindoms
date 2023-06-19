@@ -8,10 +8,14 @@ public class GridObject
     GridPosition _gridPosition;
     List<Unit> _unitList;
     Unit _unit;
-    public GridObject(GridSystem gridSystem, GridPosition gridPosition)
+    int _floorNumber;
+
+
+    public GridObject(GridSystem gridSystem, GridPosition gridPosition, int floor)
     {
         _gridSystem = gridSystem;
         _gridPosition = gridPosition;
+        _floorNumber = floor;
         _unitList = new List<Unit>();
 
     }
@@ -27,6 +31,8 @@ public class GridObject
         return
             _gridPosition.ToString()
             + "\n"
+            + $"Floor: {_floorNumber}"
+            + "\n"
             + unitString;
     }
 
@@ -39,5 +45,6 @@ public class GridObject
         _unitList.Remove(unit);
     }
 
-    public GridPosition GetGridPosition() => _gridPosition;
+
+    public int GetFloorNumber() => _floorNumber;
 }

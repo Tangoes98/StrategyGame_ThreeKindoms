@@ -73,7 +73,7 @@ public class UnitSelection : MonoBehaviour
     void SelectedUnitMovement()
     {
         // try to get Unitmovement class from selected unit
-        if (_selectedUnit.TryGetComponent<UnitMovement>(out UnitMovement unitMovement))
+        if (_selectedUnit.TryGetComponent<UnitMovementAction>(out UnitMovementAction unitMovement))
         {
             unitMovement.SetTargetPosition(TargetMovePosition());
         }
@@ -83,9 +83,11 @@ public class UnitSelection : MonoBehaviour
     // Set target MovePosition to gridPosition
     Vector3 TargetMovePosition()
     {
-        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
+        Vector3 mousePosition = MouseToWorld.Instance.GetMouseWorldPosition();
 
-        List<GridPosition> validGridPositionList = _selectedUnit.GetComponent<UnitMovement>().GetValidGridPositionList();
+        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(mousePosition);
+
+        List<GridPosition> validGridPositionList = _selectedUnit.GetComponent<UnitMovementAction>().GetValidGridPositionList();
 
         if (!validGridPositionList.Contains(gridPosition)) return _selectedUnit.position;
 
@@ -96,7 +98,7 @@ public class UnitSelection : MonoBehaviour
     {
         if (_selectedUnit == null) return;
 
-        List<GridPosition> gridPositionList = _selectedUnit.GetComponent<UnitMovement>().GetValidGridPositionList();
+        List<GridPosition> gridPositionList = _selectedUnit.GetComponent<UnitMovementAction>().GetValidGridPositionList();
 
         GridSystemVisual.Instance.ShowGridPositionVisuals(gridPositionList);
 

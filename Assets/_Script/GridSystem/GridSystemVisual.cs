@@ -92,7 +92,7 @@ public class GridSystemVisual : MonoBehaviour
 
         if (UnitSelection.Instance.UnitIsSelected())
         {
-            ShowGridPositionVisuals(UnitSelection.Instance.GetSelectedUnit().GetComponent<UnitMovement>().GetValidGridPositionList());
+            ShowGridPositionVisuals(UnitSelection.Instance.GetSelectedUnit().GetComponent<UnitMovementAction>().GetValidGridPositionList());
         }
     }
 
