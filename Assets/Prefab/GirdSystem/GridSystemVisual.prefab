@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 4352908452877888569}
   - component: {fileID: 5396986518742618516}
   - component: {fileID: 770534572419624279}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GridSystemVisualSingle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ MeshCollider:
   m_GameObject: {fileID: 5012590948837951833}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30

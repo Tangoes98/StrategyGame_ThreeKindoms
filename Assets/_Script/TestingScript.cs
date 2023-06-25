@@ -11,6 +11,10 @@ public class TestingScript : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(_gridSystem.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition()));
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            //Debug.Log(_gridSystem.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition()));
+
+        }
     }
 }

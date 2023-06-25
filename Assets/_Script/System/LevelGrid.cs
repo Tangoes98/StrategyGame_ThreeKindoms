@@ -42,9 +42,11 @@ public class LevelGrid : MonoBehaviour
     }
 
 
-    public GridPosition GetGridPosition(Vector3 worldposition) => _gridSystem.GetGridPosition(worldposition);
+    public GridPosition GetGridPosition(Vector3 worldPosition) => _gridSystem.GetGridPosition(worldPosition);
     public Vector3 GetWorldPosition(GridPosition gridPosition) => _gridSystem.GetWorldPosition(gridPosition);
     public GridObject GetGridObject(GridPosition gridPosition) => _gridSystem.GetGridObject(gridPosition);
+    public Vector3 GetGridObjectWorldPosition(GridPosition gridPosition) => _gridSystem.GetGridObjectWorldPosition(gridPosition);
+    public int GetGridObjectFloor(GridPosition gridPosition) => _gridSystem.GetGridFloorHeight(gridPosition);
     public bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
     public int GetWidth() => _gridWidth;
     public int GetHeight() => _gridHeight;

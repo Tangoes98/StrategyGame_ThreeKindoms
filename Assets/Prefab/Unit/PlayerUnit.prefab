@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8641345308079538934}
   - component: {fileID: 5379992259855579718}
   - component: {fileID: 7594911198598939236}
+  - component: {fileID: 7497459052540707923}
+  - component: {fileID: 7742879256600154352}
   - component: {fileID: 4921147219020109050}
   m_Layer: 7
   m_Name: PlayerUnit
@@ -64,6 +66,30 @@ MonoBehaviour:
   _rotateSpeed: 10
   _stopDistance: 0.1
   _UnitMaxMoveDistance: 2
+--- !u!114 &7497459052540707923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffddddc6f5dd43c419e2dec0dded184a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7742879256600154352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f1f76e2cc59014bb7f7657eea18626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!65 &4921147219020109050
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -38,7 +38,9 @@ public class GridSystemVisual : MonoBehaviour
             {
                 GridPosition gridPos = new GridPosition(x, z);
 
-                Transform singleVisual = Instantiate(_gridSystemVisualPrefab, LevelGrid.Instance.GetWorldPosition(gridPos), Quaternion.identity);
+                Vector3 worldPosition = LevelGrid.Instance.GetGridObjectWorldPosition(gridPos);
+
+                Transform singleVisual = Instantiate(_gridSystemVisualPrefab, worldPosition, Quaternion.identity);
 
                 _singleGridVisualArray[x, z] = singleVisual;
 
@@ -47,12 +49,18 @@ public class GridSystemVisual : MonoBehaviour
         }
 
         HideAllGridPositionVisuals();
+
+        UnitSelection.Instance.OnUnitSelecedChanged += UnitSelection_OnUnitSelecedChanged;
+        UnitSelection.Instance.OnSelectEmpty += UnitSelection_OnSelectEmpty;
     }
 
     void Update()
     {
         UpdateGridSystemVisual();
     }
+
+    void UnitSelection_OnSelectEmpty() => HideAllGridPositionVisuals();
+    void UnitSelection_OnUnitSelecedChanged() => HideAllGridPositionVisuals();
 
 
     public void HideAllGridPositionVisuals()
@@ -86,14 +94,16 @@ public class GridSystemVisual : MonoBehaviour
     }
     Transform GetSingelGridVisualObject(GridPosition gridPos) => _singleGridVisualArray[gridPos.x, gridPos.z];
 
-    void UpdateGridSystemVisual()
+
+    public void UpdateGridSystemVisual()
     {
         HideAllGridPositionVisuals();
 
-        if (UnitSelection.Instance.UnitIsSelected())
-        {
-            ShowGridPositionVisuals(UnitSelection.Instance.GetSelectedUnit().GetComponent<UnitMovementAction>().GetValidGridPositionList());
-        }
+        UnitBaseAction baseAction = UnitSelection.Instance.GetUnitCurrentAction();
+
+        if (!baseAction) return;
+
+        ShowGridPositionVisuals(baseAction.GetValidGridPositionList());
     }
 
 

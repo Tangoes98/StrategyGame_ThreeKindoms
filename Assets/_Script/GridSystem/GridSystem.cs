@@ -57,17 +57,23 @@ public class GridSystem
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize;
     }
 
-    public Vector3 GetGridObjectWorldPosition(GridPosition gridPosition, int floor)
+    public Vector3 GetGridObjectWorldPosition(GridPosition gridPosition)
     {
         int floorHeight = 2;
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize
-        + new Vector3(0, floor * floorHeight, 0);
+        + new Vector3(0, GetGridFloorHeight(gridPosition) * floorHeight, 0);
+    }
+
+    public int GetGridFloorHeight(GridPosition gridPosition)
+    {
+        return _gridObjectArray[gridPosition.x, gridPosition.z].GetFloorNumber();
     }
 
     public GridPosition GetGridPosition(Vector3 worldPosition)
     {
         return new GridPosition(Mathf.RoundToInt(worldPosition.x / _cellSize), Mathf.RoundToInt(worldPosition.z / _cellSize));
     }
+
 
     public void CreateGridObjectVisual(Transform objectVisualPrefab)
     {
@@ -77,7 +83,7 @@ public class GridSystem
             {
                 GridPosition gridPosition = new GridPosition(x, z);
 
-                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GetGridObjectWorldPosition(gridPosition, GetGridFloorHeight(gridPosition)), Quaternion.identity);
+                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GetGridObjectWorldPosition(gridPosition), Quaternion.identity);
                 GridObject gridObject = GetGridObject(gridPosition);
                 gridObjectPrefab.GetComponent<GridObjectVisual>().SetGridObeject(gridObject);
             }
@@ -96,8 +102,5 @@ public class GridSystem
                 gridPos.z < _height;
     }
 
-    int GetGridFloorHeight(GridPosition gridPos)
-    {
-        return _gridObjectArray[gridPos.x, gridPos.z].GetFloorNumber();
-    }
+
 }

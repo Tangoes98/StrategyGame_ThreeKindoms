@@ -6,6 +6,22 @@ public class Unit : MonoBehaviour
 {
     GridPosition _unitGridPosition;
 
+    UnitMovementAction _moveAction;
+    UnitSelfTriggerAction _selfTriggerAction;
+    UnitAttackAction _attackAction;
+    UnitBaseAction[] _baseActionArray;
+
+
+    void Awake()
+    {
+        _moveAction = GetComponent<UnitMovementAction>();
+        _selfTriggerAction = GetComponent<UnitSelfTriggerAction>();
+        _attackAction = GetComponent<UnitAttackAction>();
+
+        _baseActionArray = GetComponents<UnitBaseAction>();
+
+    }
+
     void Start()
     {
         _unitGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
@@ -27,4 +43,5 @@ public class Unit : MonoBehaviour
     }
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
+    public UnitBaseAction[] GetUnitBaseActionArray() => _baseActionArray;
 }

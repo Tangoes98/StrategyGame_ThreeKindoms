@@ -18,9 +18,10 @@ public class UnitSelectedVisual : MonoBehaviour
     void Start()
     {
         UnitSelection.Instance.OnUnitSelecedChanged += UnitSelection_OnUnitSelecedChanged;
+        UnitSelection.Instance.OnSelectEmpty += UnitSelection_OnSelectEmpty;
     }
 
-    void UnitSelection_OnUnitSelecedChanged(object sender, EventArgs e)
+    void UnitSelection_OnUnitSelecedChanged()
     {
         if (UnitSelection.Instance.GetSelectedUnit() == _unit)
         {
@@ -29,6 +30,10 @@ public class UnitSelectedVisual : MonoBehaviour
         else OnSelected(false);
     }
 
+    void UnitSelection_OnSelectEmpty()
+    {
+        OnSelected(false);
+    }
 
     public void OnSelected(bool isSelected)
     {
