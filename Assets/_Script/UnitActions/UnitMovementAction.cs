@@ -82,12 +82,6 @@ public class UnitMovementAction : UnitBaseAction
     {
         this._onActionCompleted = onActionCompleted;
 
-        // Vector3 mousePosition = MouseToWorld.Instance.GetMouseWorldPosition();
-
-        // GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(mousePosition);
-
-        // if (!IsValidActionGridPosition(mouseGridPosition)) return;
-
         if (!IsValidActionGridPosition(gridPos)) return;
 
         Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPos);
@@ -97,48 +91,48 @@ public class UnitMovementAction : UnitBaseAction
 
 
 
-    #region SelectedUnitMoveMent
+    #region Old SelectedUnitMoveMent Code // Reference use only
 
-    public void SelectedUnitMovement(Action onActionCompleted)
-    {
-        this._onActionCompleted = onActionCompleted;
+    // public void SelectedUnitMovement(Action onActionCompleted)
+    // {
+    //     this._onActionCompleted = onActionCompleted;
 
-        Transform _selectedUnit = UnitSelection.Instance.GetSelectedUnit();
+    //     Transform _selectedUnit = UnitSelection.Instance.GetSelectedUnit();
 
-        // try to get Unitmovement class from selected unit
-        if (_selectedUnit.TryGetComponent<UnitMovementAction>(out UnitMovementAction unitMovement))
-        {
-            unitMovement.SetTargetPosition(TargetMovePosition());
-        }
-        else return;
-    }
+    //     // try to get Unitmovement class from selected unit
+    //     if (_selectedUnit.TryGetComponent<UnitMovementAction>(out UnitMovementAction unitMovement))
+    //     {
+    //         unitMovement.SetTargetPosition(TargetMovePosition());
+    //     }
+    //     else return;
+    // }
 
-    // Set target MovePosition to gridPosition
-    Vector3 TargetMovePosition()
-    {
-        Transform _selectedUnit = UnitSelection.Instance.GetSelectedUnit();
+    // // Set target MovePosition to gridPosition
+    // Vector3 TargetMovePosition()
+    // {
+    //     Transform _selectedUnit = UnitSelection.Instance.GetSelectedUnit();
 
-        Vector3 mousePosition = MouseToWorld.Instance.GetMouseWorldPosition();
+    //     Vector3 mousePosition = MouseToWorld.Instance.GetMouseWorldPosition();
 
-        GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(mousePosition);
+    //     GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(mousePosition);
 
-        List<GridPosition> validGridPositionList = _selectedUnit.GetComponent<UnitMovementAction>().GetValidGridPositionList();
+    //     List<GridPosition> validGridPositionList = _selectedUnit.GetComponent<UnitMovementAction>().GetValidGridPositionList();
 
-        if (!validGridPositionList.Contains(gridPosition)) return _selectedUnit.position;
+    //     if (!validGridPositionList.Contains(gridPosition)) return _selectedUnit.position;
 
-        return LevelGrid.Instance.GetWorldPosition(gridPosition);
-    }
+    //     return LevelGrid.Instance.GetWorldPosition(gridPosition);
+    // }
 
-    public void ShowReachableGridPosition()
-    {
-        Transform _selectedUnit = UnitSelection.Instance.GetSelectedUnit();
+    // public void ShowReachableGridPosition()
+    // {
+    //     Transform _selectedUnit = UnitSelection.Instance.GetSelectedUnit();
 
-        if (_selectedUnit == null) return;
+    //     if (_selectedUnit == null) return;
 
-        List<GridPosition> gridPositionList = _selectedUnit.GetComponent<UnitMovementAction>().GetValidGridPositionList();
+    //     List<GridPosition> gridPositionList = _selectedUnit.GetComponent<UnitMovementAction>().GetValidGridPositionList();
 
-        GridSystemVisual.Instance.UpdateGridSystemVisual();
-    }
+    //     GridSystemVisual.Instance.UpdateGridSystemVisual();
+    // }
     #endregion
 
 
