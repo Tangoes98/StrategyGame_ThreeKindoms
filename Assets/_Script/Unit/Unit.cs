@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour
 
     [SerializeField] bool _isEnemy;
     [SerializeField] int _unitActionPoints;
+    int _maxActionPoints;
 
 
     void Awake()
@@ -30,6 +31,10 @@ public class Unit : MonoBehaviour
         _unitGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
 
         LevelGrid.Instance.AddUnitToGridObject(_unitGridPosition, this);
+
+
+        TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        _maxActionPoints = _unitActionPoints;
     }
 
     void Update()
@@ -71,6 +76,16 @@ public class Unit : MonoBehaviour
 
     public int GetActionPoints() => _unitActionPoints;
 
+    void TurnSystem_OnTurnChanged()
+    {
+        bool isPlayerTurnCheck = TurnSystem.Instance.IsPlayerTurn();
+        
+        if (_isEnemy && isPlayerTurnCheck) return;
+        if (!_isEnemy && !isPlayerTurnCheck) return;
+
+        _unitActionPoints = _maxActionPoints;
+    }
+
     #endregion
 
 
@@ -78,4 +93,5 @@ public class Unit : MonoBehaviour
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
     public UnitBaseAction[] GetUnitBaseActionArray() => _baseActionArray;
+    public bool IsEnemyUnit() => _isEnemy;
 }

@@ -36,6 +36,9 @@ public class UnitSelection : MonoBehaviour
         // If mouse is over UI elements, return
         if (EventSystem.current.IsPointerOverGameObject()) return;
 
+        // Check if its players turn
+        if (!TurnSystem.Instance.IsPlayerTurn()) return;
+
         // Left mouse click to select and deselect unit
         if (Input.GetMouseButtonDown(0))
         {
@@ -67,14 +70,19 @@ public class UnitSelection : MonoBehaviour
         //Debug.Log(_isBusy);
     }
 
+    #region Unit Selection & Unit Action Selection
+
     void GetUnitSelection()
     {
         // cast ray to Unitlayer to see if his a unit
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _unitLayerMask))
         {
-            SetSelectedUnit(hit.transform);
+            Transform hittedUnit = hit.transform;
 
+            if (hittedUnit.GetComponent<Unit>().IsEnemyUnit()) return; // return if trying select enemy unit
+
+            SetSelectedUnit(hit.transform);
         }
         else
         {
@@ -108,8 +116,10 @@ public class UnitSelection : MonoBehaviour
             OnActionPointsSpend?.Invoke();
 
         }
+        #endregion
 
 
+        #region Use switch to implement selected action// reference use
 
         // switch (_selectedAction)
         // {
@@ -124,6 +134,7 @@ public class UnitSelection : MonoBehaviour
         //         //Debug.Log("Special");
         //         break;
         // }
+        #endregion
     }
 
     void SetBusy() => _isBusy = true;
@@ -150,21 +161,10 @@ public class UnitSelection : MonoBehaviour
         return true;
     }
 
-    public void SetSelectedAction(UnitBaseAction baseAction)
-    {
-        _selectedAction = baseAction;
-    }
+    public void SetSelectedAction(UnitBaseAction baseAction) => _selectedAction = baseAction;
 
     public UnitBaseAction GetUnitCurrentAction() => _selectedAction;
 
-    // UnitMovementAction GetUnitMovementAction(Transform selectedUnit)
-    // {
-    //     if (selectedUnit.TryGetComponent<UnitMovementAction>(out UnitMovementAction unitMovement))
-    //     {
-    //         return unitMovement;
-    //     }
-    //     else return null;
-    // }
 
 }
 

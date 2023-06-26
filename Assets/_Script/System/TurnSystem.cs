@@ -6,6 +6,10 @@ using System;
 public class TurnSystem : MonoBehaviour
 {
     public static TurnSystem Instance;
+    public event Action OnTurnChanged;
+
+    [SerializeField] int _turnNumber;
+    bool _isPlayerTurn = true;
 
     void Awake()
     {
@@ -17,7 +21,17 @@ public class TurnSystem : MonoBehaviour
         Instance = this;
     }
 
-    
 
 
+    public void NextTurn()
+    {
+        _turnNumber++;
+        _isPlayerTurn = !_isPlayerTurn;
+
+        OnTurnChanged?.Invoke();
+    }
+
+    public int GetTurnNumber() => _turnNumber;
+    public bool IsPlayerTurn() => _isPlayerTurn;
 }
+

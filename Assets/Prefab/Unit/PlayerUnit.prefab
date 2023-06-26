@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnemy: 0
-  _unitActionPoints: 0
+  _unitActionPoints: 3
 --- !u!114 &7594911198598939236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   _moveSpeed: 4
   _rotateSpeed: 10
   _stopDistance: 0.1
-  _unitMaxMoveDistance: 0
+  _unitMaxMoveDistance: 2
   _actionCost: 1
 --- !u!114 &7497459052540707923
 MonoBehaviour:
