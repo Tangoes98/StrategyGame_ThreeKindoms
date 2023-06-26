@@ -9,7 +9,8 @@ public class UnitMovementAction : UnitBaseAction
     [SerializeField] float _rotateSpeed;
     [SerializeField] float _stopDistance;
     Vector3 _targetPosition;
-    [SerializeField] int _UnitMaxMoveDistance;
+    [SerializeField] int _unitMaxMoveDistance;
+    [SerializeField] int _actionCost;
 
 
 
@@ -25,6 +26,11 @@ public class UnitMovementAction : UnitBaseAction
         if (!_isActive) return;
 
         Move(_targetPosition);
+    }
+
+    public override int GetActionCost()
+    {
+        return _actionCost;
     }
 
     void Move(Vector3 targetPosition)
@@ -51,13 +57,13 @@ public class UnitMovementAction : UnitBaseAction
 
         GridPosition unitGridPosition = _unit.GetUnitGridPosition();
 
-        for (int x = -_UnitMaxMoveDistance; x <= _UnitMaxMoveDistance; x++)
+        for (int x = -_unitMaxMoveDistance; x <= _unitMaxMoveDistance; x++)
         {
-            for (int z = -_UnitMaxMoveDistance; z <= _UnitMaxMoveDistance; z++)
+            for (int z = -_unitMaxMoveDistance; z <= _unitMaxMoveDistance; z++)
             {
                 // Unit will not move over than max move distance
                 int moveDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if (moveDistance > _UnitMaxMoveDistance) continue;
+                if (moveDistance > _unitMaxMoveDistance) continue;
 
                 // Get ideal moveable gridposiiton
                 GridPosition offsetGridPosition = new GridPosition(x, z);

@@ -7,6 +7,8 @@ public class UnitSelfTriggerAction : UnitBaseAction
 {
     Vector3 _position;
 
+    [SerializeField] int _actionCost;
+
     protected override void Awake()
     {
         base.Awake();
@@ -16,14 +18,21 @@ public class UnitSelfTriggerAction : UnitBaseAction
 
     void Update()
     {
+        if (!_isActive) return;
+    }
 
+    public override int GetActionCost()
+    {
+        return _actionCost;
     }
 
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
         Debug.Log("Self Spined");
+        _isActive = true;
         this._onActionCompleted = onActionCompleted;
-        //_onActionCompleted();
+
+        ActionCompleted();
     }
 
     public override List<GridPosition> GetValidGridPositionList()

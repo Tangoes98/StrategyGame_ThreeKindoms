@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8da5a6d0ebdfc744bc8c8678828329f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isEnemy: 0
+  _unitActionPoints: 0
 --- !u!114 &7594911198598939236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +67,8 @@ MonoBehaviour:
   _moveSpeed: 4
   _rotateSpeed: 10
   _stopDistance: 0.1
-  _UnitMaxMoveDistance: 2
+  _unitMaxMoveDistance: 0
+  _actionCost: 1
 --- !u!114 &7497459052540707923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddddc6f5dd43c419e2dec0dded184a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actionCost: 1
 --- !u!114 &7742879256600154352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f1f76e2cc59014bb7f7657eea18626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actionCost: 2
 --- !u!65 &4921147219020109050
 BoxCollider:
   m_ObjectHideFlags: 0

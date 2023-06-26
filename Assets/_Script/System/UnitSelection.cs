@@ -9,6 +9,7 @@ public class UnitSelection : MonoBehaviour
     public static UnitSelection Instance;
     public event Action OnUnitSelecedChanged;
     public event Action OnSelectEmpty;
+    public event Action OnActionPointsSpend;
     [SerializeField] LayerMask _unitLayerMask;
     [SerializeField] Transform _selectedUnit;
 
@@ -63,7 +64,7 @@ public class UnitSelection : MonoBehaviour
         // }
         #endregion
 
-        Debug.Log(_isBusy);
+        //Debug.Log(_isBusy);
     }
 
     void GetUnitSelection()
@@ -73,11 +74,10 @@ public class UnitSelection : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _unitLayerMask))
         {
             SetSelectedUnit(hit.transform);
-            //GetUnitMovementAction(_selectedUnit).ShowReachableGridPosition();
+
         }
         else
         {
-            //if (_selectedUnit != null) _selectedUnit.GetComponentInChildren<UnitSelectedVisual>().OnSelected(false);
             _selectedUnit = null;
             _selectedAction = null;
             OnSelectEmpty?.Invoke();
@@ -92,16 +92,20 @@ public class UnitSelection : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            //if (_selectedUnit == null) return;
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
 
-            if (_selectedAction.IsValidActionGridPosition(mouseGridPosition))
-            {
-                SetBusy();
-                Debug.Log("Set Busy");
-                _selectedAction.TakeAction(mouseGridPosition, ClearBusy);
-            }
+            Unit unit = _selectedUnit.GetComponent<Unit>();
+
+            if (!_selectedAction.IsValidActionGridPosition(mouseGridPosition)) return; // return if not selecting valid grid position
+
+            if (!unit.TrySpendActionPointsToTakeAction(_selectedAction)) return; // return if not having enough action points to take action
+
+            SetBusy();
+
+            _selectedAction.TakeAction(mouseGridPosition, ClearBusy);
+
+            OnActionPointsSpend?.Invoke();
 
         }
 

@@ -11,6 +11,9 @@ public class Unit : MonoBehaviour
     UnitAttackAction _attackAction;
     UnitBaseAction[] _baseActionArray;
 
+    [SerializeField] bool _isEnemy;
+    [SerializeField] int _unitActionPoints;
+
 
     void Awake()
     {
@@ -41,6 +44,37 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.AddUnitToGridObject(_unitGridPosition, this);
         }
     }
+
+    #region Action points functions
+    public bool TrySpendActionPointsToTakeAction(UnitBaseAction baseAction)
+    {
+        if (CanSpendActionPointsToTakeAction(baseAction))
+        {
+            SpendActionPoints(baseAction.GetActionCost());
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CanSpendActionPointsToTakeAction(UnitBaseAction baseAction)
+    {
+        return _unitActionPoints >= baseAction.GetActionCost();
+    }
+
+    void SpendActionPoints(int amount)
+    {
+        _unitActionPoints -= amount;
+    }
+
+    public int GetActionPoints() => _unitActionPoints;
+
+    #endregion
+
+
+
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
     public UnitBaseAction[] GetUnitBaseActionArray() => _baseActionArray;

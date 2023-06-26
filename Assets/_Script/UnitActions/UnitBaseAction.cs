@@ -18,6 +18,8 @@ public abstract class UnitBaseAction : MonoBehaviour
 
     public abstract string GetActionName();
 
+    public abstract int GetActionCost();
+
     public virtual bool IsValidActionGridPosition(GridPosition gridpos)
     {
         List<GridPosition> validGridPositionList = GetValidGridPositionList();
@@ -32,4 +34,5 @@ public abstract class UnitBaseAction : MonoBehaviour
         _isActive = false;
         _onActionCompleted();
     }
+
 }
