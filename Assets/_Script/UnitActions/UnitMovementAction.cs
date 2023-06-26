@@ -22,7 +22,8 @@ public class UnitMovementAction : UnitBaseAction
 
     void Update()
     {
-        if (_onActionCompleted == null) return;
+        if (!_isActive) return;
+
         Move(_targetPosition);
     }
 
@@ -39,7 +40,7 @@ public class UnitMovementAction : UnitBaseAction
             // unit rotation animation
             transform.forward = Vector3.Lerp(transform.forward, targetDirection, Time.deltaTime * _rotateSpeed);
         }
-        else _onActionCompleted();
+        else ActionCompleted();
     }
 
     public void SetTargetPosition(Vector3 targetPosition) => _targetPosition = targetPosition;
@@ -80,6 +81,8 @@ public class UnitMovementAction : UnitBaseAction
 
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
+        _isActive = true;
+
         this._onActionCompleted = onActionCompleted;
 
         if (!IsValidActionGridPosition(gridPos)) return;

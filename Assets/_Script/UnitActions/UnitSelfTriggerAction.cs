@@ -22,6 +22,8 @@ public class UnitSelfTriggerAction : UnitBaseAction
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
         Debug.Log("Self Spined");
+        this._onActionCompleted = onActionCompleted;
+        //_onActionCompleted();
     }
 
     public override List<GridPosition> GetValidGridPositionList()

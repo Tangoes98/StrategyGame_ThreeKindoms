@@ -22,6 +22,8 @@ public class UnitAttackAction : UnitBaseAction
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
         Debug.Log("Attacked");
+        this._onActionCompleted = onActionCompleted;
+        //_onActionCompleted();
     }
 
     public override List<GridPosition> GetValidGridPositionList()

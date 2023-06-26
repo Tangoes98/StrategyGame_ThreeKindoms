@@ -14,7 +14,7 @@ public class UnitSelection : MonoBehaviour
 
     UnitBaseAction _selectedAction;
 
-    [SerializeField] bool _isBusy;
+    [SerializeField] bool _isBusy = false;
 
     void Awake()
     {
@@ -43,6 +43,10 @@ public class UnitSelection : MonoBehaviour
 
         HandleUnitActionSelection();
 
+
+
+        #region Right mouse click to move
+
         // Right mouse click to move
         // if (Input.GetMouseButtonDown(1))
         // {
@@ -57,8 +61,9 @@ public class UnitSelection : MonoBehaviour
         //     }
 
         // }
+        #endregion
 
-        Debug.Log(_selectedAction);
+        Debug.Log(_isBusy);
     }
 
     void GetUnitSelection()
@@ -80,11 +85,6 @@ public class UnitSelection : MonoBehaviour
     }
 
 
-
-    void SetBusy() => _isBusy = true;
-    void ClearBusy() => _isBusy = false;
-
-
     void HandleUnitActionSelection()
     {
         if (!UnitIsSelected()) return; // return if not selecting any unit
@@ -92,17 +92,20 @@ public class UnitSelection : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            if (_selectedUnit == null) return;
+            //if (_selectedUnit == null) return;
 
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
 
             if (_selectedAction.IsValidActionGridPosition(mouseGridPosition))
             {
                 SetBusy();
+                Debug.Log("Set Busy");
                 _selectedAction.TakeAction(mouseGridPosition, ClearBusy);
             }
 
         }
+
+
 
         // switch (_selectedAction)
         // {
@@ -118,6 +121,9 @@ public class UnitSelection : MonoBehaviour
         //         break;
         // }
     }
+
+    void SetBusy() => _isBusy = true;
+    void ClearBusy() => _isBusy = false;
 
 
 
@@ -147,14 +153,14 @@ public class UnitSelection : MonoBehaviour
 
     public UnitBaseAction GetUnitCurrentAction() => _selectedAction;
 
-    UnitMovementAction GetUnitMovementAction(Transform selectedUnit)
-    {
-        if (selectedUnit.TryGetComponent<UnitMovementAction>(out UnitMovementAction unitMovement))
-        {
-            return unitMovement;
-        }
-        else return null;
-    }
+    // UnitMovementAction GetUnitMovementAction(Transform selectedUnit)
+    // {
+    //     if (selectedUnit.TryGetComponent<UnitMovementAction>(out UnitMovementAction unitMovement))
+    //     {
+    //         return unitMovement;
+    //     }
+    //     else return null;
+    // }
 
 }
 

@@ -6,7 +6,7 @@ using System;
 public abstract class UnitBaseAction : MonoBehaviour
 {
     protected Unit _unit;
-
+    protected bool _isActive;
     protected Action _onActionCompleted;
 
     protected virtual void Awake()
@@ -26,4 +26,10 @@ public abstract class UnitBaseAction : MonoBehaviour
     }
 
     public abstract List<GridPosition> GetValidGridPositionList();
+
+    protected void ActionCompleted()
+    {
+        _isActive = false;
+        _onActionCompleted();
+    }
 }
