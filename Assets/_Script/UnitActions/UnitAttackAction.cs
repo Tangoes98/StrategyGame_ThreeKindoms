@@ -6,8 +6,9 @@ using System;
 public class UnitAttackAction : UnitBaseAction
 {
     Vector3 _position;
-
+    Unit _targetUnit;
     [SerializeField] int _actionCost;
+    [SerializeField] int _attackRange;
 
     protected override void Awake()
     {
@@ -19,35 +20,62 @@ public class UnitAttackAction : UnitBaseAction
     void Update()
     {
         if (!_isActive) return;
+
+
     }
 
-    public override int GetActionCost()
-    {
-        return _actionCost;
-    }
+
+    public override string GetActionName() => "Test_Attack";
+    public override int GetActionCost() => _actionCost;
+
+
 
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
-        Debug.Log("Attacked");
         _isActive = true;
         this._onActionCompleted = onActionCompleted;
+
+        _targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPos);
+
         ActionCompleted();
     }
 
     public override List<GridPosition> GetValidGridPositionList()
     {
-        GridPosition unitGridPos = _unit.GetUnitGridPosition();
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        return new List<GridPosition>
+        GridPosition unitGridPosition = _unit.GetUnitGridPosition();
+
+        GridSystemVisual.Instance.ShowGridPositionRange(unitGridPosition, _attackRange);
+
+        for (int x = -_attackRange; x <= _attackRange; x++)
         {
-            unitGridPos
-        };
-    }
-    void TestingFuction()
-    {
-        // self spin 
-        Debug.Log("Attacked");
+            for (int z = -_attackRange; z <= _attackRange; z++)
+            {
+                int moveDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (moveDistance > _attackRange) continue;
+
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition avaliableGridPosition = unitGridPosition + offsetGridPosition;
+
+                if (!LevelGrid.Instance.IsValidGridPosition(avaliableGridPosition)) continue; // gridposition in the unit system
+
+                if (avaliableGridPosition == unitGridPosition) continue; // gridposition is not unit self gridposition
+
+                if (!LevelGrid.Instance.HasUnitOnGridPosition(avaliableGridPosition)) continue; // gridposition has no unit on it
+
+                Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(avaliableGridPosition);
+                if (targetUnit.IsEnemyUnit() == _unit.IsEnemyUnit()) continue; // check if both are enemy or friendly unit
+
+
+
+
+                validGridPositionList.Add(avaliableGridPosition);
+
+            }
+        }
+        return validGridPositionList;
     }
 
-    public override string GetActionName() => "Test_Attack";
+
 }

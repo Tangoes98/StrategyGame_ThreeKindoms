@@ -76,14 +76,15 @@ public class GridSystemVisual : MonoBehaviour
         {
             for (int z = 0; z < _gridHeight; z++)
             {
-                MeshRenderer meshRend = _singleGridVisualArray[x, z].GetComponentInChildren<MeshRenderer>();
-                meshRend.enabled = false;
+                MeshRenderer[] meshRendArray = _singleGridVisualArray[x, z].GetComponentsInChildren<MeshRenderer>();
+                foreach (MeshRenderer meshRenderer in meshRendArray) meshRenderer.enabled = false;
             }
         }
 
     }
 
-    public void ShowGridPositionVisuals(List<GridPosition> gridPosList)
+    Transform GetSingelGridVisualObject(GridPosition gridPos) => _singleGridVisualArray[gridPos.x, gridPos.z];
+    void ShowValidGridPositionVisuals(List<GridPosition> gridPosList)
     {
         foreach (GridPosition gridPos in gridPosList)
         {
@@ -92,7 +93,40 @@ public class GridSystemVisual : MonoBehaviour
             meshRend.enabled = true;
         }
     }
-    Transform GetSingelGridVisualObject(GridPosition gridPos) => _singleGridVisualArray[gridPos.x, gridPos.z];
+    void ShowRangeVisual(List<GridPosition> gridPosList)
+    {
+        foreach (GridPosition gridPos in gridPosList)
+        {
+            Transform singleVisualObejct = GetSingelGridVisualObject(gridPos);
+            MeshRenderer[] meshRend = singleVisualObejct.GetComponentsInChildren<MeshRenderer>();
+            meshRend[1].enabled = true;
+        }
+    }
+    public void ShowGridPositionRange(GridPosition unitGridPosition, int range)
+    {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+
+        for (int x = -range; x <= range; x++)
+        {
+            for (int z = -range; z <= range; z++)
+            {
+                int moveDistance = Mathf.Abs(x) + Mathf.Abs(z);
+                if (moveDistance > range) continue;
+
+                GridPosition offsetGridPosition = new GridPosition(x, z);
+                GridPosition showGridPosition = unitGridPosition + offsetGridPosition;
+
+                if (!LevelGrid.Instance.IsValidGridPosition(showGridPosition)) continue; // gridposition in the unit system
+
+                if (showGridPosition == unitGridPosition) continue; // gridposition is not unit self gridposition
+
+                validGridPositionList.Add(showGridPosition);
+
+            }
+        }
+        ShowRangeVisual(validGridPositionList);
+    }
+
 
 
     public void UpdateGridSystemVisual()
@@ -103,7 +137,7 @@ public class GridSystemVisual : MonoBehaviour
 
         if (!baseAction) return;
 
-        ShowGridPositionVisuals(baseAction.GetValidGridPositionList());
+        ShowValidGridPositionVisuals(baseAction.GetValidGridPositionList());
     }
 
 

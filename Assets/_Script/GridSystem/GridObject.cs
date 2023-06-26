@@ -36,15 +36,12 @@ public class GridObject
             + unitString;
     }
 
-    public void AddUnit(Unit unit)
-    {
-        _unitList.Add(unit);
-    }
-    public void RemoveUnit(Unit unit)
-    {
-        _unitList.Remove(unit);
-    }
+    public void AddUnit(Unit unit) => _unitList.Add(unit);
 
+    public void RemoveUnit(Unit unit) => _unitList.Remove(unit);
+
+    public bool HasUnitOnGrid() => _unitList.Count > 0;
+    public Unit GetUnit() => _unitList[0];
 
     public int GetFloorNumber() => _floorNumber;
 }
