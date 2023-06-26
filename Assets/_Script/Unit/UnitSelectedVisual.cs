@@ -21,6 +21,12 @@ public class UnitSelectedVisual : MonoBehaviour
         UnitSelection.Instance.OnSelectEmpty += UnitSelection_OnSelectEmpty;
     }
 
+    void OnDestroy()
+    {
+        UnitSelection.Instance.OnUnitSelecedChanged -= UnitSelection_OnUnitSelecedChanged;
+        UnitSelection.Instance.OnSelectEmpty -= UnitSelection_OnSelectEmpty;
+    }
+
     void UnitSelection_OnUnitSelecedChanged()
     {
         if (UnitSelection.Instance.GetSelectedUnit() == _unit)
@@ -40,6 +46,7 @@ public class UnitSelectedVisual : MonoBehaviour
         if (isSelected) _selectedVisual.enabled = true;
         if (!isSelected) _selectedVisual.enabled = false;
     }
+
 
 
 

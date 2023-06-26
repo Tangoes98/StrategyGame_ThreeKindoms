@@ -1,18 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class HealthSystem : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] int _health;
+    int _maxHealth;
+
+    public event Action OnDamaged;
+    public event Action OnDead;
+
+    void Awake()
     {
-        
+        _maxHealth = _health;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnDamage(int damageValue)
     {
-        
+        _health -= damageValue;
+        OnDamaged?.Invoke();
+        if (_health <= 0) _health = 0;
+        if (_health == 0) Die();
     }
+
+    void Die()
+    {
+        Debug.Log("Unit Died");
+        OnDead?.Invoke();
+    }
+
+    public float GetHealthValueNormalized() => (float)_health / _maxHealth;
+
 }

@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     [SerializeField] bool _isEnemy;
     [SerializeField] int _unitActionPoints;
     int _maxActionPoints;
+    HealthSystem _healthSystem;
 
 
     void Awake()
@@ -23,6 +24,8 @@ public class Unit : MonoBehaviour
         _attackAction = GetComponent<UnitAttackAction>();
 
         _baseActionArray = GetComponents<UnitBaseAction>();
+
+        _healthSystem = GetComponent<HealthSystem>();
 
     }
 
@@ -35,6 +38,8 @@ public class Unit : MonoBehaviour
 
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
         _maxActionPoints = _unitActionPoints;
+
+        _healthSystem.OnDead += HealthSystem_OnDead;
     }
 
     void Update()
@@ -79,7 +84,7 @@ public class Unit : MonoBehaviour
     void TurnSystem_OnTurnChanged()
     {
         bool isPlayerTurnCheck = TurnSystem.Instance.IsPlayerTurn();
-        
+
         if (_isEnemy && isPlayerTurnCheck) return;
         if (!_isEnemy && !isPlayerTurnCheck) return;
 
@@ -88,7 +93,13 @@ public class Unit : MonoBehaviour
 
     #endregion
 
-
+    #region OnUnitDeath
+    void HealthSystem_OnDead()
+    {
+        LevelGrid.Instance.RemoveUnitFromGridObject(_unitGridPosition, this);
+        Destroy(gameObject);
+    }
+    #endregion
 
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
