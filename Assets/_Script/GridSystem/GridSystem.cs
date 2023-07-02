@@ -8,6 +8,7 @@ public class GridSystem
     int _height;
     float _cellSize;
     GridObject[,] _gridObjectArray;
+    PathNode[,] _pathNodeArray;
 
     public GridSystem(int width, int height, float cellSize)
     {
@@ -15,6 +16,7 @@ public class GridSystem
         _height = height;
         _cellSize = cellSize;
         _gridObjectArray = new GridObject[width, height];
+        _pathNodeArray = new PathNode[width, height];
 
         for (int x = 0; x < _width; x++)
         {
@@ -33,6 +35,7 @@ public class GridSystem
 
                 _gridObjectArray[x, z] = new GridObject(this, gridPosition, floor);
 
+                _pathNodeArray[x, z] = new PathNode(gridPosition);
             }
         }
     }
@@ -44,7 +47,7 @@ public class GridSystem
 
     public Vector3 GetGridObjectWorldPosition(GridPosition gridPosition)
     {
-        int floorHeight = 2;
+        int floorHeight = 1;
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize
         + new Vector3(0, GetGridFloorHeight(gridPosition) * floorHeight, 0);
     }
@@ -87,5 +90,29 @@ public class GridSystem
                 gridPos.z < _height;
     }
 
+
+    #region Pathfinding functions
+        
+    public void CreatePathNodeVisual(Transform visualPrefab)
+    {
+        for (int x = 0; x < _width; x++)
+        {
+            for (int z = 0; z < _height; z++)
+            {
+                GridPosition gridPosition = new GridPosition(x, z);
+
+                Transform gridObjectPrefab = GameObject.Instantiate(visualPrefab, GetGridObjectWorldPosition(gridPosition), Quaternion.identity);
+                PathNode pathNode = GetPathNode(gridPosition);
+                gridObjectPrefab.GetComponent<PathNodeVisual>().SetPathNode(pathNode);
+            }
+        }
+    }
+
+    public PathNode GetPathNode(GridPosition gridPosition)
+    {
+        return _pathNodeArray[gridPosition.x, gridPosition.z];
+    }
+
+    #endregion
 
 }

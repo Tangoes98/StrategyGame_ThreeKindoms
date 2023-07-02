@@ -19,6 +19,12 @@ public class UnitMovementAction : UnitBaseAction
         base.Awake();
         _targetPosition = transform.position;
 
+
+    }
+
+    void Start()
+    {
+        HeightCheck();
     }
 
     protected override void Update()
