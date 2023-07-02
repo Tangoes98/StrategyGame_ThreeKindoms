@@ -17,8 +17,9 @@ public class UnitAttackAction : UnitBaseAction
 
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (!_isActive) return;
 
 

@@ -21,11 +21,16 @@ public class UnitMovementAction : UnitBaseAction
 
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
+
         if (!_isActive) return;
 
         Move(_targetPosition);
+
+        HeightCheck();
+
     }
 
     public override int GetActionCost()
@@ -35,18 +40,28 @@ public class UnitMovementAction : UnitBaseAction
 
     void Move(Vector3 targetPosition)
     {
-        if (Vector3.Distance(targetPosition, transform.position) > _stopDistance)
+        Vector3 unitHorizontalPosition = new Vector3(transform.position.x, 0, transform.position.z);
+        if (Vector3.Distance(targetPosition, unitHorizontalPosition) > _stopDistance)
         {
             //set the direction where unit move to
-            Vector3 targetDirection = (targetPosition - this.transform.position).normalized;
+            Vector3 targetDirection = (targetPosition - unitHorizontalPosition).normalized;
 
             // unit movement to target direction
             transform.position += targetDirection * _moveSpeed * Time.deltaTime;
 
             // unit rotation animation
-            transform.forward = Vector3.Lerp(transform.forward, targetDirection, Time.deltaTime * _rotateSpeed);
+            transform.forward = Vector3.Slerp(transform.forward, targetDirection, Time.deltaTime * _rotateSpeed);
         }
         else ActionCompleted();
+    }
+
+    // Update unit heicht
+    void HeightCheck()
+    {
+        //GridPosition unitGridPosition = _unit.GetUnitGridPosition();
+        Vector3 gridWorldPosition = LevelGrid.Instance.GetGridObjectWorldPosition(_unitGridPosition);
+
+        if (transform.position.y != gridWorldPosition.y) transform.position = gridWorldPosition;
     }
 
     public void SetTargetPosition(Vector3 targetPosition) => _targetPosition = targetPosition;
@@ -55,7 +70,7 @@ public class UnitMovementAction : UnitBaseAction
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        GridPosition unitGridPosition = _unit.GetUnitGridPosition();
+        //GridPosition unitGridPosition = _unit.GetUnitGridPosition();
 
         for (int x = -_unitMaxMoveDistance; x <= _unitMaxMoveDistance; x++)
         {
@@ -67,7 +82,7 @@ public class UnitMovementAction : UnitBaseAction
 
                 // Get ideal moveable gridposiiton
                 GridPosition offsetGridPosition = new GridPosition(x, z);
-                GridPosition reachableGridposition = offsetGridPosition + unitGridPosition;
+                GridPosition reachableGridposition = offsetGridPosition + _unitGridPosition;
 
                 // Check if the girdPosition is inside the entire gridSystem
                 if (!LevelGrid.Instance.IsValidGridPosition(reachableGridposition)) continue;
@@ -81,10 +96,10 @@ public class UnitMovementAction : UnitBaseAction
         return validGridPositionList;
     }
 
+
+
+
     public override string GetActionName() => "Test_Move";
-
-
-
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
         _isActive = true;

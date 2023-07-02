@@ -33,23 +33,8 @@ public class GridSystem
 
                 _gridObjectArray[x, z] = new GridObject(this, gridPosition, floor);
 
-
-
             }
         }
-
-        // GridPosition gridPos = new GridPosition(1, 1);
-
-        // Debug.DrawLine(GetWorldPosition(gridPos), GetWorldPosition(gridPos) + Vector3.up * int.MaxValue, Color.white, 900f);
-
-        // RaycastHit[] raycastHits = Physics.RaycastAll(GetWorldPosition(gridPos), Vector3.up, float.MaxValue);
-        // for (int i = 0; i < raycastHits.Length; i++)
-        // {
-        //     Debug.Log(raycastHits[i].collider);
-        // }
-
-
-
     }
 
     public Vector3 GetWorldPosition(GridPosition gridPosition)
