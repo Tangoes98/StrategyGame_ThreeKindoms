@@ -8,23 +8,27 @@ public class UnitMovementAction : UnitBaseAction
     [SerializeField] float _moveSpeed;
     [SerializeField] float _rotateSpeed;
     [SerializeField] float _stopDistance;
-    Vector3 _targetPosition;
+    //Vector3 _targetPosition;
     [SerializeField] int _unitMaxMoveDistance;
     [SerializeField] int _actionCost;
+
+    List<Vector3> _targetPositionList;
+    int _currentPositionIndex;
 
 
 
     protected override void Awake()
     {
         base.Awake();
-        _targetPosition = transform.position;
+        //_targetPosition = transform.position;
+        _targetPositionList = new List<Vector3>();
 
 
     }
 
     void Start()
     {
-        HeightCheck();
+        StartCoroutine(HeightUpdate());
     }
 
     protected override void Update()
@@ -33,20 +37,35 @@ public class UnitMovementAction : UnitBaseAction
 
         if (!_isActive) return;
 
-        Move(_targetPosition);
+        Move(_targetPositionList);
 
         HeightCheck();
 
     }
+
+    IEnumerator HeightUpdate()
+    {
+        HeightCheck();
+        yield return null;
+    }
+
+
 
     public override int GetActionCost()
     {
         return _actionCost;
     }
 
-    void Move(Vector3 targetPosition)
+
+
+    public void SetTargetPositionList(List<Vector3> targetPositionList) => _targetPositionList = targetPositionList;
+
+    void Move(List<Vector3> targetPositionList)
     {
         Vector3 unitHorizontalPosition = new Vector3(transform.position.x, 0, transform.position.z);
+
+        Vector3 targetPosition = targetPositionList[_currentPositionIndex];
+
         if (Vector3.Distance(targetPosition, unitHorizontalPosition) > _stopDistance)
         {
             //set the direction where unit move to
@@ -58,8 +77,45 @@ public class UnitMovementAction : UnitBaseAction
             // unit rotation animation
             transform.forward = Vector3.Slerp(transform.forward, targetDirection, Time.deltaTime * _rotateSpeed);
         }
-        else ActionCompleted();
+        else
+        {
+            _currentPositionIndex++;
+
+            if (_currentPositionIndex >= _targetPositionList.Count)
+            {
+                ActionCompleted();
+            }
+        }
     }
+
+
+    #region // Simple unit movement functions
+
+    //public void SetTargetPosition(Vector3 targetPosition) => _targetPosition = targetPosition;
+
+    // void Move(Vector3 targetPosition)
+    // {
+    //     Vector3 unitHorizontalPosition = new Vector3(transform.position.x, 0, transform.position.z);
+
+    //     if (Vector3.Distance(targetPosition, unitHorizontalPosition) > _stopDistance)
+    //     {
+    //         //set the direction where unit move to
+    //         Vector3 targetDirection = (targetPosition - unitHorizontalPosition).normalized;
+
+    //         // unit movement to target direction
+    //         transform.position += targetDirection * _moveSpeed * Time.deltaTime;
+
+    //         // unit rotation animation
+    //         transform.forward = Vector3.Slerp(transform.forward, targetDirection, Time.deltaTime * _rotateSpeed);
+    //     }
+    //     else
+    //     {
+    //             ActionCompleted();
+    //     }
+    // }
+
+    #endregion
+
 
     // Update unit heicht
     void HeightCheck()
@@ -70,7 +126,6 @@ public class UnitMovementAction : UnitBaseAction
         if (transform.position.y != gridWorldPosition.y) transform.position = gridWorldPosition;
     }
 
-    public void SetTargetPosition(Vector3 targetPosition) => _targetPosition = targetPosition;
 
     public override List<GridPosition> GetValidGridPositionList()
     {
@@ -106,22 +161,46 @@ public class UnitMovementAction : UnitBaseAction
 
 
     public override string GetActionName() => "Test_Move";
-    public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
+    public override void TakeAction(GridPosition gridPosition, Action onActionCompleted)
     {
         _isActive = true;
 
         this._onActionCompleted = onActionCompleted;
 
-        if (!IsValidActionGridPosition(gridPos)) return;
+        if (!IsValidActionGridPosition(gridPosition)) return;
 
-        Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPos);
+        // _targetPositionList = new List<Vector3>();
 
-        SetTargetPosition(worldPosition);
+        _currentPositionIndex = 0;
+
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, gridPosition);
+
+        SetTargetPositionList(ConvertPathList(pathGridPositionList));
+
+
+
+        // set only one gridposition as target position
+
+        // Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+
+        // SetTargetPosition(worldPosition);
+    }
+
+    List<Vector3> ConvertPathList(List<GridPosition> gridPositionList)
+    {
+        List<Vector3> worldPositionList = new List<Vector3>();
+
+        foreach (GridPosition gridPosition in gridPositionList)
+        {
+            worldPositionList.Add(LevelGrid.Instance.GetWorldPosition(gridPosition));
+        }
+
+        return worldPositionList;
     }
 
 
 
-    #region Old SelectedUnitMoveMent Code // Reference use only
+    #region // Old SelectedUnitMoveMent Code 
 
     // public void SelectedUnitMovement(Action onActionCompleted)
     // {

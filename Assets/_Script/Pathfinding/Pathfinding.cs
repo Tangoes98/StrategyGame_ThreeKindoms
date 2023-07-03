@@ -81,6 +81,13 @@ public class Pathfinding : MonoBehaviour
             {
                 if (closeList.Contains(neighbourNode)) continue;
 
+                if (!neighbourNode.GetIsWalkable())
+                {
+                    closeList.Add(neighbourNode);
+                    continue;
+                }
+
+
                 int tempGCost = currentNode.GetGCost() + CalculateGridPositionDistance(currentNode.GetGridPosition(), neighbourNode.GetGridPosition());
 
                 if (tempGCost < neighbourNode.GetGCost())
