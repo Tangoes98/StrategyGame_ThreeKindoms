@@ -35,7 +35,7 @@ public class Pathfinding : MonoBehaviour
     }
 
 
-    public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition)
+    public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition, out int pathLength)
     {
         List<PathNode> openList = new List<PathNode>();
         List<PathNode> closeList = new List<PathNode>();
@@ -71,6 +71,7 @@ public class Pathfinding : MonoBehaviour
             if (currentNode == endNode)
             {
                 //Reach the final
+                pathLength = endNode.GetFCost();
                 return CalculatePath(endNode);
             }
 
@@ -103,10 +104,14 @@ public class Pathfinding : MonoBehaviour
             }
         }
 
-        // No path fount
+        // No path fount.
+        pathLength = 0;
         return null;
 
     }
+
+
+
 
     public int CalculateGridPositionDistance(GridPosition a, GridPosition b)
     {
@@ -158,10 +163,6 @@ public class Pathfinding : MonoBehaviour
 
         return neighbourList;
     }
-
-    PathNode GetNode(GridPosition gridPosition) => _gridSystem.GetPathNode(gridPosition);
-    bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
-
     List<GridPosition> CalculatePath(PathNode endNode)
     {
         List<PathNode> pathNodeList = new List<PathNode>();
@@ -184,5 +185,19 @@ public class Pathfinding : MonoBehaviour
         return gridPositionList;
 
     }
+
+
+    PathNode GetNode(GridPosition gridPosition) => _gridSystem.GetPathNode(gridPosition);
+    bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
+
+    public bool IsWalkableGridPosition(GridPosition gridPosition) => GetNode(gridPosition).GetIsWalkable();
+    public bool HasPathToGridPosition(GridPosition start, GridPosition end) => FindPath(start, end, out int pathLength) != null;
+    public int GetPathLength(GridPosition start, GridPosition end)
+    {
+        FindPath(start, end, out int pathLength);
+        return pathLength;
+    }
+
+
 
 }

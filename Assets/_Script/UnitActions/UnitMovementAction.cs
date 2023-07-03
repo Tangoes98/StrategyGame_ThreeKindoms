@@ -26,11 +26,6 @@ public class UnitMovementAction : UnitBaseAction
 
     }
 
-    void Start()
-    {
-        StartCoroutine(HeightUpdate());
-    }
-
     protected override void Update()
     {
         base.Update();
@@ -41,12 +36,6 @@ public class UnitMovementAction : UnitBaseAction
 
         HeightCheck();
 
-    }
-
-    IEnumerator HeightUpdate()
-    {
-        HeightCheck();
-        yield return null;
     }
 
 
@@ -143,21 +132,31 @@ public class UnitMovementAction : UnitBaseAction
 
                 // Get ideal moveable gridposiiton
                 GridPosition offsetGridPosition = new GridPosition(x, z);
-                GridPosition reachableGridposition = offsetGridPosition + _unitGridPosition;
+                GridPosition ValidGridposition = offsetGridPosition + _unitGridPosition;
 
                 // Check if the girdPosition is inside the entire gridSystem
-                if (!LevelGrid.Instance.IsValidGridPosition(reachableGridposition)) continue;
+                if (!LevelGrid.Instance.IsValidGridPosition(ValidGridposition)) continue;
+
+                // Check if gridposition is walkable
+                if (!Pathfinding.Instance.IsWalkableGridPosition(ValidGridposition)) continue;
+
+                // Check if gridposition is reachable
+                if (!Pathfinding.Instance.HasPathToGridPosition(_unitGridPosition, ValidGridposition)) continue;
+
+                // Check if the path is too long
+                int pathfindingDistanceMultiplier = 10;
+                if (Pathfinding.Instance.GetPathLength(_unitGridPosition, ValidGridposition) > _unitMaxMoveDistance * pathfindingDistanceMultiplier) continue;
+
+
 
                 //Debug.Log(reachableGridposition);
 
-                validGridPositionList.Add(reachableGridposition);
+                validGridPositionList.Add(ValidGridposition);
 
             }
         }
         return validGridPositionList;
     }
-
-
 
 
     public override string GetActionName() => "Test_Move";
@@ -173,7 +172,7 @@ public class UnitMovementAction : UnitBaseAction
 
         _currentPositionIndex = 0;
 
-        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, gridPosition);
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, gridPosition, out int pathLength);
 
         SetTargetPositionList(ConvertPathList(pathGridPositionList));
 
