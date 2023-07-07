@@ -110,6 +110,44 @@ public class Pathfinding : MonoBehaviour
 
     }
 
+    public List<GridPosition> GetValidGridPoisitionList(GridPosition startGridPosition, int maxMoveDistance)
+    {
+        List<GridPosition> validGridPositionList = new List<GridPosition>();
+        List<PathNode> openList = new List<PathNode>();
+        List<PathNode> closeList = new List<PathNode>();
+
+        PathNode startNode = _gridSystem.GetPathNode(startGridPosition);
+        startNode.SetAccucmulatedMoveDistance(0);
+
+        openList.Add(startNode);
+
+        while (openList.Count > 0)
+        {
+            PathNode currentNode = openList[0];
+
+            openList.Remove(currentNode);
+            closeList.Add(currentNode);
+
+            foreach (PathNode neighbourNode in GetNeighbourNodeList(currentNode))
+            {
+                if (closeList.Contains(neighbourNode)) continue;
+                if (validGridPositionList.Contains(neighbourNode.GetGridPosition())) continue;
+
+                // calculate distance between neighbourNode and currentNode
+                int distance = currentNode.GetAccucmulatedMoveDistance() + CalculateNeighbourGridPositionDistance(neighbourNode.GetGridPosition(), currentNode.GetGridPosition());
+
+                if (distance <= maxMoveDistance * 10)
+                {
+                    neighbourNode.SetAccucmulatedMoveDistance(distance);
+                    if (!openList.Contains(neighbourNode)) openList.Add(neighbourNode);
+                    if (!validGridPositionList.Contains(neighbourNode.GetGridPosition())) validGridPositionList.Add(neighbourNode.GetGridPosition());
+                }
+            }
+        }
+
+        return validGridPositionList;
+    }
+
 
 
 
@@ -127,6 +165,13 @@ public class Pathfinding : MonoBehaviour
         // return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, zDistance) + MOVE_STRAIGHT_COST * remainning;
         //
 
+    }
+    public int CalculateNeighbourGridPositionDistance(GridPosition neighbourGrid, GridPosition currentGrid)
+    {
+        GridPosition gridDistance = neighbourGrid - currentGrid;
+        int distance = Mathf.Abs(gridDistance.x) + Mathf.Abs(gridDistance.z);
+        int neighbourGridMoveCost = GetNode(neighbourGrid).GetMoveCost();
+        return distance * neighbourGridMoveCost;
     }
 
     PathNode GetLowestFCostPathNode(List<PathNode> pathNodeList)
@@ -187,7 +232,7 @@ public class Pathfinding : MonoBehaviour
     }
 
 
-    PathNode GetNode(GridPosition gridPosition) => _gridSystem.GetPathNode(gridPosition);
+    public PathNode GetNode(GridPosition gridPosition) => _gridSystem.GetPathNode(gridPosition);
     bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
 
     public bool IsWalkableGridPosition(GridPosition gridPosition) => GetNode(gridPosition).GetIsWalkable();

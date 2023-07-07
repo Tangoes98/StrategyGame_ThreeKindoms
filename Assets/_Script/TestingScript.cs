@@ -15,22 +15,27 @@ public class TestingScript : MonoBehaviour
         {
             //Debug.Log(_gridSystem.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition()));
             GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
-            GridPosition startGridPosition = new GridPosition(0, 0);
+            GridPosition startGridPosition = new GridPosition(0,0);
 
-            List<GridPosition> gridPositionList = Pathfinding.Instance.FindPath(startGridPosition, mouseGridPosition, out int pathLength);
+            GridPosition testGridPosition = new GridPosition(1,1);
+            Pathfinding.Instance.GetNode(testGridPosition).SetMoveCost(0.5f);
 
-            for (int i = 0; i < gridPositionList.Count - 1; i++)
+            List<GridPosition> gridPositionList = Pathfinding.Instance.GetValidGridPoisitionList(startGridPosition, 2);
+
+            for (int i = 0; i < gridPositionList.Count; i++)
             {
                 Debug.DrawLine(
                     LevelGrid.Instance.GetWorldPosition(gridPositionList[i]),
-                    LevelGrid.Instance.GetWorldPosition(gridPositionList[i + 1]),
-                    Color.white,
+                    LevelGrid.Instance.GetWorldPosition(gridPositionList[i]) + Vector3.up * 1000f,
+                    Color.red,
                     1000f
 
                 );
             }
 
-
         }
     }
 }
+
+
+//LevelGrid.Instance.GetWorldPosition(gridPositionList[i + 1])
