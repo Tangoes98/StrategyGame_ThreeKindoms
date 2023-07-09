@@ -20,7 +20,7 @@ public class TestingScript : MonoBehaviour
             GridPosition testGridPosition = new GridPosition(1,1);
             Pathfinding.Instance.GetNode(testGridPosition).SetMoveCost(0.5f);
 
-            List<GridPosition> gridPositionList = Pathfinding.Instance.GetValidGridPoisitionList(startGridPosition, 2);
+            List<GridPosition> gridPositionList = Pathfinding.Instance.GetValidMoveGridPoisitionList(startGridPosition, 2);
 
             for (int i = 0; i < gridPositionList.Count; i++)
             {

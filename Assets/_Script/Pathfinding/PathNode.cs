@@ -11,13 +11,20 @@ public class PathNode
     int _fCost;
     PathNode _cameFromNode;
     bool _isWalkable = true;
-    int _moveCost = 10;
+    int _moveCost;
     int _accumulatedMoveDistance;
 
-    public PathNode(GridPosition gridPosition)
+    TerrainType _terrainType;
+
+    public PathNode(GridPosition gridPosition, TerrainType terrainType)
     {
         _gridPosition = gridPosition;
+        _terrainType = terrainType;
 
+        var terrain = _terrainType.GetTerrainType();
+        _moveCost = _terrainType.GetTerrainMoveCost(terrain);
+
+        if (_moveCost == 0) _isWalkable = false;
     }
 
 
@@ -32,7 +39,7 @@ public class PathNode
     public int GetHCost() => _hCost;
     public int GetFCost() => _fCost;
 
-    public int GetMoveCost() => _moveCost;
+    public int GetMoveCost() => _moveCost * PathfindingDistanceMultiplier;
     public void SetMoveCost(float moveCost) => _moveCost = Mathf.RoundToInt(moveCost * PathfindingDistanceMultiplier);
 
     public int GetAccucmulatedMoveDistance() => _accumulatedMoveDistance;
@@ -49,5 +56,7 @@ public class PathNode
 
     public bool GetIsWalkable() => _isWalkable;
     public void SetIsWalkable(bool isWalkable) => _isWalkable = isWalkable;
+
+    public TerrainType GetTerrain() => _terrainType;
 
 }

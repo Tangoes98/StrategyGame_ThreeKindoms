@@ -33,9 +33,15 @@ public class GridSystem
 
                 int floor = raycastHits.Length;
 
+                int lastRaycastHitObjectIndex = raycastHits.Length - 1;
+
+                TerrainType terrainObject = raycastHits[lastRaycastHitObjectIndex].transform.GetComponent<TerrainType>();
+
+
+
                 _gridObjectArray[x, z] = new GridObject(this, gridPosition, floor);
 
-                _pathNodeArray[x, z] = new PathNode(gridPosition);
+                _pathNodeArray[x, z] = new PathNode(gridPosition, terrainObject);
             }
         }
     }
@@ -92,7 +98,7 @@ public class GridSystem
 
 
     #region Pathfinding functions
-        
+
     public void CreatePathNodeVisual(Transform visualPrefab)
     {
         for (int x = 0; x < _width; x++)

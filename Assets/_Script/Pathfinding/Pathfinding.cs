@@ -6,6 +6,7 @@ public class Pathfinding : MonoBehaviour
 {
     const int MOVE_STRAIGHT_COST = 10;
     const int MOVE_DIAGONAL_COST = 14;
+    const int PathfindingDistanceMultiplier = 10;
 
     public static Pathfinding Instance;
 
@@ -110,7 +111,7 @@ public class Pathfinding : MonoBehaviour
 
     }
 
-    public List<GridPosition> GetValidGridPoisitionList(GridPosition startGridPosition, int maxMoveDistance)
+    public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, int maxMoveDistance)
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         List<PathNode> openList = new List<PathNode>();
@@ -132,11 +133,16 @@ public class Pathfinding : MonoBehaviour
             {
                 if (closeList.Contains(neighbourNode)) continue;
                 if (validGridPositionList.Contains(neighbourNode.GetGridPosition())) continue;
+                if (!neighbourNode.GetIsWalkable())
+                {
+                    closeList.Add(neighbourNode);
+                    continue;
+                }
 
                 // calculate distance between neighbourNode and currentNode
                 int distance = currentNode.GetAccucmulatedMoveDistance() + CalculateNeighbourGridPositionDistance(neighbourNode.GetGridPosition(), currentNode.GetGridPosition());
 
-                if (distance <= maxMoveDistance * 10)
+                if (distance <= maxMoveDistance * PathfindingDistanceMultiplier)
                 {
                     neighbourNode.SetAccucmulatedMoveDistance(distance);
                     if (!openList.Contains(neighbourNode)) openList.Add(neighbourNode);

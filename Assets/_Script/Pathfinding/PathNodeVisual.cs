@@ -11,6 +11,7 @@ public class PathNodeVisual : MonoBehaviour
     [SerializeField] TextMeshPro _fCostText;
     [SerializeField] TextMeshPro _accumulatedMoveDistanceText;
     [SerializeField] TextMeshPro _moveCostText;
+    [SerializeField] TextMeshPro _terrainTypeText;
 
     PathNode _pathNode;
 
@@ -36,6 +37,7 @@ public class PathNodeVisual : MonoBehaviour
         _fCostText.text = _pathNode.GetFCost().ToString();
         _accumulatedMoveDistanceText.text = _pathNode.GetAccucmulatedMoveDistance().ToString();
         _moveCostText.text = _pathNode.GetMoveCost().ToString();
+        _terrainTypeText.text = _pathNode.GetTerrain().GetTerrainType().ToString();
     }
 
 }

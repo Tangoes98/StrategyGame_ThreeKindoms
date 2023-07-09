@@ -1,0 +1,180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8507880918160149423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8507880918160149422}
+  - component: {fileID: 8507880918160149419}
+  - component: {fileID: 8507880918160149416}
+  - component: {fileID: 8507880918160149417}
+  - component: {fileID: 2845960488694603984}
+  m_Layer: 8
+  m_Name: DefaultGroundObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8507880918160149422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507880918160149423}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.9, y: 1.9, z: 1.9}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &8507880918160149419
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507880918160149423}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &8507880918160149416
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507880918160149423}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ee2fba3cb9a355d478efa0ebedd22ffb, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8507880918160149417
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507880918160149423}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2845960488694603984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507880918160149423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96056ef593002624cb932d75753ee211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _terrainTypeMaterialList:
+  - terrainType: 0
+    terrainMaterial: {fileID: 2100000, guid: ee2fba3cb9a355d478efa0ebedd22ffb, type: 2}
+    terrainMoveCost: 1
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 1
+    terrainMaterial: {fileID: 2100000, guid: bee6ca1764799c340b5e67c663564c23, type: 2}
+    terrainMoveCost: 1
+    isflammable: 1
+    isWalkable: 1
+  - terrainType: 2
+    terrainMaterial: {fileID: 2100000, guid: c19a2fc48ec492449aa519cfcd919f35, type: 2}
+    terrainMoveCost: 2
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 3
+    terrainMaterial: {fileID: 2100000, guid: b792c9c6d9d340940af7963ba0a398d2, type: 2}
+    terrainMoveCost: 1
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 4
+    terrainMaterial: {fileID: 2100000, guid: 4867b0909dadff149a9ae4fa508d551c, type: 2}
+    terrainMoveCost: 1
+    isflammable: 1
+    isWalkable: 1
+  - terrainType: 5
+    terrainMaterial: {fileID: 2100000, guid: 7d24b3e767eec504ebe1e01cc42a2847, type: 2}
+    terrainMoveCost: 2
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 6
+    terrainMaterial: {fileID: 2100000, guid: ede1bbdc6f642bd4ea1bcbe116fc7fa3, type: 2}
+    terrainMoveCost: 1
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 7
+    terrainMaterial: {fileID: 2100000, guid: 14f21a8dcfb904e4d880f3865597fe6d, type: 2}
+    terrainMoveCost: 2
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 8
+    terrainMaterial: {fileID: 2100000, guid: 9826205c421f119469dcecaa432a32fb, type: 2}
+    terrainMoveCost: 1
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 9
+    terrainMaterial: {fileID: 2100000, guid: bdbd519fc7e4fa34fa1958ef3b431b3e, type: 2}
+    terrainMoveCost: 1
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 10
+    terrainMaterial: {fileID: 2100000, guid: c3e0ae0e6bd90b742acc393f7090b809, type: 2}
+    terrainMoveCost: 2
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 11
+    terrainMaterial: {fileID: 2100000, guid: 435eaa623e896f44497d23f4626f70ce, type: 2}
+    terrainMoveCost: 2
+    isflammable: 0
+    isWalkable: 1
+  - terrainType: 12
+    terrainMaterial: {fileID: 2100000, guid: 9613af0fd9cac7f4eba6db511839a867, type: 2}
+    terrainMoveCost: 0
+    isflammable: 0
+    isWalkable: 0
+  _terrainType: 0
+  _isBurning: 0

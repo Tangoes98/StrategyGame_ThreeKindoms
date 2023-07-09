@@ -147,6 +147,9 @@ public class UnitMovementAction : UnitBaseAction
                 int pathfindingDistanceMultiplier = 10;
                 if (Pathfinding.Instance.GetPathLength(_unitGridPosition, ValidGridposition) > _unitMaxMoveDistance * pathfindingDistanceMultiplier) continue;
 
+                // Check if is valid gridposition based on terrain moveCost check
+                if(!Pathfinding.Instance.GetValidMoveGridPoisitionList(_unitGridPosition, _unitMaxMoveDistance).Contains(ValidGridposition)) continue;
+
 
 
                 //Debug.Log(reachableGridposition);
