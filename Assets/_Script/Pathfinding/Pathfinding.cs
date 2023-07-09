@@ -26,11 +26,14 @@ public class Pathfinding : MonoBehaviour
             Destroy(Instance);
         }
         Instance = this;
+
         _gridWidth = LevelGrid.Instance.GetWidth();
         _gridHeight = LevelGrid.Instance.GetHeight();
         _gridCellSize = LevelGrid.Instance.GetCellSize();
 
         _gridSystem = new GridSystem(_gridWidth, _gridHeight, _gridCellSize);
+
+        // _gridSystem = LevelGrid.Instance.GetGridSystem();
 
         _gridSystem.CreatePathNodeVisual(_pathNodeVisual);
     }

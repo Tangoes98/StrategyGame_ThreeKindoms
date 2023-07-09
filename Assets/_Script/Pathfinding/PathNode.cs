@@ -16,15 +16,16 @@ public class PathNode
 
     TerrainType _terrainType;
 
-    public PathNode(GridPosition gridPosition, TerrainType terrainType)
+    public PathNode(GridPosition gridPosition)
     {
         _gridPosition = gridPosition;
-        _terrainType = terrainType;
+        //_terrainType = terrainType;
+        // _terrainType = GetRayCastTerrainObject(gridPosition);
 
-        var terrain = _terrainType.GetTerrainType();
-        _moveCost = _terrainType.GetTerrainMoveCost(terrain);
+        // var terrain = _terrainType.GetTerrainType();
+        // _moveCost = _terrainType.GetTerrainMoveCost(terrain);
 
-        if (_moveCost == 0) _isWalkable = false;
+        // if (_moveCost == 0) _isWalkable = false;
     }
 
 
@@ -40,7 +41,7 @@ public class PathNode
     public int GetFCost() => _fCost;
 
     public int GetMoveCost() => _moveCost * PathfindingDistanceMultiplier;
-    public void SetMoveCost(float moveCost) => _moveCost = Mathf.RoundToInt(moveCost * PathfindingDistanceMultiplier);
+    public void SetMoveCost(float moveCost) => _moveCost = Mathf.RoundToInt(moveCost);
 
     public int GetAccucmulatedMoveDistance() => _accumulatedMoveDistance;
     public void SetAccucmulatedMoveDistance(int a) => _accumulatedMoveDistance = a;
@@ -58,5 +59,6 @@ public class PathNode
     public void SetIsWalkable(bool isWalkable) => _isWalkable = isWalkable;
 
     public TerrainType GetTerrain() => _terrainType;
+    public void SetTerrain(TerrainType terrain) => _terrainType = terrain;
 
 }

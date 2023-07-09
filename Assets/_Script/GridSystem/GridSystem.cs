@@ -31,17 +31,18 @@ public class GridSystem
 
                 //Debug.DrawLine(GetWorldPosition(gridPosition) + Vector3.down * raycastOffset, GetWorldPosition(gridPosition) + Vector3.up * int.MaxValue, Color.white, 900f);
 
+
                 int floor = raycastHits.Length;
 
-                int lastRaycastHitObjectIndex = raycastHits.Length - 1;
+                // int lastRaycastHitObjectIndex = raycastHits.Length - 1;
 
-                TerrainType terrainObject = raycastHits[lastRaycastHitObjectIndex].transform.GetComponent<TerrainType>();
+                // TerrainType terrainObject = raycastHits[lastRaycastHitObjectIndex].transform.GetComponent<TerrainType>();
 
 
 
                 _gridObjectArray[x, z] = new GridObject(this, gridPosition, floor);
 
-                _pathNodeArray[x, z] = new PathNode(gridPosition, terrainObject);
+                _pathNodeArray[x, z] = new PathNode(gridPosition);
             }
         }
     }

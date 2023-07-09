@@ -37,7 +37,9 @@ public class PathNodeVisual : MonoBehaviour
         _fCostText.text = _pathNode.GetFCost().ToString();
         _accumulatedMoveDistanceText.text = _pathNode.GetAccucmulatedMoveDistance().ToString();
         _moveCostText.text = _pathNode.GetMoveCost().ToString();
-        _terrainTypeText.text = _pathNode.GetTerrain().GetTerrainType().ToString();
+
+        if (!_pathNode.GetTerrain()) _terrainTypeText.text = "N/A";
+        else _terrainTypeText.text = _pathNode.GetTerrain().GetTerrainType().ToString();
     }
 
 }
