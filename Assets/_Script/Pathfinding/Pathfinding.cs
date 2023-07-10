@@ -114,6 +114,85 @@ public class Pathfinding : MonoBehaviour
 
     }
 
+    #region //PathFindingCodeOriginal//
+
+    // public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition, out int pathLength)
+    // {
+    //     List<PathNode> openList = new List<PathNode>();
+    //     List<PathNode> closeList = new List<PathNode>();
+
+    //     PathNode startNode = _gridSystem.GetPathNode(startGridPosition);
+    //     PathNode endNode = _gridSystem.GetPathNode(endGridPosition);
+
+    //     openList.Add(startNode);
+
+    //     // PathNode value initialization
+    //     for (int x = 0; x < _gridWidth; x++)
+    //     {
+    //         for (int z = 0; z < _gridHeight; z++)
+    //         {
+    //             GridPosition gridPosition = new GridPosition(x, z);
+    //             PathNode pathNode = _gridSystem.GetPathNode(gridPosition);
+
+    //             pathNode.SetGCost(int.MaxValue);
+    //             pathNode.SetHCost(0);
+    //             pathNode.CalculateFCost();
+    //             pathNode.ResetCameFromNode();
+    //         }
+    //     }
+
+    //     startNode.SetGCost(0);
+    //     startNode.SetHCost(CalculateGridPositionDistance(startGridPosition, endGridPosition));
+    //     startNode.CalculateFCost();
+
+    //     while (openList.Count > 0)
+    //     {
+    //         PathNode currentNode = GetLowestFCostPathNode(openList);
+
+    //         if (currentNode == endNode)
+    //         {
+    //             //Reach the final
+    //             pathLength = endNode.GetFCost();
+    //             return CalculatePath(endNode);
+    //         }
+
+    //         openList.Remove(currentNode);
+    //         closeList.Add(currentNode);
+
+    //         foreach (PathNode neighbourNode in GetNeighbourNodeList(currentNode))
+    //         {
+    //             if (closeList.Contains(neighbourNode)) continue;
+
+    //             if (!neighbourNode.GetIsWalkable())
+    //             {
+    //                 closeList.Add(neighbourNode);
+    //                 continue;
+    //             }
+
+
+    //             int tempGCost = currentNode.GetGCost() + CalculateGridPositionDistance(currentNode.GetGridPosition(), neighbourNode.GetGridPosition());
+
+    //             if (tempGCost < neighbourNode.GetGCost())
+    //             {
+    //                 neighbourNode.SetCameFromNode(currentNode);
+    //                 neighbourNode.SetGCost(tempGCost);
+    //                 neighbourNode.SetHCost(CalculateGridPositionDistance(neighbourNode.GetGridPosition(), endGridPosition));
+    //                 neighbourNode.CalculateFCost();
+
+    //                 if (!openList.Contains(neighbourNode)) openList.Add(neighbourNode);
+
+    //             }
+    //         }
+    //     }
+
+    //     // No path fount.
+    //     pathLength = 0;
+    //     return null;
+
+    // }
+
+    #endregion
+
     public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, int maxMoveDistance)
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
@@ -183,6 +262,22 @@ public class Pathfinding : MonoBehaviour
         return distance * neighbourGridMoveCost;
     }
 
+    public int CalculateTotalMoveDistance(List<GridPosition> gridPositionList)
+    {
+        int totalDistance = 0;
+
+        //if (gridPositionList.Count < 3) return totalDistance += GetNode(gridPositionList[0]).GetMoveCost();
+
+
+        for (int i = 0; i < gridPositionList.Count - 1; i++)
+        {
+            int tempDistance = CalculateNeighbourGridPositionDistance(gridPositionList[i + 1], gridPositionList[i]);
+
+            totalDistance += tempDistance;
+        }
+        return totalDistance;
+    }
+
     PathNode GetLowestFCostPathNode(List<PathNode> pathNodeList)
     {
         PathNode lowestFCostNode = pathNodeList[0];
@@ -217,6 +312,27 @@ public class Pathfinding : MonoBehaviour
 
         return neighbourList;
     }
+
+    // List<PathNode> GetValidMoveableNeighbourNodeList(PathNode currentNode)
+    // {
+    //     List<PathNode> neighbourList = new List<PathNode>();
+
+    //     GridPosition currentNodeGridPosition = currentNode.GetGridPosition();
+
+    //     GridPosition rightNode = new GridPosition(currentNodeGridPosition.x + 1, currentNodeGridPosition.z);
+    //     GridPosition leftNode = new GridPosition(currentNodeGridPosition.x - 1, currentNodeGridPosition.z);
+    //     GridPosition upNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
+    //     GridPosition downNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
+
+    //     if (IsValidGridPosition(rightNode)) neighbourList.Add(GetNode(rightNode));
+    //     if (IsValidGridPosition(leftNode)) neighbourList.Add(GetNode(leftNode));
+    //     if (IsValidGridPosition(upNode)) neighbourList.Add(GetNode(upNode));
+    //     if (IsValidGridPosition(downNode)) neighbourList.Add(GetNode(downNode));
+
+
+    //     return neighbourList;
+    // }
+
     List<GridPosition> CalculatePath(PathNode endNode)
     {
         List<PathNode> pathNodeList = new List<PathNode>();

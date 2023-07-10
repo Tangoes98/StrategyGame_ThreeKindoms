@@ -277,7 +277,7 @@ MonoBehaviour:
   _rotateSpeed: 10
   _stopDistance: 0.1
   _unitMaxMoveDistance: 2
-  _actionCost: 1
+  _actionCost: 0
 --- !u!114 &7497459052540707923
 MonoBehaviour:
   m_ObjectHideFlags: 0

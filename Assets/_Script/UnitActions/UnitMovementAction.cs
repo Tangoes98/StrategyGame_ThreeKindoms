@@ -10,10 +10,12 @@ public class UnitMovementAction : UnitBaseAction
     [SerializeField] float _stopDistance;
     //Vector3 _targetPosition;
     [SerializeField] int _unitMaxMoveDistance;
+    [SerializeField] int _unitCurrentMoveDistance;
     [SerializeField] int _actionCost;
 
     List<Vector3> _targetPositionList;
     int _currentPositionIndex;
+    const int PathfindingDistanceMultiplier = 10;
 
 
 
@@ -23,6 +25,7 @@ public class UnitMovementAction : UnitBaseAction
         //_targetPosition = transform.position;
         _targetPositionList = new List<Vector3>();
 
+        _unitCurrentMoveDistance = _unitMaxMoveDistance;
 
     }
 
@@ -39,12 +42,19 @@ public class UnitMovementAction : UnitBaseAction
     }
 
 
+    #region Exposed Variables
 
-    public override int GetActionCost()
-    {
-        return _actionCost;
-    }
+    public override string GetActionName() => "Test_Move";
+    public override int GetActionCost() => _actionCost;
+    public int GetMaxMoveDistance() => _unitMaxMoveDistance;
+    public void SetMoveDistance(int moveDistance) => _unitCurrentMoveDistance = moveDistance;
 
+
+
+
+
+
+    #endregion
 
 
     public void SetTargetPositionList(List<Vector3> targetPositionList) => _targetPositionList = targetPositionList;
@@ -122,13 +132,13 @@ public class UnitMovementAction : UnitBaseAction
 
         //GridPosition unitGridPosition = _unit.GetUnitGridPosition();
 
-        for (int x = -_unitMaxMoveDistance; x <= _unitMaxMoveDistance; x++)
+        for (int x = -_unitCurrentMoveDistance; x <= _unitCurrentMoveDistance; x++)
         {
-            for (int z = -_unitMaxMoveDistance; z <= _unitMaxMoveDistance; z++)
+            for (int z = -_unitCurrentMoveDistance; z <= _unitCurrentMoveDistance; z++)
             {
                 // Unit will not move over than max move distance
                 int moveDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if (moveDistance > _unitMaxMoveDistance) continue;
+                if (moveDistance > _unitCurrentMoveDistance) continue;
 
                 // Get ideal moveable gridposiiton
                 GridPosition offsetGridPosition = new GridPosition(x, z);
@@ -145,10 +155,10 @@ public class UnitMovementAction : UnitBaseAction
 
                 // Check if the path is too long
                 int pathfindingDistanceMultiplier = 10;
-                if (Pathfinding.Instance.GetPathLength(_unitGridPosition, ValidGridposition) > _unitMaxMoveDistance * pathfindingDistanceMultiplier) continue;
+                if (Pathfinding.Instance.GetPathLength(_unitGridPosition, ValidGridposition) > _unitCurrentMoveDistance * pathfindingDistanceMultiplier) continue;
 
                 // Check if is valid gridposition based on terrain moveCost check
-                if(!Pathfinding.Instance.GetValidMoveGridPoisitionList(_unitGridPosition, _unitMaxMoveDistance).Contains(ValidGridposition)) continue;
+                if (!Pathfinding.Instance.GetValidMoveGridPoisitionList(_unitGridPosition, _unitCurrentMoveDistance).Contains(ValidGridposition)) continue;
 
 
 
@@ -162,33 +172,42 @@ public class UnitMovementAction : UnitBaseAction
     }
 
 
-    public override string GetActionName() => "Test_Move";
-    public override void TakeAction(GridPosition gridPosition, Action onActionCompleted)
+
+
+
+    public override void TakeAction(GridPosition mouseGridPosition, Action onActionCompleted)
     {
         _isActive = true;
 
         this._onActionCompleted = onActionCompleted;
 
-        if (!IsValidActionGridPosition(gridPosition)) return;
+        if (!IsValidActionGridPosition(mouseGridPosition)) return;
 
         // _targetPositionList = new List<Vector3>();
 
         _currentPositionIndex = 0;
 
-        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, gridPosition, out int pathLength);
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, mouseGridPosition, out int pathLength);
 
-        SetTargetPositionList(ConvertPathList(pathGridPositionList));
+        UpdateMoveDistance(pathGridPositionList);
+
+        SetTargetPositionList(ConvertPathListToWorldPositionList(pathGridPositionList));
 
 
-
-        // set only one gridposition as target position
-
+        #region // set only one gridposition as target position
         // Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
-
         // SetTargetPosition(worldPosition);
+        #endregion
     }
 
-    List<Vector3> ConvertPathList(List<GridPosition> gridPositionList)
+    void UpdateMoveDistance(List<GridPosition> pathGridPositionList)
+    {
+        int distance = Pathfinding.Instance.CalculateTotalMoveDistance(pathGridPositionList);
+        Debug.Log(distance);
+        _unitCurrentMoveDistance -= distance / PathfindingDistanceMultiplier;
+    }
+
+    List<Vector3> ConvertPathListToWorldPositionList(List<GridPosition> gridPositionList)
     {
         List<Vector3> worldPositionList = new List<Vector3>();
 
@@ -199,6 +218,16 @@ public class UnitMovementAction : UnitBaseAction
 
         return worldPositionList;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 

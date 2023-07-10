@@ -89,6 +89,8 @@ public class Unit : MonoBehaviour
         if (!_isEnemy && !isPlayerTurnCheck) return;
 
         _unitActionPoints = _maxActionPoints;
+
+        _moveAction.SetMoveDistance(_moveAction.GetMaxMoveDistance());
     }
 
     #endregion
