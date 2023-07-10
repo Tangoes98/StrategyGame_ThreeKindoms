@@ -113,9 +113,9 @@ MonoBehaviour:
   _terrainTypeMaterialList:
   - terrainType: 0
     terrainMaterial: {fileID: 2100000, guid: ee2fba3cb9a355d478efa0ebedd22ffb, type: 2}
-    terrainMoveCost: 1
+    terrainMoveCost: 0
     isflammable: 0
-    isWalkable: 1
+    isWalkable: 0
   - terrainType: 1
     terrainMaterial: {fileID: 2100000, guid: bee6ca1764799c340b5e67c663564c23, type: 2}
     terrainMoveCost: 1

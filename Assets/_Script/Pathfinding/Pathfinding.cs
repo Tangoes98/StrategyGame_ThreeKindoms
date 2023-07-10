@@ -17,6 +17,8 @@ public class Pathfinding : MonoBehaviour
     int _gridHeight;
     float _gridCellSize;
 
+    List<GridPosition> _validMoveGridPoisitionList = new List<GridPosition>();
+
 
     void Awake()
     {
@@ -57,7 +59,7 @@ public class Pathfinding : MonoBehaviour
                 GridPosition gridPosition = new GridPosition(x, z);
                 PathNode pathNode = _gridSystem.GetPathNode(gridPosition);
 
-                pathNode.SetGCost(int.MaxValue);
+                pathNode.SetGCost(500);
                 pathNode.SetHCost(0);
                 pathNode.CalculateFCost();
                 pathNode.ResetCameFromNode();
@@ -82,7 +84,7 @@ public class Pathfinding : MonoBehaviour
             openList.Remove(currentNode);
             closeList.Add(currentNode);
 
-            foreach (PathNode neighbourNode in GetNeighbourNodeList(currentNode))
+            foreach (PathNode neighbourNode in GetValidMoveableNeighbourNodeList(currentNode))
             {
                 if (closeList.Contains(neighbourNode)) continue;
 
@@ -93,7 +95,7 @@ public class Pathfinding : MonoBehaviour
                 }
 
 
-                int tempGCost = currentNode.GetGCost() + CalculateGridPositionDistance(currentNode.GetGridPosition(), neighbourNode.GetGridPosition());
+                int tempGCost = currentNode.GetGCost() + CalculateNeighbourGridPositionDistance(neighbourNode.GetGridPosition(), currentNode.GetGridPosition());
 
                 if (tempGCost < neighbourNode.GetGCost())
                 {
@@ -193,7 +195,7 @@ public class Pathfinding : MonoBehaviour
 
     #endregion
 
-    public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, int maxMoveDistance)
+    public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, int moveDistance)
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         List<PathNode> openList = new List<PathNode>();
@@ -224,7 +226,7 @@ public class Pathfinding : MonoBehaviour
                 // calculate distance between neighbourNode and currentNode
                 int distance = currentNode.GetAccucmulatedMoveDistance() + CalculateNeighbourGridPositionDistance(neighbourNode.GetGridPosition(), currentNode.GetGridPosition());
 
-                if (distance <= maxMoveDistance * PathfindingDistanceMultiplier)
+                if (distance <= moveDistance * PathfindingDistanceMultiplier)
                 {
                     neighbourNode.SetAccucmulatedMoveDistance(distance);
                     if (!openList.Contains(neighbourNode)) openList.Add(neighbourNode);
@@ -232,8 +234,18 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
-
+        _validMoveGridPoisitionList = validGridPositionList;
         return validGridPositionList;
+    }
+
+    bool CompareFloorHeight(GridPosition currentPosition, GridPosition neighbourPosition)
+    {
+        int currentGridHeight = LevelGrid.Instance.GetGridObject(currentPosition).GetFloorNumber();
+        int neighbourGridHeight = LevelGrid.Instance.GetGridObject(neighbourPosition).GetFloorNumber();
+
+        int maxFloorMoveDifference = 1;
+        if ((neighbourGridHeight - currentGridHeight) > maxFloorMoveDifference) return false;
+        else return true;
     }
 
 
@@ -265,9 +277,6 @@ public class Pathfinding : MonoBehaviour
     public int CalculateTotalMoveDistance(List<GridPosition> gridPositionList)
     {
         int totalDistance = 0;
-
-        //if (gridPositionList.Count < 3) return totalDistance += GetNode(gridPositionList[0]).GetMoveCost();
-
 
         for (int i = 0; i < gridPositionList.Count - 1; i++)
         {
@@ -304,34 +313,34 @@ public class Pathfinding : MonoBehaviour
         GridPosition upNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
         GridPosition downNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
 
-        if (IsValidGridPosition(rightNode)) neighbourList.Add(GetNode(rightNode));
-        if (IsValidGridPosition(leftNode)) neighbourList.Add(GetNode(leftNode));
-        if (IsValidGridPosition(upNode)) neighbourList.Add(GetNode(upNode));
-        if (IsValidGridPosition(downNode)) neighbourList.Add(GetNode(downNode));
+        if (IsValidGridPosition(rightNode) && CompareFloorHeight(currentNodeGridPosition, rightNode)) neighbourList.Add(GetNode(rightNode));
+        if (IsValidGridPosition(leftNode) && CompareFloorHeight(currentNodeGridPosition, leftNode)) neighbourList.Add(GetNode(leftNode));
+        if (IsValidGridPosition(upNode) && CompareFloorHeight(currentNodeGridPosition, upNode)) neighbourList.Add(GetNode(upNode));
+        if (IsValidGridPosition(downNode) && CompareFloorHeight(currentNodeGridPosition, downNode)) neighbourList.Add(GetNode(downNode));
 
 
         return neighbourList;
     }
 
-    // List<PathNode> GetValidMoveableNeighbourNodeList(PathNode currentNode)
-    // {
-    //     List<PathNode> neighbourList = new List<PathNode>();
+    List<PathNode> GetValidMoveableNeighbourNodeList(PathNode currentNode)
+    {
+        List<PathNode> neighbourList = new List<PathNode>();
 
-    //     GridPosition currentNodeGridPosition = currentNode.GetGridPosition();
+        GridPosition currentNodeGridPosition = currentNode.GetGridPosition();
 
-    //     GridPosition rightNode = new GridPosition(currentNodeGridPosition.x + 1, currentNodeGridPosition.z);
-    //     GridPosition leftNode = new GridPosition(currentNodeGridPosition.x - 1, currentNodeGridPosition.z);
-    //     GridPosition upNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
-    //     GridPosition downNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
+        GridPosition rightNode = new GridPosition(currentNodeGridPosition.x + 1, currentNodeGridPosition.z);
+        GridPosition leftNode = new GridPosition(currentNodeGridPosition.x - 1, currentNodeGridPosition.z);
+        GridPosition upNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
+        GridPosition downNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
 
-    //     if (IsValidGridPosition(rightNode)) neighbourList.Add(GetNode(rightNode));
-    //     if (IsValidGridPosition(leftNode)) neighbourList.Add(GetNode(leftNode));
-    //     if (IsValidGridPosition(upNode)) neighbourList.Add(GetNode(upNode));
-    //     if (IsValidGridPosition(downNode)) neighbourList.Add(GetNode(downNode));
+        if (IsValidGridPosition(rightNode) && _validMoveGridPoisitionList.Contains(rightNode)) neighbourList.Add(GetNode(rightNode));
+        if (IsValidGridPosition(leftNode) && _validMoveGridPoisitionList.Contains(leftNode)) neighbourList.Add(GetNode(leftNode));
+        if (IsValidGridPosition(upNode) && _validMoveGridPoisitionList.Contains(upNode)) neighbourList.Add(GetNode(upNode));
+        if (IsValidGridPosition(downNode) && _validMoveGridPoisitionList.Contains(downNode)) neighbourList.Add(GetNode(downNode));
 
 
-    //     return neighbourList;
-    // }
+        return neighbourList;
+    }
 
     List<GridPosition> CalculatePath(PathNode endNode)
     {
