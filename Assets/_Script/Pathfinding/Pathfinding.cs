@@ -238,13 +238,13 @@ public class Pathfinding : MonoBehaviour
         return validGridPositionList;
     }
 
-    bool CompareFloorHeight(GridPosition currentPosition, GridPosition neighbourPosition)
+    public bool CompareFloorHeight(GridPosition currentPosition, GridPosition neighbourPosition)
     {
         int currentGridHeight = LevelGrid.Instance.GetGridObject(currentPosition).GetFloorNumber();
         int neighbourGridHeight = LevelGrid.Instance.GetGridObject(neighbourPosition).GetFloorNumber();
 
         int maxFloorMoveDifference = 1;
-        if ((neighbourGridHeight - currentGridHeight) > maxFloorMoveDifference) return false;
+        if ((neighbourGridHeight - currentGridHeight) > maxFloorMoveDifference) return false; // neighbour gridposition is too high
         else return true;
     }
 
@@ -257,13 +257,14 @@ public class Pathfinding : MonoBehaviour
         int distance = Mathf.Abs(gridDistance.x) + Mathf.Abs(gridDistance.z);
         return distance * MOVE_STRAIGHT_COST;
 
-        // If diagonal movement is applied
+        #region // If diagonal movement is applied
         // 
         // int xDistance = Mathf.Abs(gridDistance.x);
         // int zDistance = Mathf.Abs(gridDistance.z);
         // int remainning = Mathf.Abs(xDistance - zDistance);
         // return MOVE_DIAGONAL_COST * Mathf.Min(xDistance, zDistance) + MOVE_STRAIGHT_COST * remainning;
         //
+        #endregion
 
     }
     public int CalculateNeighbourGridPositionDistance(GridPosition neighbourGrid, GridPosition currentGrid)

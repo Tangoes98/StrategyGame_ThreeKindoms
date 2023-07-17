@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class HealthSystem : MonoBehaviour
+public class ConstructionHealthSystem : MonoBehaviour
 {
     [SerializeField] int _health;
     int _maxHealth;
 
     public event Action OnDamaged;
-    public event Action OnDead;
+    public event Action OnDestroyed;
 
     void Start()
     {
         _maxHealth = _health;
-
     }
 
     public void OnDamage(int damageValue)
@@ -27,10 +26,9 @@ public class HealthSystem : MonoBehaviour
 
     void Die()
     {
-        Debug.Log("Unit Died");
-        OnDead?.Invoke();
+        Debug.Log("CONSTRUCTION DESTROYED");
+        OnDestroyed?.Invoke();
     }
 
     public float GetHealthValueNormalized() => (float)_health / _maxHealth;
-
 }

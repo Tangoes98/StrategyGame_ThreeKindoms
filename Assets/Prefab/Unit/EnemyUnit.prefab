@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5274474710898399211, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _campConstructionPrefab
+      value: 
+      objectReference: {fileID: 935320089358984928, guid: dad5b432aea656343b9638cb880d9b8f, type: 3}
     - target: {fileID: 2896852594613495132, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_Name
       value: EnemyUnit
@@ -19,13 +23,33 @@ PrefabInstance:
       propertyPath: _unitActionPoints
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5737594741977632754, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _campConstructionPrefab
+      value: 
+      objectReference: {fileID: 8386912785466219752, guid: ef969cad9d4743c408a36b3419e844e4, type: 3}
+    - target: {fileID: 5737594741977632754, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _flagConstructionPrefab
+      value: 
+      objectReference: {fileID: 8386912785466219752, guid: ef969cad9d4743c408a36b3419e844e4, type: 3}
     - target: {fileID: 5837040862267618907, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: aaa3abaf13356b0409a5a48dbc92e124, type: 2}
+    - target: {fileID: 7497459052540707923, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _isActionEnabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7594911198598939236, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _isActionEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7594911198598939236, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: _unitMaxMoveDistance
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742879256600154352, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _isActionEnabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8641345308079538934, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_RootOrder

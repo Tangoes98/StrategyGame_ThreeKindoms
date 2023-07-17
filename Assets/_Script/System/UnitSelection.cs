@@ -13,7 +13,7 @@ public class UnitSelection : MonoBehaviour
     [SerializeField] LayerMask _unitLayerMask;
     [SerializeField] Transform _selectedUnit;
 
-    UnitBaseAction _selectedAction;
+    [SerializeField] UnitBaseAction _selectedAction;
 
     [SerializeField] bool _isBusy = false;
 
@@ -49,7 +49,7 @@ public class UnitSelection : MonoBehaviour
 
 
 
-        #region Right mouse click to move
+        #region //Right mouse click to move
 
         // Right mouse click to move
         // if (Input.GetMouseButtonDown(1))
@@ -80,7 +80,8 @@ public class UnitSelection : MonoBehaviour
         {
             Transform hittedUnit = hit.transform;
 
-            if (hittedUnit.GetComponent<Unit>().IsEnemyUnit()) return; // return if trying select enemy unit
+            // return if trying select enemy unit
+            //if (hittedUnit.GetComponent<Unit>().IsEnemyUnit()) return;
 
             SetSelectedUnit(hit.transform);
         }
@@ -119,7 +120,7 @@ public class UnitSelection : MonoBehaviour
         #endregion
 
 
-        #region Use switch to implement selected action// reference use
+        #region // Use switch to implement selected action
 
         // switch (_selectedAction)
         // {

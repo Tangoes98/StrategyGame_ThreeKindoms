@@ -8,6 +8,10 @@ public class UnitActionSystemUI : MonoBehaviour
     [SerializeField] Transform _actionButtonPrefab;
     [SerializeField] Transform _actionButtonContainerTransform;
 
+    [SerializeField] Transform _unitConstructActionButtonPrefab;
+    [SerializeField] Transform _unitConstructActionButtonContainerTransform;
+
+
 
 
 
@@ -27,18 +31,31 @@ public class UnitActionSystemUI : MonoBehaviour
 
         Unit selectedUnit = UnitSelection.Instance.GetSelectedUnit().GetComponent<Unit>();
 
-        UnitBaseAction[] unitActionArray = selectedUnit.GetUnitBaseActionArray();
+        List<UnitBaseAction> unitActionList = selectedUnit.GetUnitBaseActionList();
 
-        foreach (UnitBaseAction unitAction in unitActionArray)
+        foreach (UnitBaseAction unitAction in unitActionList)
         {
             Transform actionButton = Instantiate(_actionButtonPrefab, _actionButtonContainerTransform);
             UnitActionButtonUI actionButtonUI = actionButton.GetComponent<UnitActionButtonUI>();
             actionButtonUI.SetBaseAction(unitAction);
         }
+
+        List<UnitBaseConstructAction> unitConstructActionList = selectedUnit.GetUnitConstructActionList();
+        foreach (UnitBaseConstructAction unitAction in unitConstructActionList)
+        {
+            Transform actionButton = Instantiate(_unitConstructActionButtonPrefab, _unitConstructActionButtonContainerTransform);
+            UnitActionButtonUI actionButtonUI = actionButton.GetComponent<UnitActionButtonUI>();
+            actionButtonUI.SetBaseAction(unitAction);
+        }
+
     }
     void DestoryActionButton()
     {
         foreach (Transform action in _actionButtonContainerTransform)
+        {
+            Destroy(action.gameObject);
+        }
+        foreach (Transform action in _unitConstructActionButtonContainerTransform)
         {
             Destroy(action.gameObject);
         }

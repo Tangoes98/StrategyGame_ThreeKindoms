@@ -27,6 +27,8 @@ public class UnitSelfTriggerAction : UnitBaseAction
         return _actionCost;
     }
 
+    public override bool IsEnabled() => _isActionEnabled;
+
     public override void TakeAction(GridPosition gridPos, Action onActionCompleted)
     {
         Debug.Log("Self Spined");

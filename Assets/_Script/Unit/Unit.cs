@@ -9,7 +9,10 @@ public class Unit : MonoBehaviour
     UnitMovementAction _moveAction;
     UnitSelfTriggerAction _selfTriggerAction;
     UnitAttackAction _attackAction;
-    UnitBaseAction[] _baseActionArray;
+    List<UnitBaseAction> _UnitBaseActionList;
+    List<UnitBaseConstructAction> _UnitBaseConstructsActionList;
+    ConstructCampAction _campAction;
+    ConstructFlagAction _flagAction;
 
     [SerializeField] bool _isEnemy;
     [SerializeField] int _unitActionPoints;
@@ -22,11 +25,13 @@ public class Unit : MonoBehaviour
         _moveAction = GetComponent<UnitMovementAction>();
         _selfTriggerAction = GetComponent<UnitSelfTriggerAction>();
         _attackAction = GetComponent<UnitAttackAction>();
+        _UnitBaseActionList = new List<UnitBaseAction>();
 
-        _baseActionArray = GetComponents<UnitBaseAction>();
+        _campAction = GetComponent<ConstructCampAction>();
+        _flagAction = GetComponent<ConstructFlagAction>();
+        _UnitBaseConstructsActionList = new List<UnitBaseConstructAction>();
 
         _healthSystem = GetComponent<HealthSystem>();
-
     }
 
     void Start()
@@ -40,6 +45,23 @@ public class Unit : MonoBehaviour
         _maxActionPoints = _unitActionPoints;
 
         _healthSystem.OnDead += HealthSystem_OnDead;
+
+
+        // ConstructCampAction[] campActionArray = GetComponents<ConstructCampAction>();
+
+        // foreach (ConstructCampAction action in campActionArray)
+        // {
+
+        //     UnitActionValidation(action, _UnitConstructsActionList);
+        // }
+
+
+        UnitActionValidation(_moveAction, _UnitBaseActionList);
+        UnitActionValidation(_selfTriggerAction, _UnitBaseActionList);
+        UnitActionValidation(_attackAction, _UnitBaseActionList);
+
+        UnitConstructActionValidation(_campAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_flagAction, _UnitBaseConstructsActionList);
     }
 
     void Update()
@@ -54,6 +76,21 @@ public class Unit : MonoBehaviour
             LevelGrid.Instance.AddUnitToGridObject(_unitGridPosition, this);
         }
     }
+
+    #region Unit Action Validation
+
+    void UnitActionValidation(UnitBaseAction action, List<UnitBaseAction> actionList)
+    {
+        if (action.IsEnabled()) actionList.Add(action);
+    }
+    void UnitConstructActionValidation(UnitBaseConstructAction action, List<UnitBaseConstructAction> actionList)
+    {
+        if (action.IsEnabled()) actionList.Add(action);
+    }
+
+    #endregion
+
+
 
     #region Action points functions
     public bool TrySpendActionPointsToTakeAction(UnitBaseAction baseAction)
@@ -105,6 +142,8 @@ public class Unit : MonoBehaviour
 
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
-    public UnitBaseAction[] GetUnitBaseActionArray() => _baseActionArray;
+    public List<UnitBaseAction> GetUnitBaseActionList() => _UnitBaseActionList;
     public bool IsEnemyUnit() => _isEnemy;
+    //public List<UnitBaseAction> GetUnitConstructActionList() => _UnitConstructsActionList;
+    public List<UnitBaseConstructAction> GetUnitConstructActionList() => _UnitBaseConstructsActionList;
 }

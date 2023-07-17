@@ -41,6 +41,8 @@ public class UnitMovementAction : UnitBaseAction
 
     }
 
+    public override bool IsEnabled() => _isActionEnabled;
+
 
     #region Exposed Variables
 
@@ -120,7 +122,7 @@ public class UnitMovementAction : UnitBaseAction
     void HeightCheck()
     {
         //GridPosition unitGridPosition = _unit.GetUnitGridPosition();
-        Vector3 gridWorldPosition = LevelGrid.Instance.GetGridObjectWorldPosition(_unitGridPosition);
+        Vector3 gridWorldPosition = LevelGrid.Instance.GetWorldPositionWithHeight(_unitGridPosition);
 
         if (transform.position.y != gridWorldPosition.y) transform.position = gridWorldPosition;
     }

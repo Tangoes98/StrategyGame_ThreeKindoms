@@ -61,6 +61,7 @@ public class TerrainType : MonoBehaviour
 
 
     public TerrainTypeEnum GetTerrainType() => _terrainType;
+    
     public int GetTerrainMoveCost(TerrainTypeEnum terrainType)
     {
         foreach (TerrainTypeMaterial terrainTypeMaterial in _terrainTypeMaterialList)

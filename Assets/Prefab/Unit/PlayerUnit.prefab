@@ -209,6 +209,8 @@ GameObject:
   - component: {fileID: 7497459052540707923}
   - component: {fileID: 7742879256600154352}
   - component: {fileID: 4921147219020109050}
+  - component: {fileID: -5274474710898399211}
+  - component: {fileID: 5737594741977632754}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -247,7 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isEnemy: 0
-  _unitActionPoints: 3
+  _unitActionPoints: 10
 --- !u!114 &8483613593592991935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,10 +275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba88dbcb1a4d0cf499a66d8ad9e6c772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActionEnabled: 1
   _moveSpeed: 4
   _rotateSpeed: 10
   _stopDistance: 0.1
   _unitMaxMoveDistance: 2
+  _unitCurrentMoveDistance: 0
   _actionCost: 0
 --- !u!114 &7497459052540707923
 MonoBehaviour:
@@ -290,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffddddc6f5dd43c419e2dec0dded184a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActionEnabled: 1
   _actionCost: 1
 --- !u!114 &7742879256600154352
 MonoBehaviour:
@@ -303,6 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f1f76e2cc59014bb7f7657eea18626, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isActionEnabled: 1
   _actionCost: 2
   _attackRange: 1
   _damageAmount: 4
@@ -319,6 +325,46 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.442181, z: 1}
   m_Center: {x: 0, y: 0.9215846, z: 0}
+--- !u!114 &-5274474710898399211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39db886c59b5c574f9ad807b684bc7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _actionName: _Build_Camp_
+  _actionRange: 1
+  _actionCost: 4
+  _useCount: 1
+  _isSpendingConstructionCost: 0
+  _actionConstructionCost: 0
+  _campConstructionPrefab: {fileID: 3138760199012610837, guid: 64d0dde7e0568a2448dcba0c57246f41, type: 3}
+--- !u!114 &5737594741977632754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730aafc355d0857479827710a73f61a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _actionName: _Build_Flag_
+  _actionRange: 1
+  _actionCost: 3
+  _useCount: 1
+  _isSpendingConstructionCost: 0
+  _actionConstructionCost: 0
+  _flagConstructionPrefab: {fileID: 260297184930401228, guid: fe25454c6981f444d836101bd449d3e5, type: 3}
 --- !u!1 &5837040862265182845
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,9 @@ public class PathNode
     public PathNode(GridPosition gridPosition)
     {
         _gridPosition = gridPosition;
+        
+        #region //Testing code blocks
+
         //_terrainType = terrainType;
         // _terrainType = GetRayCastTerrainObject(gridPosition);
 
@@ -26,6 +29,7 @@ public class PathNode
         // _moveCost = _terrainType.GetTerrainMoveCost(terrain);
 
         // if (_moveCost == 0) _isWalkable = false;
+        #endregion
     }
 
 

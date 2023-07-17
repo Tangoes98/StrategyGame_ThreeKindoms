@@ -38,7 +38,7 @@ public class GridSystemVisual : MonoBehaviour
             {
                 GridPosition gridPos = new GridPosition(x, z);
 
-                Vector3 worldPosition = LevelGrid.Instance.GetGridObjectWorldPosition(gridPos);
+                Vector3 worldPosition = LevelGrid.Instance.GetWorldPositionWithHeight(gridPos);
 
                 Transform singleVisual = Instantiate(_gridSystemVisualPrefab, worldPosition, Quaternion.identity);
 
@@ -116,9 +116,11 @@ public class GridSystemVisual : MonoBehaviour
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition showGridPosition = unitGridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(showGridPosition)) continue; // gridposition in the unit system
+                // gridposition in the unit system
+                if (!LevelGrid.Instance.IsValidGridPosition(showGridPosition)) continue;
 
-                if (showGridPosition == unitGridPosition) continue; // gridposition is not unit self gridposition
+                // gridposition is not unit self gridposition
+                if (showGridPosition == unitGridPosition) continue;
 
                 validGridPositionList.Add(showGridPosition);
 
