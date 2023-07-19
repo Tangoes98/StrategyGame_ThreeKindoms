@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: -5274474710898399211, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: _campConstructionPrefab
       value: 
-      objectReference: {fileID: 935320089358984928, guid: dad5b432aea656343b9638cb880d9b8f, type: 3}
+      objectReference: {fileID: 3138760199012610837, guid: 64d0dde7e0568a2448dcba0c57246f41, type: 3}
     - target: {fileID: 2896852594613495132, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_Name
       value: EnemyUnit
@@ -30,7 +30,7 @@ PrefabInstance:
     - target: {fileID: 5737594741977632754, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: _flagConstructionPrefab
       value: 
-      objectReference: {fileID: 8386912785466219752, guid: ef969cad9d4743c408a36b3419e844e4, type: 3}
+      objectReference: {fileID: 260297184930401228, guid: fe25454c6981f444d836101bd449d3e5, type: 3}
     - target: {fileID: 5837040862267618907, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

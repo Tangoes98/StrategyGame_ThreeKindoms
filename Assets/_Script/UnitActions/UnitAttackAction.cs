@@ -56,7 +56,7 @@ public class UnitAttackAction : UnitBaseAction
 
     void DealDamageToTargetConstruction(GridPosition gridPosition)
     {
-        Construction targetConstruction = LevelGrid.Instance.GetGridObject(gridPosition).GetConstructionObject();
+        Construction targetConstruction = LevelGrid.Instance.GetConstructionAtGridPosition(gridPosition);
         ConstructionHealthSystem targetHealthSystem = targetConstruction.GetComponent<ConstructionHealthSystem>();
         targetHealthSystem.OnDamage(_damageAmount);
 
@@ -89,7 +89,7 @@ public class UnitAttackAction : UnitBaseAction
 
                 // gridposition has no unit on it
                 if (!LevelGrid.Instance.HasUnitOnGridPosition(avaliableGridPosition)
-                    && !LevelGrid.Instance.GetGridObject(avaliableGridPosition).HasConstructionOnGrid()) continue;
+                    && !LevelGrid.Instance.HasConstructionOnGridPosition(avaliableGridPosition)) continue;
 
                 // check if both are enemy or friendly unit
                 // Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(avaliableGridPosition);

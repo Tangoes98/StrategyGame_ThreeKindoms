@@ -240,8 +240,8 @@ public class Pathfinding : MonoBehaviour
 
     public bool CompareFloorHeight(GridPosition currentPosition, GridPosition neighbourPosition)
     {
-        int currentGridHeight = LevelGrid.Instance.GetGridObject(currentPosition).GetFloorNumber();
-        int neighbourGridHeight = LevelGrid.Instance.GetGridObject(neighbourPosition).GetFloorNumber();
+        int currentGridHeight = LevelGrid.Instance.GetGridFloorHeight(currentPosition);
+        int neighbourGridHeight = LevelGrid.Instance.GetGridFloorHeight(neighbourPosition);
 
         int maxFloorMoveDifference = 1;
         if ((neighbourGridHeight - currentGridHeight) > maxFloorMoveDifference) return false; // neighbour gridposition is too high

@@ -52,9 +52,7 @@ public class ConstructFlagAction : UnitBaseConstructAction
         Construction flag = flagTransform.GetComponent<Construction>();
 
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(worldPosition);
-        GridObject gridObject = LevelGrid.Instance.GetGridObject(gridPosition);
-
-        gridObject.AddConstruction(flag);
+        LevelGrid.Instance.AddConstructionToGrdObject(gridPosition, flag);
     }
 
 
@@ -88,7 +86,7 @@ public class ConstructFlagAction : UnitBaseConstructAction
                 if (!Pathfinding.Instance.CompareFloorHeight(_unitGridPosition, tempValidGridposition)) continue;
 
                 // Skip if gridposition already contains a Construction
-                if (LevelGrid.Instance.GetGridObject(tempValidGridposition).HasConstructionOnGrid()) continue;
+                if (LevelGrid.Instance.HasConstructionOnGridPosition(tempValidGridposition)) continue;
 
                 actionGridPositionList.Add(tempValidGridposition);
             }

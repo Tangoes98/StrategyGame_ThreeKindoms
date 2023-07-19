@@ -47,6 +47,25 @@ public class GridObject
         // + constructionString;
     }
 
+
+    public void UpdateConstructionType()
+    {
+        if (HasUnitOnGrid() && HasConstructionOnGrid())
+        {
+            bool isEnemy = _unitList[0].IsEnemyUnit();
+
+            if (isEnemy)
+                _constructionList[0].SetConstructionOccupationCondition(Construction.ConstructionOccupationConditionType.Enemy);
+
+            if (!isEnemy)
+                _constructionList[0].SetConstructionOccupationCondition(Construction.ConstructionOccupationConditionType.Friend);
+        }
+    }
+
+
+
+
+
     public void AddUnit(Unit unit) => _unitList.Add(unit);
     public void RemoveUnit(Unit unit) => _unitList.Remove(unit);
     public bool HasUnitOnGrid() => _unitList.Count > 0;

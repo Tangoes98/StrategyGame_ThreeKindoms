@@ -47,14 +47,6 @@ public class Unit : MonoBehaviour
         _healthSystem.OnDead += HealthSystem_OnDead;
 
 
-        // ConstructCampAction[] campActionArray = GetComponents<ConstructCampAction>();
-
-        // foreach (ConstructCampAction action in campActionArray)
-        // {
-
-        //     UnitActionValidation(action, _UnitConstructsActionList);
-        // }
-
 
         UnitActionValidation(_moveAction, _UnitBaseActionList);
         UnitActionValidation(_selfTriggerAction, _UnitBaseActionList);
@@ -89,8 +81,6 @@ public class Unit : MonoBehaviour
     }
 
     #endregion
-
-
 
     #region Action points functions
     public bool TrySpendActionPointsToTakeAction(UnitBaseAction baseAction)

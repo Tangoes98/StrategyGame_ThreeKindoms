@@ -54,9 +54,7 @@ public class ConstructCampAction : UnitBaseConstructAction
         Construction camp = campTransform.GetComponent<Construction>();
 
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(worldPosition);
-        GridObject gridObject = LevelGrid.Instance.GetGridObject(gridPosition);
-
-        gridObject.AddConstruction(camp);
+        LevelGrid.Instance.AddConstructionToGrdObject(gridPosition, camp);
     }
 
 
@@ -92,7 +90,7 @@ public class ConstructCampAction : UnitBaseConstructAction
                 if (!Pathfinding.Instance.CompareFloorHeight(_unitGridPosition, tempValidGridposition)) continue;
 
                 // Skip if gridposition already contains a Construction
-                if (LevelGrid.Instance.GetGridObject(tempValidGridposition).HasConstructionOnGrid()) continue;
+                if (LevelGrid.Instance.HasConstructionOnGridPosition(tempValidGridposition)) continue;
 
                 actionGridPositionList.Add(tempValidGridposition);
             }

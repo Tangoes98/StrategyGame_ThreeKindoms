@@ -26,6 +26,7 @@ public class LevelGrid : MonoBehaviour
         _gridSystem.CreateGridObjectVisual(_gridObjectVisual);
     }
 
+
     public GridPosition GetGridPosition(Vector3 worldPosition) => _gridSystem.GetGridPosition(worldPosition);
     public Vector3 GetWorldPosition(GridPosition gridPosition) => _gridSystem.GetWorldPosition(gridPosition);
     public GridObject GetGridObject(GridPosition gridPosition) => _gridSystem.GetGridObject(gridPosition);
@@ -38,9 +39,16 @@ public class LevelGrid : MonoBehaviour
     public int GetHeight() => _gridHeight;
     public float GetCellSize() => _gridCellSize;
 
+    public int GetGridFloorHeight(GridPosition gridPosition) => GetGridObject(gridPosition).GetFloorNumber();
+
     public void AddUnitToGridObject(GridPosition gridPosition, Unit unit) => GetGridObject(gridPosition).AddUnit(unit);
     public void RemoveUnitFromGridObject(GridPosition gridPosition, Unit unit) => GetGridObject(gridPosition).RemoveUnit(unit);
     public bool HasUnitOnGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).HasUnitOnGrid();
     public Unit GetUnitAtGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).GetUnit();
+
+    public void AddConstructionToGrdObject(GridPosition gridPosition, Construction construction) => GetGridObject(gridPosition).AddConstruction(construction);
+    public void RemoveConstructionFromGrdObject(GridPosition gridPosition, Construction construction) => GetGridObject(gridPosition).RemoveConstruction(construction);
+    public bool HasConstructionOnGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).HasConstructionOnGrid();
+    public Construction GetConstructionAtGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).GetConstructionObject();
 
 }
