@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     ConstructCampAction _campAction;
     ConstructFlagAction _flagAction;
     GainConstructPointsAction _gainConstructPointsAction;
+    ConstructRopeLadderAction _ropeLadder;
 
 
     [SerializeField] bool _isEnemy;
@@ -36,6 +37,7 @@ public class Unit : MonoBehaviour
         _campAction = GetComponent<ConstructCampAction>();
         _flagAction = GetComponent<ConstructFlagAction>();
         _gainConstructPointsAction = GetComponent<GainConstructPointsAction>();
+        _ropeLadder = GetComponent<ConstructRopeLadderAction>();
         _UnitBaseConstructsActionList = new List<UnitBaseConstructAction>();
 
         _healthSystem = GetComponent<HealthSystem>();
@@ -62,6 +64,7 @@ public class Unit : MonoBehaviour
         UnitConstructActionValidation(_campAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_flagAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_gainConstructPointsAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_ropeLadder, _UnitBaseConstructsActionList);
     }
 
     void Update()

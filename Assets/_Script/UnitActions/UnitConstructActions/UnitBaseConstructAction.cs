@@ -21,6 +21,6 @@ public abstract class UnitBaseConstructAction : UnitBaseAction
         base.Update();
     }
 
-    public bool IsOverUseCount() => _useCount < 1;
+    public bool IsOverUseCount() => _useCount < 1 && _useCount > 0;
 
 }

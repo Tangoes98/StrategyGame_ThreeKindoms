@@ -6,9 +6,8 @@ using UnityEngine;
 public class ConstructCampAction : UnitBaseConstructAction
 {
 
-    [Header("Action_Information")]
+    [Header("Action_Camp")]
     [SerializeField] Transform _campConstructionPrefab;
-
     Vector3 _targetPosition;
 
 
