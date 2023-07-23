@@ -39,7 +39,7 @@ public class ConstructCampAction : UnitBaseConstructAction
 
         if (_useCount < 1) return;
 
-        if (!IsValidActionGridPosition(mouseGridPosition)) return;
+        //if (!IsValidActionGridPosition(mouseGridPosition)) return;
 
         SetActionWorldPosition(mouseGridPosition);
 

@@ -18,6 +18,11 @@ public class UnitActionButtonUI : MonoBehaviour
             () =>
             {
                 UnitSelection.Instance.SetSelectedAction(baseAction);
+                if (baseAction.IsConstructionAction())
+                {
+                    UnitBaseConstructAction action = (UnitBaseConstructAction)baseAction;
+                    if (action.IsOverUseCount()) Debug.Log("Cant use this Action!");
+                }
             }
         );
     }

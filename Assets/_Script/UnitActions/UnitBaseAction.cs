@@ -7,14 +7,16 @@ public abstract class UnitBaseAction : MonoBehaviour
 {
     protected Unit _unit;
     protected Vector3 _unitTransformPosition;
+    protected GridPosition _unitGridPosition;
     protected bool _isActive;
     protected Action _onActionCompleted;
-    protected GridPosition _unitGridPosition;
 
     public abstract bool IsEnabled();
 
     [SerializeField] protected bool _isActionEnabled;
     //[SerializeField] protected int _actionCost;
+
+    [SerializeField] protected bool _isConstructionActions;
 
 
     protected virtual void Awake()
@@ -40,11 +42,8 @@ public abstract class UnitBaseAction : MonoBehaviour
 
 
     public abstract void TakeAction(GridPosition mouseGridPosition, Action onActionCompleted);
-
     public abstract string GetActionName();
-
     public abstract int GetActionCost();
-
     public abstract List<GridPosition> GetValidGridPositionList();
 
 
@@ -55,5 +54,7 @@ public abstract class UnitBaseAction : MonoBehaviour
         _isActive = false;
         _onActionCompleted();
     }
+
+    public bool IsConstructionAction() => _isConstructionActions;
 
 }

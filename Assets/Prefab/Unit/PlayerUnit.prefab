@@ -211,6 +211,7 @@ GameObject:
   - component: {fileID: 4921147219020109050}
   - component: {fileID: -5274474710898399211}
   - component: {fileID: 5737594741977632754}
+  - component: {fileID: 5549527844571187481}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -250,6 +251,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isEnemy: 0
   _unitActionPoints: 10
+  _unitConstructionPoints: 0
 --- !u!114 &8483613593592991935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,6 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
+  _isConstructionActions: 0
   _moveSpeed: 4
   _rotateSpeed: 10
   _stopDistance: 0.1
@@ -295,6 +298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
+  _isConstructionActions: 0
   _actionCost: 1
 --- !u!114 &7742879256600154352
 MonoBehaviour:
@@ -309,6 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
+  _isConstructionActions: 0
   _actionCost: 2
   _attackRange: 1
   _damageAmount: 4
@@ -338,7 +343,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _actionName: _Build_Camp_
+  _isConstructionActions: 1
+  _actionName: Build_Camp
   _actionRange: 1
   _actionCost: 4
   _useCount: 1
@@ -358,13 +364,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _actionName: _Build_Flag_
+  _isConstructionActions: 1
+  _actionName: Build_Flag
   _actionRange: 1
   _actionCost: 3
   _useCount: 1
   _isSpendingConstructionCost: 0
   _actionConstructionCost: 0
   _flagConstructionPrefab: {fileID: 260297184930401228, guid: fe25454c6981f444d836101bd449d3e5, type: 3}
+--- !u!114 &5549527844571187481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fc5c00f6faa6554abd6ba6ff268638a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _isConstructionActions: 1
+  _actionName: Gain_Construction_Action
+  _actionRange: 0
+  _actionCost: 2
+  _useCount: 2
+  _isSpendingConstructionCost: 0
+  _actionConstructionCost: 0
+  _constructionPoints: 10
 --- !u!1 &5837040862265182845
 GameObject:
   m_ObjectHideFlags: 0

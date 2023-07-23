@@ -13,11 +13,17 @@ public class Unit : MonoBehaviour
     List<UnitBaseConstructAction> _UnitBaseConstructsActionList;
     ConstructCampAction _campAction;
     ConstructFlagAction _flagAction;
+    GainConstructPointsAction _gainConstructPointsAction;
+
 
     [SerializeField] bool _isEnemy;
     [SerializeField] int _unitActionPoints;
     int _maxActionPoints;
     HealthSystem _healthSystem;
+
+
+    [Header("CONSTRUCTION FIELD")]
+    [SerializeField] int _unitConstructionPoints;
 
 
     void Awake()
@@ -29,6 +35,7 @@ public class Unit : MonoBehaviour
 
         _campAction = GetComponent<ConstructCampAction>();
         _flagAction = GetComponent<ConstructFlagAction>();
+        _gainConstructPointsAction = GetComponent<GainConstructPointsAction>();
         _UnitBaseConstructsActionList = new List<UnitBaseConstructAction>();
 
         _healthSystem = GetComponent<HealthSystem>();
@@ -54,6 +61,7 @@ public class Unit : MonoBehaviour
 
         UnitConstructActionValidation(_campAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_flagAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_gainConstructPointsAction, _UnitBaseConstructsActionList);
     }
 
     void Update()
@@ -130,6 +138,13 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
+    #region Unit Construction Points Functions
+    public int GetUnitConstructionPoints() => _unitConstructionPoints;
+    public void AddUnitConstructionPoints(int points) => _unitConstructionPoints += points;
+
+
+
+    #endregion
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
     public List<UnitBaseAction> GetUnitBaseActionList() => _UnitBaseActionList;

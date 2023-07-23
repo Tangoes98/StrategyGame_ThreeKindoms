@@ -12,4 +12,15 @@ public abstract class UnitBaseConstructAction : UnitBaseAction
     [SerializeField] protected bool _isSpendingConstructionCost;
     [SerializeField] protected int _actionConstructionCost;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    public bool IsOverUseCount() => _useCount < 1;
+
 }

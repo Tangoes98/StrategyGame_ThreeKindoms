@@ -96,8 +96,10 @@ public class UnitSelection : MonoBehaviour
 
     void HandleUnitActionSelection()
     {
-        if (!UnitIsSelected()) return; // return if not selecting any unit
-        if (!_selectedAction) return; // retunr if not selecting any action
+        // return if not selecting any unit
+        if (!UnitIsSelected()) return;
+        // retunr if not selecting any action
+        if (!_selectedAction) return;
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -106,9 +108,17 @@ public class UnitSelection : MonoBehaviour
 
             Unit unit = _selectedUnit.GetComponent<Unit>();
 
-            if (!_selectedAction.IsValidActionGridPosition(mouseGridPosition)) return; // return if not selecting valid grid position
+            // return if not selecting valid grid position
+            if (!_selectedAction.IsValidActionGridPosition(mouseGridPosition)) return;
 
-            if (!unit.TrySpendActionPointsToTakeAction(_selectedAction)) return; // return if not having enough action points to take action
+            // return if not having enough action points to take action
+            if (!unit.TrySpendActionPointsToTakeAction(_selectedAction)) return;
+
+            if (_selectedAction.IsConstructionAction())
+            {
+                UnitBaseConstructAction action = (UnitBaseConstructAction)_selectedAction;
+                if (action.IsOverUseCount()) return;
+            }
 
             SetBusy();
 
