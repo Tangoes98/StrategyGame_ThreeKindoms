@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     ConstructFlagAction _flagAction;
     GainConstructPointsAction _gainConstructPointsAction;
     ConstructRopeLadderAction _ropeLadder;
+    ConstructFloatingBridge _floatingBridge;
 
 
     [SerializeField] bool _isEnemy;
@@ -38,6 +39,8 @@ public class Unit : MonoBehaviour
         _flagAction = GetComponent<ConstructFlagAction>();
         _gainConstructPointsAction = GetComponent<GainConstructPointsAction>();
         _ropeLadder = GetComponent<ConstructRopeLadderAction>();
+        _floatingBridge = GetComponent<ConstructFloatingBridge>();
+
         _UnitBaseConstructsActionList = new List<UnitBaseConstructAction>();
 
         _healthSystem = GetComponent<HealthSystem>();
@@ -65,6 +68,7 @@ public class Unit : MonoBehaviour
         UnitConstructActionValidation(_flagAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_gainConstructPointsAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_ropeLadder, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_floatingBridge, _UnitBaseConstructsActionList);
     }
 
     void Update()

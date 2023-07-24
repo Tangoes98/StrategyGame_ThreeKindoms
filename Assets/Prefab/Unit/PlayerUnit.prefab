@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 5737594741977632754}
   - component: {fileID: 5549527844571187481}
   - component: {fileID: -2056590213151058020}
+  - component: {fileID: 6299697371742229935}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -415,6 +416,27 @@ MonoBehaviour:
   _isSpendingConstructionCost: 0
   _actionConstructionCost: 0
   _ropeLadderPrefab: {fileID: 4310104336337919513, guid: 9253d5f3e3156f845810becba2beeb2e, type: 3}
+--- !u!114 &6299697371742229935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450b669fc4ff3ce4381c194b8716a693, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _isConstructionActions: 1
+  _actionName: FloatingBridge
+  _actionRange: 2
+  _actionCost: 0
+  _useCount: -1
+  _isSpendingConstructionCost: 0
+  _actionConstructionCost: 0
+  _floatingBridgePrefab: {fileID: 4310104336337919513, guid: 82b9c553bd47ba44eb30685ef013928c, type: 3}
 --- !u!1 &5837040862265182845
 GameObject:
   m_ObjectHideFlags: 0

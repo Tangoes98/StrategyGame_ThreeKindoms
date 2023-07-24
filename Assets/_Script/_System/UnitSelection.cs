@@ -117,12 +117,11 @@ public class UnitSelection : MonoBehaviour
             if (_selectedAction.IsConstructionAction())
             {
                 UnitBaseConstructAction action = (UnitBaseConstructAction)_selectedAction;
-
+                if (action.IsOverUseCount()) return;
 
 
 
                 
-                if (action.IsOverUseCount()) return;
             }
 
             SetBusy();
@@ -155,7 +154,7 @@ public class UnitSelection : MonoBehaviour
 
     void SetBusy() => _isBusy = true;
     void ClearBusy() => _isBusy = false;
-
+    public bool IsBusy() => _isBusy;
 
 
     void SetSelectedUnit(Transform unit)

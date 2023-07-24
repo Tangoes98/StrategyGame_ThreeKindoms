@@ -8,8 +8,6 @@ public class ConstructFlagAction : UnitBaseConstructAction
     [Header("Action_Information")]
     [SerializeField] Transform _flagConstructionPrefab;
 
-    Vector3 _targetPosition;
-
 
 
     public override int GetActionCost() => _actionCost;

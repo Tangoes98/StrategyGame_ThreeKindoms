@@ -7,7 +7,6 @@ public class ConstructRopeLadderAction : UnitBaseConstructAction
 {
     [Header("Action_RopeLadder")]
     [SerializeField] Transform _ropeLadderPrefab;
-    Vector3 _targetPosition;
 
 
 
