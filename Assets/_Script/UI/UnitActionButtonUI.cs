@@ -21,12 +21,20 @@ public class UnitActionButtonUI : MonoBehaviour
 
                 UnitSelection.Instance.SetSelectedAction(baseAction);
 
+
                 if (baseAction.IsConstructionAction())
                 {
                     UnitBaseConstructAction action = (UnitBaseConstructAction)baseAction;
                     if (action.IsOverUseCount()) Debug.Log("Cant use this Action!");
-                    int actionCountDown = 2;
-                    action.SetBuildActionCountdown(actionCountDown);
+                    
+
+                    if (action is ConstructFloatingBridge)
+                    {
+                        ConstructFloatingBridge floatingBridgeAction = (ConstructFloatingBridge)action;
+                        int actionCountDown = 2;
+                        floatingBridgeAction.SetBuildActionCountDown(actionCountDown);
+                        floatingBridgeAction.SetIsSecondAction(false);
+                    }
 
                 }
             }

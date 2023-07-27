@@ -11,12 +11,22 @@ public class ConstructFloatingBridge : UnitBaseConstructAction
 
     GridPosition _firstBridgePosition;
     bool _isSecondAction;
+    int _buildActionCountdown = 2;
+
+    #region Getters and Setters
+
+
+    public void SetBuildActionCountDown(int countNumber) => _buildActionCountdown = countNumber;
+    public void SetIsSecondAction(bool isSecondAction) => _isSecondAction = isSecondAction;
+
+    #endregion
 
 
 
     public override int GetActionCost() => _actionCost;
     public override string GetActionName() => _actionName;
     public override bool IsEnabled() => _isActionEnabled;
+
 
 
     protected override void Update()

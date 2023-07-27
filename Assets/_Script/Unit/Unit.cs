@@ -10,12 +10,13 @@ public class Unit : MonoBehaviour
     UnitSelfTriggerAction _selfTriggerAction;
     UnitAttackAction _attackAction;
     List<UnitBaseAction> _UnitBaseActionList;
-    List<UnitBaseConstructAction> _UnitBaseConstructsActionList;
+
     ConstructCampAction _campAction;
     ConstructFlagAction _flagAction;
     GainConstructPointsAction _gainConstructPointsAction;
     ConstructRopeLadderAction _ropeLadder;
     ConstructFloatingBridge _floatingBridge;
+    List<UnitBaseConstructAction> _UnitBaseConstructsActionList;
 
 
     [SerializeField] bool _isEnemy;
