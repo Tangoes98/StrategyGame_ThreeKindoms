@@ -214,6 +214,8 @@ GameObject:
   - component: {fileID: 5549527844571187481}
   - component: {fileID: -2056590213151058020}
   - component: {fileID: 6299697371742229935}
+  - component: {fileID: -997227381826598955}
+  - component: {fileID: -2788063817550114046}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -346,7 +348,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
   _isConstructionActions: 1
-  _actionName: Build_Camp
+  _actionName: CAMP
   _actionRange: 1
   _actionCost: 4
   _useCount: 1
@@ -367,7 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
   _isConstructionActions: 1
-  _actionName: Build_Flag
+  _actionName: FLAG
   _actionRange: 1
   _actionCost: 3
   _useCount: 1
@@ -388,7 +390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
   _isConstructionActions: 1
-  _actionName: Gain_Construction_Action
+  _actionName: GAIN_CP
   _actionRange: 0
   _actionCost: 2
   _useCount: 2
@@ -409,7 +411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
   _isConstructionActions: 1
-  _actionName: RopeLadder
+  _actionName: ROPE_LADDER
   _actionRange: 1
   _actionCost: 0
   _useCount: -1
@@ -430,13 +432,55 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
   _isConstructionActions: 1
-  _actionName: FloatingBridge
+  _actionName: FLOATING_BRIDGE
   _actionRange: 2
   _actionCost: 0
   _useCount: -1
   _isSpendingConstructionCost: 0
   _actionConstructionCost: 0
   _floatingBridgePrefab: {fileID: 4310104336337919513, guid: 82b9c553bd47ba44eb30685ef013928c, type: 3}
+--- !u!114 &-997227381826598955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5721881040546f3408813475d93a7ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _isConstructionActions: 1
+  _actionName: OBSTACLE
+  _actionRange: 1
+  _actionCost: 0
+  _useCount: -1
+  _isSpendingConstructionCost: 0
+  _actionConstructionCost: 0
+  _obstacleConstructionPrefab: {fileID: 1097826387374134668, guid: 66e80baf2c8bf7b4fbb50cb1e8b12ac3, type: 3}
+--- !u!114 &-2788063817550114046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71b3c0673a008174c825ff05da0ba212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _isConstructionActions: 1
+  _actionName: Road
+  _actionRange: 1
+  _actionCost: 0
+  _useCount: -1
+  _isSpendingConstructionCost: 0
+  _actionConstructionCost: 0
+  _roadConstructionPrefab: {fileID: 2176735568011706817, guid: b0a548b2204745246a9e2557909e0201, type: 3}
 --- !u!1 &5837040862265182845
 GameObject:
   m_ObjectHideFlags: 0

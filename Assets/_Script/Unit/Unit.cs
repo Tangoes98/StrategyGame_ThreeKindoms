@@ -14,8 +14,10 @@ public class Unit : MonoBehaviour
     ConstructCampAction _campAction;
     ConstructFlagAction _flagAction;
     GainConstructPointsAction _gainConstructPointsAction;
-    ConstructRopeLadderAction _ropeLadder;
-    ConstructFloatingBridge _floatingBridge;
+    ConstructRopeLadderAction _ropeLadderAction;
+    ConstructFloatingBridge _floatingBridgeAction;
+    ConstructObstacleAction _obstacleAction;
+    ConstructRoadAction _roadAction;
     List<UnitBaseConstructAction> _UnitBaseConstructsActionList;
 
 
@@ -39,8 +41,10 @@ public class Unit : MonoBehaviour
         _campAction = GetComponent<ConstructCampAction>();
         _flagAction = GetComponent<ConstructFlagAction>();
         _gainConstructPointsAction = GetComponent<GainConstructPointsAction>();
-        _ropeLadder = GetComponent<ConstructRopeLadderAction>();
-        _floatingBridge = GetComponent<ConstructFloatingBridge>();
+        _ropeLadderAction = GetComponent<ConstructRopeLadderAction>();
+        _floatingBridgeAction = GetComponent<ConstructFloatingBridge>();
+        _obstacleAction = GetComponent<ConstructObstacleAction>();
+        _roadAction = GetComponent<ConstructRoadAction>();
 
         _UnitBaseConstructsActionList = new List<UnitBaseConstructAction>();
 
@@ -68,8 +72,10 @@ public class Unit : MonoBehaviour
         UnitConstructActionValidation(_campAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_flagAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_gainConstructPointsAction, _UnitBaseConstructsActionList);
-        UnitConstructActionValidation(_ropeLadder, _UnitBaseConstructsActionList);
-        UnitConstructActionValidation(_floatingBridge, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_ropeLadderAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_floatingBridgeAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_obstacleAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_roadAction, _UnitBaseConstructsActionList);
     }
 
     void Update()
