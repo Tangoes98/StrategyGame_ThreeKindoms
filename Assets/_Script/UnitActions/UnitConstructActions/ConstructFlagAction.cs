@@ -35,7 +35,7 @@ public class ConstructFlagAction : UnitBaseConstructAction
 
         if (_useCount < 1) return;
 
-        //if (!IsValidActionGridPosition(mouseGridPosition)) return;
+        UnitIdentificationCheck<ConstructionFlag>(_flagConstructionPrefab);
 
         SetActionWorldPosition(mouseGridPosition);
 

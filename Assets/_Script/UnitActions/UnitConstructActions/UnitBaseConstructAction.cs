@@ -25,4 +25,13 @@ public abstract class UnitBaseConstructAction : UnitBaseAction
 
     public bool IsOverUseCount() => _useCount < 1 && _useCount > 0;
     //public void SetBuildActionCountdown(int buildActionCountdown) => _buildActionCountdown = buildActionCountdown;
+
+
+    protected void UnitIdentificationCheck<ConstructionType>(Transform constructionPrfab) where ConstructionType : Construction
+    {
+        bool isEenmyUnit = _unit.IsEnemyUnit();
+        ConstructionType camp = constructionPrfab.GetComponent<ConstructionType>();
+        if (isEenmyUnit) camp.SetConstructionOccupationCondition(Construction.ConstructionOccupationConditionType.Enemy);
+        if (!isEenmyUnit) camp.SetConstructionOccupationCondition(Construction.ConstructionOccupationConditionType.Friend);
+    }
 }

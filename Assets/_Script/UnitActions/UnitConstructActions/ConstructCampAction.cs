@@ -39,6 +39,8 @@ public class ConstructCampAction : UnitBaseConstructAction
 
         //if (!IsValidActionGridPosition(mouseGridPosition)) return;
 
+        UnitIdentificationCheck<ConstructionCamp>(_campConstructionPrefab);
+
         SetActionWorldPosition(mouseGridPosition);
 
         _useCount -= 1;
@@ -54,6 +56,15 @@ public class ConstructCampAction : UnitBaseConstructAction
         GridPosition gridPosition = LevelGrid.Instance.GetGridPosition(worldPosition);
         LevelGrid.Instance.AddConstructionToGrdObject(gridPosition, camp);
     }
+
+    // void UnitIdentificationCheck(Unit unit)
+    // {
+    //     bool isEenmyUnit = unit.IsEnemyUnit();
+    //     ConstructionCamp camp = _campConstructionPrefab.GetComponent<ConstructionCamp>();
+    //     if (isEenmyUnit) camp.SetConstructionOccupationCondition(Construction.ConstructionOccupationConditionType.Enemy);
+    //     if (!isEenmyUnit) camp.SetConstructionOccupationCondition(Construction.ConstructionOccupationConditionType.Friend);
+    // }
+
 
 
 
