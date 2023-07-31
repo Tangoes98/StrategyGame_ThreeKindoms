@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Pathfinding : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class Pathfinding : MonoBehaviour
     GridSystem _gridSystem;
     [SerializeField] Transform _pathNodeVisual;
 
-    int _gridWidth;
-    int _gridHeight;
+    protected int _gridWidth;
+    protected int _gridHeight;
     float _gridCellSize;
 
     List<GridPosition> _validMoveGridPoisitionList = new List<GridPosition>();
@@ -38,7 +39,28 @@ public class Pathfinding : MonoBehaviour
         // _gridSystem = LevelGrid.Instance.GetGridSystem();
 
         _gridSystem.CreatePathNodeVisual(_pathNodeVisual);
+
     }
+
+    void Start()
+    {
+
+    }
+    void Update()
+    {
+        //UpdatePathNode();
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     public List<GridPosition> FindPath(GridPosition startGridPosition, GridPosition endGridPosition, out int pathLength)
@@ -59,7 +81,7 @@ public class Pathfinding : MonoBehaviour
                 GridPosition gridPosition = new GridPosition(x, z);
                 PathNode pathNode = _gridSystem.GetPathNode(gridPosition);
 
-                pathNode.SetGCost(500);
+                pathNode.SetGCost(5000); // 5000 is greater than any Unit max move distance
                 pathNode.SetHCost(0);
                 pathNode.CalculateFCost();
                 pathNode.ResetCameFromNode();
@@ -195,6 +217,16 @@ public class Pathfinding : MonoBehaviour
 
     #endregion
 
+
+
+
+
+
+
+
+
+
+
     public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, int moveDistance)
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
@@ -249,6 +281,15 @@ public class Pathfinding : MonoBehaviour
         // neighbour gridposition is not too high
         else return true;
     }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -331,19 +372,38 @@ public class Pathfinding : MonoBehaviour
 
         GridPosition currentNodeGridPosition = currentNode.GetGridPosition();
 
-        GridPosition rightNode = new GridPosition(currentNodeGridPosition.x + 1, currentNodeGridPosition.z);
-        GridPosition leftNode = new GridPosition(currentNodeGridPosition.x - 1, currentNodeGridPosition.z);
-        GridPosition upNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
-        GridPosition downNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
+        GridPosition rightNodeGridPosition = new GridPosition(currentNodeGridPosition.x + 1, currentNodeGridPosition.z);
+        GridPosition leftNodeGridPosition = new GridPosition(currentNodeGridPosition.x - 1, currentNodeGridPosition.z);
+        GridPosition upNodePosition = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
+        GridPosition downNodeGridPosition = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
 
-        if (IsValidGridPosition(rightNode) && _validMoveGridPoisitionList.Contains(rightNode)) neighbourList.Add(GetNode(rightNode));
-        if (IsValidGridPosition(leftNode) && _validMoveGridPoisitionList.Contains(leftNode)) neighbourList.Add(GetNode(leftNode));
-        if (IsValidGridPosition(upNode) && _validMoveGridPoisitionList.Contains(upNode)) neighbourList.Add(GetNode(upNode));
-        if (IsValidGridPosition(downNode) && _validMoveGridPoisitionList.Contains(downNode)) neighbourList.Add(GetNode(downNode));
-
+        if (ValidMoveableNeighbourNodeCheck(rightNodeGridPosition)) neighbourList.Add(GetNode(rightNodeGridPosition));
+        if (ValidMoveableNeighbourNodeCheck(leftNodeGridPosition)) neighbourList.Add(GetNode(leftNodeGridPosition));
+        if (ValidMoveableNeighbourNodeCheck(upNodePosition)) neighbourList.Add(GetNode(upNodePosition));
+        if (ValidMoveableNeighbourNodeCheck(downNodeGridPosition)) neighbourList.Add(GetNode(downNodeGridPosition));
 
         return neighbourList;
     }
+
+    bool ValidMoveableNeighbourNodeCheck(GridPosition gridpos)
+    {
+        if (IsValidGridPosition(gridpos) &&
+            _validMoveGridPoisitionList.Contains(gridpos) &&
+            !HasUnitOnGridPosition(gridpos))
+            return true;
+        else return false;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     List<GridPosition> CalculatePath(PathNode endNode)
     {
@@ -369,8 +429,21 @@ public class Pathfinding : MonoBehaviour
     }
 
 
+
+
+
+
+
+
+
+
+
+
+
     public PathNode GetNode(GridPosition gridPosition) => _gridSystem.GetPathNode(gridPosition);
     bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
+
+    bool HasUnitOnGridPosition(GridPosition gridpos) => LevelGrid.Instance.HasUnitOnGridPosition(gridpos);
 
     public bool IsWalkableGridPosition(GridPosition gridPosition) => GetNode(gridPosition).GetIsWalkable();
     public bool HasPathToGridPosition(GridPosition start, GridPosition end) => FindPath(start, end, out int pathLength) != null;

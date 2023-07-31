@@ -196,8 +196,6 @@ public class UnitMovementAction : UnitBaseAction
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        //GridPosition unitGridPosition = _unit.GetUnitGridPosition();
-
         for (int x = -_unitCurrentMoveDistance; x <= _unitCurrentMoveDistance; x++)
         {
             for (int z = -_unitCurrentMoveDistance; z <= _unitCurrentMoveDistance; z++)
@@ -210,6 +208,9 @@ public class UnitMovementAction : UnitBaseAction
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition ValidGridposition = offsetGridPosition + _unitGridPosition;
 
+                // check if gridPosition is not unit gridPosition and have unit on it
+                if (ValidGridposition != _unitGridPosition && LevelGrid.Instance.HasUnitOnGridPosition(ValidGridposition)) continue;
+
                 // Check if the girdPosition is inside the entire gridSystem
                 if (!LevelGrid.Instance.IsValidGridPosition(ValidGridposition)) continue;
 
@@ -221,21 +222,33 @@ public class UnitMovementAction : UnitBaseAction
 
                 // Check if the path is too long
                 int pathfindingDistanceMultiplier = 10;
-                if (Pathfinding.Instance.GetPathLength(_unitGridPosition, ValidGridposition) > _unitCurrentMoveDistance * pathfindingDistanceMultiplier) continue;
+                List<GridPosition> tempPathList = Pathfinding.Instance.FindPath(_unitGridPosition, ValidGridposition, out int path);
+                if (Pathfinding.Instance.CalculateTotalMoveDistance(tempPathList) > _unitCurrentMoveDistance * pathfindingDistanceMultiplier) continue;
 
                 // Check if is valid gridposition based on terrain moveCost check
                 if (!Pathfinding.Instance.GetValidMoveGridPoisitionList(_unitGridPosition, _unitCurrentMoveDistance).Contains(ValidGridposition)) continue;
 
-
-
-                //Debug.Log(reachableGridposition);
-
                 validGridPositionList.Add(ValidGridposition);
-
             }
         }
         return validGridPositionList;
     }
+
+    bool IsUnitGridPosition(GridPosition gridPosition)
+    {
+        return gridPosition == _unitGridPosition;
+    }
+
+    // void IsUnitOnGridPositionCheck(GridPosition gridPosition)
+    // {
+    //     if (!LevelGrid.Instance.HasUnitOnGridPosition(gridPosition)) return;
+    //     bool thisUnitCondition = _unit.IsEnemyUnit();
+    //     Unit unit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
+    //     bool unitCondition = unit.IsEnemyUnit();
+
+    //     if()
+
+    // }
 
 
 

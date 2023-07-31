@@ -45,6 +45,8 @@ public class LevelGrid : MonoBehaviour
     public void RemoveUnitFromGridObject(GridPosition gridPosition, Unit unit) => GetGridObject(gridPosition).RemoveUnit(unit);
     public bool HasUnitOnGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).HasUnitOnGrid();
     public Unit GetUnitAtGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).GetUnit();
+    public bool HasFriendlyUnitOnGridPosition(GridPosition gridPosition) => !GetUnitAtGridPosition(gridPosition).IsEnemyUnit();
+    public bool HasEnemyUnitOnGridPosition(GridPosition gridPosition) => GetUnitAtGridPosition(gridPosition).IsEnemyUnit();
 
     public void AddConstructionToGrdObject(GridPosition gridPosition, Construction construction) => GetGridObject(gridPosition).AddConstruction(construction);
     public void RemoveConstructionFromGrdObject(GridPosition gridPosition, Construction construction) => GetGridObject(gridPosition).RemoveConstruction(construction);

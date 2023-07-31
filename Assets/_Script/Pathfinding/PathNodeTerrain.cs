@@ -38,6 +38,7 @@ public class PathNodeTerrain : MonoBehaviour
 
                 if (moveCost == 0) pathNode.SetIsWalkable(false);
 
+                pathNode.SetOriginalMoveCost(moveCost);
                 pathNode.SetMoveCost(moveCost);
 
 

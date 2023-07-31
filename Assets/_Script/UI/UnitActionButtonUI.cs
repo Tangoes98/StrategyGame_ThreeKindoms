@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UnitActionButtonUI : MonoBehaviour
 {
+
+
+
     [SerializeField] TextMeshProUGUI _textMeshPro;
     [SerializeField] Button _button;
 
@@ -20,6 +24,13 @@ public class UnitActionButtonUI : MonoBehaviour
                 if (UnitSelection.Instance.IsBusy()) return;
 
                 UnitSelection.Instance.SetSelectedAction(baseAction);
+
+                if (baseAction is UnitMovementAction)
+                {
+                    UnitMoveGridPositionDebug((UnitMovementAction)baseAction);
+                }
+
+
 
                 if (baseAction is UnitBaseConstructAction)
                 {
@@ -39,4 +50,23 @@ public class UnitActionButtonUI : MonoBehaviour
             }
         );
     }
+
+    void UnitMoveGridPositionDebug(UnitMovementAction action)
+    {
+        var positionList = action.GetValidGridPositionList();
+        foreach (GridPosition position in positionList)
+        {
+            Debug.Log(position);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 }

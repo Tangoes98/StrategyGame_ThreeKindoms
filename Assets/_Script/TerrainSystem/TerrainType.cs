@@ -61,7 +61,7 @@ public class TerrainType : MonoBehaviour
 
 
     public TerrainTypeEnum GetTerrainType() => _terrainType;
-    
+
     public int GetTerrainMoveCost(TerrainTypeEnum terrainType)
     {
         foreach (TerrainTypeMaterial terrainTypeMaterial in _terrainTypeMaterialList)
@@ -71,6 +71,15 @@ public class TerrainType : MonoBehaviour
 
         Debug.LogError("TerrainType not abaliable");
         return 0;
+    }
+
+    public bool GetTerrainIsWalkable(TerrainTypeEnum terrainType)
+    {
+        foreach (TerrainTypeMaterial terrainTypeMaterial in _terrainTypeMaterialList)
+        {
+            if (terrainTypeMaterial.terrainType == terrainType) return terrainTypeMaterial.isWalkable;
+        }
+        return false;
     }
 
 
