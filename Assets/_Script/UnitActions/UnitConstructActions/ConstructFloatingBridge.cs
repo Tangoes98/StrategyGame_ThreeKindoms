@@ -51,6 +51,8 @@ public class ConstructFloatingBridge : UnitBaseConstructAction
         _buildActionCountdown = 2;
         _firstBridgePosition = mouseGridPosition;
 
+        Pathfinding.Instance.UpdatingGridMoveCost(mouseGridPosition);
+
         BuildFirstBridge(mouseGridPosition);
 
     }
@@ -77,6 +79,8 @@ public class ConstructFloatingBridge : UnitBaseConstructAction
 
             // return if not selecting valid grid position
             if (!IsValidActionGridPosition(mouseGridPosition)) return;
+
+            Pathfinding.Instance.UpdatingGridMoveCost(mouseGridPosition);
 
             SetActionWorldPosition(mouseGridPosition);
             _buildActionCountdown -= 1;

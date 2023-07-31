@@ -34,7 +34,10 @@ public class ConstructRoadAction : UnitBaseConstructAction
 
         _onActionCompleted = onActionCompleted;
 
+        Pathfinding.Instance.UpdatingGridMoveCost(mouseGridPosition);
+
         SetActionWorldPosition(mouseGridPosition);
+
 
     }
 

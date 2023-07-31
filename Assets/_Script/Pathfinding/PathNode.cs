@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PathNode
 {
-    const int PathfindingDistanceMultiplier = 10;
     GridPosition _gridPosition;
     int _gCost;
     int _hCost;
@@ -45,7 +44,8 @@ public class PathNode
     public int GetHCost() => _hCost;
     public int GetFCost() => _fCost;
 
-    public int GetMoveCost() => _moveCost * PathfindingDistanceMultiplier;
+    public int GetMoveCost() => _moveCost;
+    public int GetOriginalMoveCost() => _originalMoveCost;
     public void ResetMoveCost() => _moveCost = _originalMoveCost;
     public void SetOriginalMoveCost(int moveCost) => _originalMoveCost = moveCost;
     public void SetMoveCost(int moveCost) => _moveCost = moveCost;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PathNodeTerrain : MonoBehaviour
 {
-
+    const int PathfindingDistanceMultiplier = 10;
     int _width;
     int _height;
 
@@ -38,8 +38,9 @@ public class PathNodeTerrain : MonoBehaviour
 
                 if (moveCost == 0) pathNode.SetIsWalkable(false);
 
-                pathNode.SetOriginalMoveCost(moveCost);
-                pathNode.SetMoveCost(moveCost);
+                pathNode.SetOriginalMoveCost(moveCost * PathfindingDistanceMultiplier);
+
+                pathNode.SetMoveCost(moveCost * PathfindingDistanceMultiplier);
 
 
             }

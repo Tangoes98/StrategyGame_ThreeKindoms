@@ -48,10 +48,9 @@ public class Pathfinding : MonoBehaviour
     }
     void Update()
     {
-        //UpdatePathNode();
+
 
     }
-
 
 
 
@@ -227,7 +226,7 @@ public class Pathfinding : MonoBehaviour
 
 
 
-    public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, int moveDistance)
+    public List<GridPosition> GetValidMoveGridPoisitionList(GridPosition startGridPosition, float moveDistance)
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         List<PathNode> openList = new List<PathNode>();
@@ -437,7 +436,6 @@ public class Pathfinding : MonoBehaviour
 
 
 
-
     List<GridPosition> CalculatePath(PathNode endNode)
     {
         List<PathNode> pathNodeList = new List<PathNode>();
@@ -466,6 +464,16 @@ public class Pathfinding : MonoBehaviour
 
 
 
+    public void UpdatingGridMoveCost(GridPosition gridPosition)
+    {
+        PathNode pathNode = Pathfinding.Instance.GetNode(gridPosition);
+        int moveCost = pathNode.GetMoveCost();
+        pathNode.SetMoveCost(moveCost / 2);
+    }
+
+
+
+
 
 
 
@@ -481,6 +489,7 @@ public class Pathfinding : MonoBehaviour
 
     public bool IsWalkableGridPosition(GridPosition gridPosition) => GetNode(gridPosition).GetIsWalkable();
     public bool HasPathToGridPosition(GridPosition start, GridPosition end) => FindPath(start, end, out int pathLength) != null;
+
     public int GetPathLength(GridPosition start, GridPosition end)
     {
         FindPath(start, end, out int pathLength);
