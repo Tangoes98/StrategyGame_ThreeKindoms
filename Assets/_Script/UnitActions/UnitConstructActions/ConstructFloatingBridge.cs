@@ -125,7 +125,7 @@ public class ConstructFloatingBridge : UnitBaseConstructAction
                 // ||terrain != TerrainType.TerrainTypeEnum.StreamDeep
 
                 // Skip if gridposition is too high
-                if (!Pathfinding.Instance.CompareFloorHeight(startGridPosition, tempValidGridposition)) continue;
+                if (!Pathfinding.Instance.CanClimbNeighbourGrid(startGridPosition, tempValidGridposition)) continue;
 
                 // Skip if gridposition already contains a Construction
                 if (LevelGrid.Instance.HasConstructionOnGridPosition(tempValidGridposition)) continue;

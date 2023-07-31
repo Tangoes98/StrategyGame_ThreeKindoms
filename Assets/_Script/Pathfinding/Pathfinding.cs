@@ -270,19 +270,30 @@ public class Pathfinding : MonoBehaviour
         return validGridPositionList;
     }
 
-    public bool CompareFloorHeight(GridPosition currentPosition, GridPosition neighbourPosition)
+
+
+
+
+
+
+
+    public bool CanClimbNeighbourGrid(GridPosition currentPosition, GridPosition neighbourPosition)
     {
         int currentGridHeight = LevelGrid.Instance.GetGridFloorHeight(currentPosition);
         int neighbourGridHeight = LevelGrid.Instance.GetGridFloorHeight(neighbourPosition);
 
-        int maxFloorMoveDifference = 1;
-        // neighbour gridposition is too high
-        if ((neighbourGridHeight - currentGridHeight) > maxFloorMoveDifference) return false;
-        // neighbour gridposition is not too high
-        else return true;
+        int maxFloorMoveDifference = 2;
+
+
+
+        if ((neighbourGridHeight - currentGridHeight) < maxFloorMoveDifference) return true;
+
+        if (!LevelGrid.Instance.HasConstructionOnGridPosition(currentPosition)) return false;
+
+        Construction construction = LevelGrid.Instance.GetConstructionAtGridPosition(currentPosition);
+        return construction is ConstructionRopeLadder;
+
     }
-
-
 
 
 
@@ -357,10 +368,10 @@ public class Pathfinding : MonoBehaviour
         GridPosition upNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
         GridPosition downNode = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
 
-        if (IsValidGridPosition(rightNode) && CompareFloorHeight(currentNodeGridPosition, rightNode)) neighbourList.Add(GetNode(rightNode));
-        if (IsValidGridPosition(leftNode) && CompareFloorHeight(currentNodeGridPosition, leftNode)) neighbourList.Add(GetNode(leftNode));
-        if (IsValidGridPosition(upNode) && CompareFloorHeight(currentNodeGridPosition, upNode)) neighbourList.Add(GetNode(upNode));
-        if (IsValidGridPosition(downNode) && CompareFloorHeight(currentNodeGridPosition, downNode)) neighbourList.Add(GetNode(downNode));
+        if (IsValidGridPosition(rightNode) && CanClimbNeighbourGrid(currentNodeGridPosition, rightNode)) neighbourList.Add(GetNode(rightNode));
+        if (IsValidGridPosition(leftNode) && CanClimbNeighbourGrid(currentNodeGridPosition, leftNode)) neighbourList.Add(GetNode(leftNode));
+        if (IsValidGridPosition(upNode) && CanClimbNeighbourGrid(currentNodeGridPosition, upNode)) neighbourList.Add(GetNode(upNode));
+        if (IsValidGridPosition(downNode) && CanClimbNeighbourGrid(currentNodeGridPosition, downNode)) neighbourList.Add(GetNode(downNode));
 
 
         return neighbourList;
@@ -377,12 +388,21 @@ public class Pathfinding : MonoBehaviour
         GridPosition upNodePosition = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z + 1);
         GridPosition downNodeGridPosition = new GridPosition(currentNodeGridPosition.x, currentNodeGridPosition.z - 1);
 
-        if (ValidMoveableNeighbourNodeCheck(rightNodeGridPosition)) neighbourList.Add(GetNode(rightNodeGridPosition));
-        if (ValidMoveableNeighbourNodeCheck(leftNodeGridPosition)) neighbourList.Add(GetNode(leftNodeGridPosition));
-        if (ValidMoveableNeighbourNodeCheck(upNodePosition)) neighbourList.Add(GetNode(upNodePosition));
-        if (ValidMoveableNeighbourNodeCheck(downNodeGridPosition)) neighbourList.Add(GetNode(downNodeGridPosition));
+
+        if (ValidNeighbourGridCheck(currentNodeGridPosition, rightNodeGridPosition)) neighbourList.Add(GetNode(rightNodeGridPosition));
+        if (ValidNeighbourGridCheck(currentNodeGridPosition, leftNodeGridPosition)) neighbourList.Add(GetNode(leftNodeGridPosition));
+        if (ValidNeighbourGridCheck(currentNodeGridPosition, upNodePosition)) neighbourList.Add(GetNode(upNodePosition));
+        if (ValidNeighbourGridCheck(currentNodeGridPosition, downNodeGridPosition)) neighbourList.Add(GetNode(downNodeGridPosition));
 
         return neighbourList;
+    }
+
+    bool ValidNeighbourGridCheck(GridPosition currentGrid, GridPosition nextGrid)
+    {
+        if (ValidMoveableNeighbourNodeCheck(nextGrid) &&
+            NeighbourGridPositionClimbingCheck(currentGrid, nextGrid))
+            return true;
+        return false;
     }
 
     bool ValidMoveableNeighbourNodeCheck(GridPosition gridpos)
@@ -390,18 +410,23 @@ public class Pathfinding : MonoBehaviour
         if (IsValidGridPosition(gridpos) &&
             _validMoveGridPoisitionList.Contains(gridpos) &&
             !HasUnitOnGridPosition(gridpos) &&
-            !NeighbourGirdPositionConstrucionIsObstacle(gridpos))
+            !NeighbourGirdConstrucionCheck<ConstructionObstacle>(gridpos))
             return true;
-        else return false;
+        return false;
     }
 
-    bool NeighbourGirdPositionConstrucionIsObstacle(GridPosition gridpos)
+    bool NeighbourGridPositionClimbingCheck(GridPosition currentGridpos, GridPosition nextGridpos)
+    {
+        if (CanClimbNeighbourGrid(currentGridpos, nextGridpos)) return true;
+        return false;
+    }
+
+    bool NeighbourGirdConstrucionCheck<ConstructionType>(GridPosition gridpos)
     {
         if (!LevelGrid.Instance.HasConstructionOnGridPosition(gridpos)) return false;
         Construction construction = LevelGrid.Instance.GetConstructionAtGridPosition(gridpos);
-        return construction is ConstructionObstacle;
+        return construction is ConstructionType;
     }
-
 
 
 

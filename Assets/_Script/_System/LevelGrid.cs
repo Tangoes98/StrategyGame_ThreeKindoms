@@ -33,7 +33,6 @@ public class LevelGrid : MonoBehaviour
     public Vector3 GetWorldPositionWithHeight(GridPosition gridPosition) => _gridSystem.GetGridObjectWorldPosition(gridPosition);
     public int GetGridObjectFloor(GridPosition gridPosition) => _gridSystem.GetGridFloorHeight(gridPosition);
     public bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
-    public GridSystem GetGridSystem() => _gridSystem;
 
     public int GetWidth() => _gridWidth;
     public int GetHeight() => _gridHeight;

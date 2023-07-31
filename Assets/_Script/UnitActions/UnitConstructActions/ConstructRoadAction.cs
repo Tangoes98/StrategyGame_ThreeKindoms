@@ -79,7 +79,7 @@ public class ConstructRoadAction : UnitBaseConstructAction
                     terrain == TerrainType.TerrainTypeEnum.StreamDeep) continue;
 
                 // Skip if gridposition is too high
-                if (!Pathfinding.Instance.CompareFloorHeight(_unitGridPosition, tempValidGridposition)) continue;
+                if (!Pathfinding.Instance.CanClimbNeighbourGrid(_unitGridPosition, tempValidGridposition)) continue;
 
                 // Skip if gridposition already contains a Construction
                 if (LevelGrid.Instance.HasConstructionOnGridPosition(tempValidGridposition)) continue;

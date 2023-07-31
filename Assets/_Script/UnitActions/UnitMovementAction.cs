@@ -208,11 +208,11 @@ public class UnitMovementAction : UnitBaseAction
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition ValidGridposition = offsetGridPosition + _unitGridPosition;
 
-                // check if gridPosition is not unit gridPosition and have unit on it
-                if (ValidGridposition != _unitGridPosition && LevelGrid.Instance.HasUnitOnGridPosition(ValidGridposition)) continue;
-
                 // Check if the girdPosition is inside the entire gridSystem
                 if (!LevelGrid.Instance.IsValidGridPosition(ValidGridposition)) continue;
+
+                // check if gridPosition is not unit gridPosition and have unit on it
+                if (ValidGridposition != _unitGridPosition && LevelGrid.Instance.HasUnitOnGridPosition(ValidGridposition)) continue;
 
                 // Check if gridposition is walkable
                 if (!Pathfinding.Instance.IsWalkableGridPosition(ValidGridposition)) continue;

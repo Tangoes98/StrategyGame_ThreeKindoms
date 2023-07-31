@@ -82,7 +82,7 @@ public class ConstructRopeLadderAction : UnitBaseConstructAction
                 List<GridPosition> neighbourGridpositionList = GetNeighbourGridpositionList(tempValidGridposition);
                 foreach (GridPosition neighbourGrid in neighbourGridpositionList)
                 {
-                    if (Pathfinding.Instance.CompareFloorHeight(tempValidGridposition, neighbourGrid)) continue;
+                    if (Pathfinding.Instance.CanClimbNeighbourGrid(tempValidGridposition, neighbourGrid)) continue;
 
                     actionGridPositionList.Add(tempValidGridposition);
                 }
