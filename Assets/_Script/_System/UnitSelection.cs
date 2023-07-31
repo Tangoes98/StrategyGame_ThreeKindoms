@@ -114,14 +114,16 @@ public class UnitSelection : MonoBehaviour
             // return if not having enough action points to take action
             if (!unit.TrySpendActionPointsToTakeAction(_selectedAction)) return;
 
-            if (_selectedAction.IsConstructionAction())
+
+            if (_selectedAction is UnitBaseConstructAction)
             {
+                Debug.Log("action is unitBaseConstructAction");
                 UnitBaseConstructAction action = (UnitBaseConstructAction)_selectedAction;
                 if (action.IsOverUseCount()) return;
 
 
 
-                
+
             }
 
             SetBusy();

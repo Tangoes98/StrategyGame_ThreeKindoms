@@ -16,8 +16,6 @@ public abstract class UnitBaseAction : MonoBehaviour
     [SerializeField] protected bool _isActionEnabled;
     //[SerializeField] protected int _actionCost;
 
-    [SerializeField] protected bool _isConstructionActions;
-
 
     protected virtual void Awake()
     {
@@ -54,7 +52,5 @@ public abstract class UnitBaseAction : MonoBehaviour
         _isActive = false;
         _onActionCompleted();
     }
-
-    public bool IsConstructionAction() => _isConstructionActions;
 
 }

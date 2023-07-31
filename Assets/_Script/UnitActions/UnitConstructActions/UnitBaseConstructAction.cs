@@ -23,7 +23,7 @@ public abstract class UnitBaseConstructAction : UnitBaseAction
         base.Update();
     }
 
-    public bool IsOverUseCount() => _useCount < 1 && _useCount > 0;
+    public bool IsOverUseCount() => _useCount < 1 && _useCount > -1;
     //public void SetBuildActionCountdown(int buildActionCountdown) => _buildActionCountdown = buildActionCountdown;
 
 

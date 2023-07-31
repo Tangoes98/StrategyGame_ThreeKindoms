@@ -14,6 +14,11 @@ public class GridSystemVisual : MonoBehaviour
     int _gridWidth;
     int _gridHeight;
 
+    // bool _isMoveActionSelected;
+
+
+
+
     void Awake()
     {
         if (Instance != null)
@@ -23,6 +28,9 @@ public class GridSystemVisual : MonoBehaviour
         }
         Instance = this;
     }
+
+
+
 
 
     void Start()
@@ -59,49 +67,72 @@ public class GridSystemVisual : MonoBehaviour
         UpdateGridSystemVisual();
     }
 
+
+
+
     void UnitSelection_OnSelectEmpty() => HideAllGridPositionVisuals();
     void UnitSelection_OnUnitSelecedChanged() => HideAllGridPositionVisuals();
+    Transform GetSingelGridVisualObject(GridPosition gridPos) => _singleGridVisualArray[gridPos.x, gridPos.z];
+
+
+    public void UpdateGridSystemVisual()
+    {
+        HideAllGridPositionVisuals();
+
+        UnitBaseAction baseAction = UnitSelection.Instance.GetUnitCurrentAction();
+
+        if (!baseAction) return;
+
+        ShowValidGridPositionVisuals(baseAction.GetValidGridPositionList());
+
+        if (baseAction is UnitMovementAction)
+        {
+            ShowUnitMovePathValidation(baseAction);
+        }
+
+    }
+
+    void ShowUnitMovePathValidation(UnitBaseAction baseAction)
+    {
+        UnitMovementAction moveAction = (UnitMovementAction)baseAction;
+        GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MouseToWorld.Instance.GetMouseWorldPosition());
+        if (!moveAction.IsValidActionGridPosition(mouseGridPosition)) return;
+        List<GridPosition> movePathList = moveAction.GetPredictedMovePathGridPositionList(mouseGridPosition);
+        ShowPredictedUnitMovePath(movePathList);
+    }
+
+
+
+
+
 
 
     public void HideAllGridPositionVisuals()
     {
-        // foreach (Transform singleGridVisual in _singleGridVisualList)
-        // {
-        //     MeshRenderer meshRed = singleGridVisual.GetComponentInChildren<MeshRenderer>();
-        //     meshRed.enabled = false;
-        // }
-
-
         for (int x = 0; x < _gridWidth; x++)
         {
             for (int z = 0; z < _gridHeight; z++)
             {
-                MeshRenderer[] meshRendArray = _singleGridVisualArray[x, z].GetComponentsInChildren<MeshRenderer>();
-                foreach (MeshRenderer meshRenderer in meshRendArray) meshRenderer.enabled = false;
+                // MeshRenderer[] meshRendArray = _singleGridVisualArray[x, z].GetComponentsInChildren<MeshRenderer>();
+                // foreach (MeshRenderer meshRenderer in meshRendArray) meshRenderer.enabled = false;
+                MeshRenderer meshRend = _singleGridVisualArray[x, z].GetComponentInChildren<MeshRenderer>();
+                meshRend.enabled = false;
             }
         }
 
     }
 
-    Transform GetSingelGridVisualObject(GridPosition gridPos) => _singleGridVisualArray[gridPos.x, gridPos.z];
+
     void ShowValidGridPositionVisuals(List<GridPosition> gridPosList)
     {
         foreach (GridPosition gridPos in gridPosList)
         {
-            Transform singleVisualObejct = GetSingelGridVisualObject(gridPos);
-            MeshRenderer meshRend = singleVisualObejct.GetComponentInChildren<MeshRenderer>();
-            meshRend.enabled = true;
+            EnableGridVisualObjectMeshrenderer(gridPos, GridPositionVisual.GridPositionVisualEnum.ValidGridPosition);
         }
     }
-    void ShowRangeVisual(List<GridPosition> gridPosList)
-    {
-        foreach (GridPosition gridPos in gridPosList)
-        {
-            Transform singleVisualObejct = GetSingelGridVisualObject(gridPos);
-            MeshRenderer[] meshRend = singleVisualObejct.GetComponentsInChildren<MeshRenderer>();
-            meshRend[1].enabled = true;
-        }
-    }
+
+
+
     public void ShowGridPositionRange(GridPosition unitGridPosition, int range)
     {
         List<GridPosition> validGridPositionList = new List<GridPosition>();
@@ -128,20 +159,42 @@ public class GridSystemVisual : MonoBehaviour
         }
         ShowRangeVisual(validGridPositionList);
     }
-
-
-
-    public void UpdateGridSystemVisual()
+    void ShowRangeVisual(List<GridPosition> gridPosList)
     {
-        HideAllGridPositionVisuals();
+        foreach (GridPosition gridPos in gridPosList)
+        {
+            EnableGridVisualObjectMeshrenderer(gridPos, GridPositionVisual.GridPositionVisualEnum.RangeGridPosition);
+        }
+    }
 
-        UnitBaseAction baseAction = UnitSelection.Instance.GetUnitCurrentAction();
 
-        if (!baseAction) return;
-
-        ShowValidGridPositionVisuals(baseAction.GetValidGridPositionList());
+    void ShowPredictedUnitMovePath(List<GridPosition> gridPosList)
+    {
+        foreach (GridPosition gridPos in gridPosList)
+        {
+            EnableGridVisualObjectMeshrenderer(gridPos, GridPositionVisual.GridPositionVisualEnum.MovePathGridPosition);
+        }
     }
 
 
 
+
+
+
+
+
+
+
+
+    void EnableGridVisualObjectMeshrenderer(GridPosition gridPosition, GridPositionVisual.GridPositionVisualEnum gridVisualType)
+    {
+        Transform singleVisualObejct = GetSingelGridVisualObject(gridPosition);
+        Transform sigleVisual = singleVisualObejct.GetChild(0);
+
+        MeshRenderer meshRend = sigleVisual.GetComponent<MeshRenderer>();
+        meshRend.enabled = true;
+
+        GridPositionVisual gridPositionVisual = sigleVisual.GetComponent<GridPositionVisual>();
+        gridPositionVisual.SetGridPositionVisualType(gridVisualType);
+    }
 }

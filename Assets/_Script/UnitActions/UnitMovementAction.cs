@@ -118,6 +118,70 @@ public class UnitMovementAction : UnitBaseAction
     #endregion
 
 
+
+
+
+
+
+    public override void TakeAction(GridPosition mouseGridPosition, Action onActionCompleted)
+    {
+        _isActive = true;
+
+        this._onActionCompleted = onActionCompleted;
+
+        if (!IsValidActionGridPosition(mouseGridPosition)) return;
+
+        // _targetPositionList = new List<Vector3>();
+
+        _currentPositionIndex = 0;
+
+        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, mouseGridPosition, out int pathLength);
+
+        UpdateMoveDistance(pathGridPositionList);
+
+        SetTargetPositionList(ConvertPathListToWorldPositionList(pathGridPositionList));
+
+
+        #region // set only one gridposition as target position
+        // Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        // SetTargetPosition(worldPosition);
+        #endregion
+    }
+
+    void UpdateMoveDistance(List<GridPosition> pathGridPositionList)
+    {
+        int distance = Pathfinding.Instance.CalculateTotalMoveDistance(pathGridPositionList);
+        Debug.Log(distance);
+        _unitCurrentMoveDistance -= distance / PathfindingDistanceMultiplier;
+    }
+
+    List<Vector3> ConvertPathListToWorldPositionList(List<GridPosition> gridPositionList)
+    {
+        List<Vector3> worldPositionList = new List<Vector3>();
+
+        foreach (GridPosition gridPosition in gridPositionList)
+        {
+            worldPositionList.Add(LevelGrid.Instance.GetWorldPosition(gridPosition));
+        }
+
+        return worldPositionList;
+    }
+
+
+    public List<GridPosition> GetPredictedMovePathGridPositionList(GridPosition mouseGridPosition)
+    {
+        List<GridPosition> pathGridPositionList = new List<GridPosition>();
+
+        pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, mouseGridPosition, out int pathLength);
+
+        return pathGridPositionList;
+    }
+
+
+
+
+
+
     // Update unit heicht
     void HeightCheck()
     {
@@ -172,56 +236,6 @@ public class UnitMovementAction : UnitBaseAction
         }
         return validGridPositionList;
     }
-
-
-
-
-
-    public override void TakeAction(GridPosition mouseGridPosition, Action onActionCompleted)
-    {
-        _isActive = true;
-
-        this._onActionCompleted = onActionCompleted;
-
-        if (!IsValidActionGridPosition(mouseGridPosition)) return;
-
-        // _targetPositionList = new List<Vector3>();
-
-        _currentPositionIndex = 0;
-
-        List<GridPosition> pathGridPositionList = Pathfinding.Instance.FindPath(_unitGridPosition, mouseGridPosition, out int pathLength);
-
-        UpdateMoveDistance(pathGridPositionList);
-
-        SetTargetPositionList(ConvertPathListToWorldPositionList(pathGridPositionList));
-
-
-        #region // set only one gridposition as target position
-        // Vector3 worldPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
-        // SetTargetPosition(worldPosition);
-        #endregion
-    }
-
-    void UpdateMoveDistance(List<GridPosition> pathGridPositionList)
-    {
-        int distance = Pathfinding.Instance.CalculateTotalMoveDistance(pathGridPositionList);
-        Debug.Log(distance);
-        _unitCurrentMoveDistance -= distance / PathfindingDistanceMultiplier;
-    }
-
-    List<Vector3> ConvertPathListToWorldPositionList(List<GridPosition> gridPositionList)
-    {
-        List<Vector3> worldPositionList = new List<Vector3>();
-
-        foreach (GridPosition gridPosition in gridPositionList)
-        {
-            worldPositionList.Add(LevelGrid.Instance.GetWorldPosition(gridPosition));
-        }
-
-        return worldPositionList;
-    }
-
-
 
 
 
