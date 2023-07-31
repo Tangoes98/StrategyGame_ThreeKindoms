@@ -239,16 +239,6 @@ public class UnitMovementAction : UnitBaseAction
         return gridPosition == _unitGridPosition;
     }
 
-    // void IsUnitOnGridPositionCheck(GridPosition gridPosition)
-    // {
-    //     if (!LevelGrid.Instance.HasUnitOnGridPosition(gridPosition)) return;
-    //     bool thisUnitCondition = _unit.IsEnemyUnit();
-    //     Unit unit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
-    //     bool unitCondition = unit.IsEnemyUnit();
-
-    //     if()
-
-    // }
 
 
 

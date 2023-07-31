@@ -389,9 +389,17 @@ public class Pathfinding : MonoBehaviour
     {
         if (IsValidGridPosition(gridpos) &&
             _validMoveGridPoisitionList.Contains(gridpos) &&
-            !HasUnitOnGridPosition(gridpos))
+            !HasUnitOnGridPosition(gridpos) &&
+            !NeighbourGirdPositionConstrucionIsObstacle(gridpos))
             return true;
         else return false;
+    }
+
+    bool NeighbourGirdPositionConstrucionIsObstacle(GridPosition gridpos)
+    {
+        if (!LevelGrid.Instance.HasConstructionOnGridPosition(gridpos)) return false;
+        Construction construction = LevelGrid.Instance.GetConstructionAtGridPosition(gridpos);
+        return construction is ConstructionObstacle;
     }
 
 
@@ -444,6 +452,7 @@ public class Pathfinding : MonoBehaviour
     bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.IsValidGridPosition(gridPosition);
 
     bool HasUnitOnGridPosition(GridPosition gridpos) => LevelGrid.Instance.HasUnitOnGridPosition(gridpos);
+
 
     public bool IsWalkableGridPosition(GridPosition gridPosition) => GetNode(gridPosition).GetIsWalkable();
     public bool HasPathToGridPosition(GridPosition start, GridPosition end) => FindPath(start, end, out int pathLength) != null;

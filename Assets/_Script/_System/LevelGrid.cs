@@ -53,4 +53,5 @@ public class LevelGrid : MonoBehaviour
     public bool HasConstructionOnGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).HasConstructionOnGrid();
     public Construction GetConstructionAtGridPosition(GridPosition gridPosition) => GetGridObject(gridPosition).GetConstructionObject();
 
+
 }

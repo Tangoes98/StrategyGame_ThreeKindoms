@@ -586,6 +586,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 905a47dfc6f2fc344b7f467d5ac0ffeb, type: 3}
+--- !u!1 &4310104336337919494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6086615917151741396, guid: 905a47dfc6f2fc344b7f467d5ac0ffeb, type: 3}
+  m_PrefabInstance: {fileID: 8045841140359609298}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6495566962776951858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4310104336337919494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b65aa0bace1b1ac46a08ec73ce77d39f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isCapByEnemy: 0
+  _isCapByAlly: 0
+  _isFlammable: 0
+  _canBeAccessedByFriendlyUnit: 0
+  _canBeAccessedByEnemyUnit: 0
+  _currentCondition: 0
+  _conditionTypeList: []
 --- !u!4 &4310104336337919513 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6086615917151741387, guid: 905a47dfc6f2fc344b7f467d5ac0ffeb, type: 3}
