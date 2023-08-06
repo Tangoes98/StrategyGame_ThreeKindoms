@@ -15,6 +15,9 @@ public class ConstructCampAction : UnitBaseConstructAction
     public override string GetActionName() => _actionName;
     public override bool IsEnabled() => _isActionEnabled;
 
+    public override int GetConstructionActionCost() => _constructCost;
+    public override bool IsSpendingConstructionCost() => _isSpendingConstructionCost;
+
 
     protected override void Update()
     {
@@ -35,7 +38,7 @@ public class ConstructCampAction : UnitBaseConstructAction
 
         _onActionCompleted = onActionCompleted;
 
-        if (_useCount < 1) return;
+        if (_useLimit < 1) return;
 
         //if (!IsValidActionGridPosition(mouseGridPosition)) return;
 
@@ -43,7 +46,7 @@ public class ConstructCampAction : UnitBaseConstructAction
 
         SetActionWorldPosition(mouseGridPosition);
 
-        _useCount -= 1;
+        _useLimit -= 1;
 
     }
 
@@ -105,7 +108,7 @@ public class ConstructCampAction : UnitBaseConstructAction
             }
         }
 
-        if (_useCount < 1)
+        if (_useLimit < 1)
         {
             List<GridPosition> enmptyGridPositionlist = new List<GridPosition>();
             return enmptyGridPositionlist;

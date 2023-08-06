@@ -6,6 +6,7 @@ using TMPro;
 public class UnitActionPointsUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI _actionPoitnsText;
+    [SerializeField] TextMeshProUGUI _constructionPointsText;
 
     void Start()
     {
@@ -19,11 +20,17 @@ public class UnitActionPointsUI : MonoBehaviour
     {
         UpdateActionPointsText();
 
-        
+
     }
+
+
+
 
     void UnitSelection_OnUnitSelecedChanged() => UpdateActionPointsText();
     void UnitSelection_OnactionPointsSpend() => UpdateActionPointsText();
+
+
+
 
     void UpdateActionPointsText()
     {
@@ -39,9 +46,18 @@ public class UnitActionPointsUI : MonoBehaviour
 
         ShowText();
         _actionPoitnsText.text = "ACTION POINT : " + selectedUnit.GetActionPoints();
+        _constructionPointsText.text = "CONSTRUCTION POINT : " + selectedUnit.GetUnitConstructionPoints();
     }
 
-    void ShowText() => _actionPoitnsText.enabled = true;
-    void HideText() => _actionPoitnsText.enabled = false;
+    void ShowText()
+    {
+        _actionPoitnsText.enabled = true;
+        _constructionPointsText.enabled = true;
+    }
+    void HideText()
+    {
+        _actionPoitnsText.enabled = false;
+        _constructionPointsText.enabled = false;
+    }
 
 }

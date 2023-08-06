@@ -126,10 +126,14 @@ public class UnitSelection : MonoBehaviour
 
             if (_selectedAction is UnitBaseConstructAction)
             {
-                Debug.Log("action is unitBaseConstructAction");
+                Debug.Log("action is ConstructAction");
                 UnitBaseConstructAction action = (UnitBaseConstructAction)_selectedAction;
                 if (action.IsOverUseCount()) return;
 
+                if (action.IsSpendingConstructionCost())
+                {
+                    if (!unit.TrySpendConstructionPoints(action)) return;
+                }
 
 
 

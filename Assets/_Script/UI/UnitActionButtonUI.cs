@@ -51,16 +51,6 @@ public class UnitActionButtonUI : MonoBehaviour
         );
     }
 
-    // void UnitMoveGridPositionDebug(UnitMovementAction action)
-    // {
-    //     var positionList = action.GetValidGridPositionList();
-    //     foreach (GridPosition position in positionList)
-    //     {
-    //         Debug.Log(position);
-    //     }
-    // }
-
-
 
 
 

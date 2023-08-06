@@ -31,6 +31,14 @@ public class Unit : MonoBehaviour
     [SerializeField] int _unitConstructionPoints;
 
 
+
+
+
+
+
+
+
+
     void Awake()
     {
         _moveAction = GetComponent<UnitMovementAction>();
@@ -91,6 +99,14 @@ public class Unit : MonoBehaviour
         }
     }
 
+
+
+
+
+
+
+
+
     #region Unit Action Validation
 
     void UnitActionValidation(UnitBaseAction action, List<UnitBaseAction> actionList)
@@ -103,6 +119,15 @@ public class Unit : MonoBehaviour
     }
 
     #endregion
+
+
+
+
+
+
+
+
+
 
     #region Action points functions
     public bool TrySpendActionPointsToTakeAction(UnitBaseAction baseAction)
@@ -144,6 +169,16 @@ public class Unit : MonoBehaviour
 
     #endregion
 
+
+
+
+
+
+
+
+
+
+
     #region OnUnitDeath
     void HealthSystem_OnDead()
     {
@@ -152,13 +187,51 @@ public class Unit : MonoBehaviour
     }
     #endregion
 
+
+
+
+
+
+
+
+
+
+
     #region Unit Construction Points Functions
     public int GetUnitConstructionPoints() => _unitConstructionPoints;
     public void AddUnitConstructionPoints(int points) => _unitConstructionPoints += points;
 
+    void SpendConstructionPoints(int points) => _unitConstructionPoints -= points;
+
+    public bool CanSpendConstructionPoints(UnitBaseConstructAction action)
+        => _unitConstructionPoints >= action.GetConstructionActionCost();
+
+    public bool TrySpendConstructionPoints(UnitBaseConstructAction action)
+    {
+        if (CanSpendConstructionPoints(action))
+        {
+            SpendConstructionPoints(action.GetConstructionActionCost());
+            return true;
+        }
+        else
+        {
+            Debug.Log("NOT ENOUGH CP");
+            return false;
+        }
+    }
+
+
+
 
 
     #endregion
+
+
+
+
+
+
+
 
     public GridPosition GetUnitGridPosition() => _unitGridPosition;
     public List<UnitBaseAction> GetUnitBaseActionList() => _UnitBaseActionList;

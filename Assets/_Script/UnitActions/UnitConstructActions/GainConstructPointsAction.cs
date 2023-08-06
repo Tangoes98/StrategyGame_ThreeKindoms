@@ -13,6 +13,8 @@ public class GainConstructPointsAction : UnitBaseConstructAction
     public override int GetActionCost() => _actionCost;
     public override string GetActionName() => _actionName;
     public override bool IsEnabled() => _isActionEnabled;
+    public override int GetConstructionActionCost() => _constructCost;
+    public override bool IsSpendingConstructionCost() => _isSpendingConstructionCost;
 
     protected override void Update()
     {
@@ -33,9 +35,9 @@ public class GainConstructPointsAction : UnitBaseConstructAction
 
         _onActionCompleted = onActionCompleted;
 
-        if (_useCount < 1) return;
+        if (_useLimit < 1) return;
 
-        _useCount -= 1;
+        _useLimit -= 1;
 
         Unit unit = LevelGrid.Instance.GetUnitAtGridPosition(mouseGridPosition);
         unit.AddUnitConstructionPoints(_constructionPoints);
@@ -47,7 +49,7 @@ public class GainConstructPointsAction : UnitBaseConstructAction
         List<GridPosition> validGridPositionList = new List<GridPosition>();
         validGridPositionList.Add(_unitGridPosition);
 
-        if (_useCount < 1)
+        if (_useLimit < 1)
         {
             List<GridPosition> emptyGridPositionList = new List<GridPosition>();
             return emptyGridPositionList;

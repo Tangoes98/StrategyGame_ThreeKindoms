@@ -282,7 +282,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 0
   _moveSpeed: 4
   _rotateSpeed: 10
   _stopDistance: 0.1
@@ -302,7 +301,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 0
   _actionCost: 1
 --- !u!114 &7742879256600154352
 MonoBehaviour:
@@ -317,7 +315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 0
   _actionCost: 2
   _attackRange: 1
   _damageAmount: 4
@@ -347,13 +344,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: CAMP
   _actionRange: 1
   _actionCost: 4
-  _useCount: 1
+  _useLimit: 1
   _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _constructCost: 0
   _campConstructionPrefab: {fileID: 3138760199012610837, guid: 64d0dde7e0568a2448dcba0c57246f41, type: 3}
 --- !u!114 &5737594741977632754
 MonoBehaviour:
@@ -368,13 +364,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: FLAG
   _actionRange: 1
   _actionCost: 3
-  _useCount: 1
+  _useLimit: 1
   _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _constructCost: 0
   _flagConstructionPrefab: {fileID: 260297184930401228, guid: fe25454c6981f444d836101bd449d3e5, type: 3}
 --- !u!114 &5549527844571187481
 MonoBehaviour:
@@ -389,13 +384,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: GAIN_CP
   _actionRange: 0
   _actionCost: 2
-  _useCount: 2
+  _useLimit: 2
   _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _constructCost: 0
   _constructionPoints: 10
 --- !u!114 &-2056590213151058020
 MonoBehaviour:
@@ -410,13 +404,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: ROPE_LADDER
   _actionRange: 1
   _actionCost: 0
-  _useCount: -1
-  _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _useLimit: -1
+  _isSpendingConstructionCost: 1
+  _constructCost: 2
   _ropeLadderPrefab: {fileID: 4310104336337919513, guid: 9253d5f3e3156f845810becba2beeb2e, type: 3}
 --- !u!114 &6299697371742229935
 MonoBehaviour:
@@ -431,13 +424,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: FLOATING_BRIDGE
   _actionRange: 2
   _actionCost: 0
-  _useCount: -1
-  _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _useLimit: -1
+  _isSpendingConstructionCost: 1
+  _constructCost: 2
   _floatingBridgePrefab: {fileID: 4310104336337919513, guid: 82b9c553bd47ba44eb30685ef013928c, type: 3}
 --- !u!114 &-997227381826598955
 MonoBehaviour:
@@ -452,13 +444,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: OBSTACLE
   _actionRange: 1
   _actionCost: 0
-  _useCount: -1
-  _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _useLimit: -1
+  _isSpendingConstructionCost: 1
+  _constructCost: 3
   _obstacleConstructionPrefab: {fileID: 1097826387374134668, guid: 66e80baf2c8bf7b4fbb50cb1e8b12ac3, type: 3}
 --- !u!114 &-2788063817550114046
 MonoBehaviour:
@@ -473,13 +464,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
-  _isConstructionActions: 1
   _actionName: Road
   _actionRange: 1
   _actionCost: 0
-  _useCount: -1
-  _isSpendingConstructionCost: 0
-  _actionConstructionCost: 0
+  _useLimit: -1
+  _isSpendingConstructionCost: 1
+  _constructCost: 1
   _roadConstructionPrefab: {fileID: 2176735568011706817, guid: b0a548b2204745246a9e2557909e0201, type: 3}
 --- !u!1 &5837040862265182845
 GameObject:

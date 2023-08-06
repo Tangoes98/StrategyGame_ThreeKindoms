@@ -13,6 +13,8 @@ public class ConstructObstacleAction : UnitBaseConstructAction
     public override int GetActionCost() => _actionCost;
     public override string GetActionName() => _actionName;
     public override bool IsEnabled() => _isActionEnabled;
+    public override int GetConstructionActionCost() => _constructCost;
+    public override bool IsSpendingConstructionCost() => _isSpendingConstructionCost;
 
 
     protected override void Update()
