@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 6299697371742229935}
   - component: {fileID: -997227381826598955}
   - component: {fileID: -2788063817550114046}
+  - component: {fileID: 7378699290155195409}
   m_Layer: 7
   m_Name: PlayerUnit
   m_TagString: Untagged
@@ -471,6 +472,26 @@ MonoBehaviour:
   _isSpendingConstructionCost: 1
   _constructCost: 1
   _roadConstructionPrefab: {fileID: 2176735568011706817, guid: b0a548b2204745246a9e2557909e0201, type: 3}
+--- !u!114 &7378699290155195409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2896852594613495132}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c9e67cbf722047488d37a76799ec2f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isActionEnabled: 1
+  _actionName: TRAP
+  _actionRange: 1
+  _actionCost: 0
+  _useLimit: -1
+  _isSpendingConstructionCost: 1
+  _constructCost: 5
+  _TrapConstructionPrefab: {fileID: 4310104336337919513, guid: 23d898ceebc45e441aca84e044438595, type: 3}
 --- !u!1 &5837040862265182845
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     ConstructFloatingBridge _floatingBridgeAction;
     ConstructObstacleAction _obstacleAction;
     ConstructRoadAction _roadAction;
+    ConstructTrapAction _trapAction;
     List<UnitBaseConstructAction> _UnitBaseConstructsActionList;
 
 
@@ -53,6 +54,7 @@ public class Unit : MonoBehaviour
         _floatingBridgeAction = GetComponent<ConstructFloatingBridge>();
         _obstacleAction = GetComponent<ConstructObstacleAction>();
         _roadAction = GetComponent<ConstructRoadAction>();
+        _trapAction = GetComponent<ConstructTrapAction>();
 
         _UnitBaseConstructsActionList = new List<UnitBaseConstructAction>();
 
@@ -84,6 +86,7 @@ public class Unit : MonoBehaviour
         UnitConstructActionValidation(_floatingBridgeAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_obstacleAction, _UnitBaseConstructsActionList);
         UnitConstructActionValidation(_roadAction, _UnitBaseConstructsActionList);
+        UnitConstructActionValidation(_trapAction, _UnitBaseConstructsActionList);
     }
 
     void Update()
