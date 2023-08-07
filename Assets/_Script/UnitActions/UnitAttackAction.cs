@@ -39,8 +39,14 @@ public class UnitAttackAction : UnitBaseAction
         _isActive = true;
         this._onActionCompleted = onActionCompleted;
 
-        DealDamageToTargetUnit(gridPosition);
-        //DealDamageToTargetConstruction(gridPosition);
+
+        if (LevelGrid.Instance.HasUnitOnGridPosition(gridPosition))
+        {
+            DealDamageToTargetUnit(gridPosition);
+        }
+
+        if (LevelGrid.Instance.HasConstructionOnGridPosition(gridPosition))
+            DealDamageToTargetConstruction(gridPosition);
 
         ActionCompleted();
     }

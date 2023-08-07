@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7808483782588592091, guid: 905a47dfc6f2fc344b7f467d5ac0ffeb, type: 3}
+      propertyPath: _health
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6086615917151741385, guid: 905a47dfc6f2fc344b7f467d5ac0ffeb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -83,7 +87,7 @@ MonoBehaviour:
   _isFlammable: 0
   _canBeAccessedByFriendlyUnit: 0
   _canBeAccessedByEnemyUnit: 0
-  _currentCondition: 0
+  _currentCondition: 2
   _conditionTypeList:
   - _condition: 0
     _material: {fileID: 2100000, guid: bace33809033ba94a8f7976b4f94fa44, type: 2}
@@ -91,16 +95,3 @@ MonoBehaviour:
     _material: {fileID: 2100000, guid: 069a92696921f7849b92db87db3e07bc, type: 2}
   - _condition: 2
     _material: {fileID: 2100000, guid: d07aa2da490d3854f9938343dd6836b4, type: 2}
---- !u!114 &7645202480287999106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3138760199012610826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9008b86336a0a44883c6ef2c7239faa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 5

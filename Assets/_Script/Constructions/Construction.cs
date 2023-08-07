@@ -13,6 +13,8 @@ public abstract class Construction : MonoBehaviour
     [SerializeField] protected bool _canBeAccessedByFriendlyUnit;
     [SerializeField] protected bool _canBeAccessedByEnemyUnit;
 
+    GridPosition _constructionGridPosition;
+    ConstructionHealthSystem _constructionHealth;
 
 
     public enum ConstructionOccupationConditionType
@@ -31,9 +33,17 @@ public abstract class Construction : MonoBehaviour
     [SerializeField] List<ConstructionConditions> _conditionTypeList;
 
 
+
+
+
+
+
     protected virtual void Start()
     {
+        _constructionGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+        _constructionHealth = GetComponent<ConstructionHealthSystem>();
 
+        _constructionHealth.OnDestroyed += ConstructionHealth_OnDestroyed;
     }
 
     protected virtual void Update()
@@ -41,6 +51,30 @@ public abstract class Construction : MonoBehaviour
         UpdateConstructionCondition(_currentCondition);
         ConstructionOccupationConditionValidation();
     }
+
+
+
+
+
+
+
+
+    void ConstructionHealth_OnDestroyed()
+    {
+        LevelGrid.Instance.RemoveConstructionFromGrdObject(_constructionGridPosition, this);
+        Destroy(gameObject);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     void ConstructionOccupationConditionValidation()
     {
