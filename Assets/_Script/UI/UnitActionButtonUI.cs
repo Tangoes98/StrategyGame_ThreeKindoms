@@ -32,15 +32,13 @@ public class UnitActionButtonUI : MonoBehaviour
 
 
 
-                if (baseAction is UnitBaseConstructAction)
+                if (baseAction is UnitBaseConstructAction action)
                 {
-                    UnitBaseConstructAction action = (UnitBaseConstructAction)baseAction;
                     if (action.IsOverUseCount()) Debug.Log("Cant use this Action!");
 
 
-                    if (action is ConstructFloatingBridge)
+                    if (action is ConstructFloatingBridge floatingBridgeAction)
                     {
-                        ConstructFloatingBridge floatingBridgeAction = (ConstructFloatingBridge)action;
                         int actionCountDown = 2;
                         floatingBridgeAction.SetBuildActionCountDown(actionCountDown);
                         floatingBridgeAction.SetIsSecondAction(false);

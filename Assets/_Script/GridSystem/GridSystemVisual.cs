@@ -75,7 +75,7 @@ public class GridSystemVisual : MonoBehaviour
     Transform GetSingelGridVisualObject(GridPosition gridPos) => _singleGridVisualArray[gridPos.x, gridPos.z];
 
 
-    public void UpdateGridSystemVisual()
+    void UpdateGridSystemVisual()
     {
         HideAllGridPositionVisuals();
 
@@ -133,33 +133,8 @@ public class GridSystemVisual : MonoBehaviour
 
 
 
-    public void ShowGridPositionRange(GridPosition unitGridPosition, int range)
-    {
-        List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        for (int x = -range; x <= range; x++)
-        {
-            for (int z = -range; z <= range; z++)
-            {
-                int moveDistance = Mathf.Abs(x) + Mathf.Abs(z);
-                if (moveDistance > range) continue;
-
-                GridPosition offsetGridPosition = new GridPosition(x, z);
-                GridPosition showGridPosition = unitGridPosition + offsetGridPosition;
-
-                // gridposition in the unit system
-                if (!LevelGrid.Instance.IsValidGridPosition(showGridPosition)) continue;
-
-                // gridposition is not unit self gridposition
-                if (showGridPosition == unitGridPosition) continue;
-
-                validGridPositionList.Add(showGridPosition);
-
-            }
-        }
-        ShowRangeVisual(validGridPositionList);
-    }
-    void ShowRangeVisual(List<GridPosition> gridPosList)
+    public void ShowGridpositionRangeVisual(List<GridPosition> gridPosList)
     {
         foreach (GridPosition gridPos in gridPosList)
         {

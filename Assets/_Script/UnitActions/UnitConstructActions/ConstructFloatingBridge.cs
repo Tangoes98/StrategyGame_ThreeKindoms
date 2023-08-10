@@ -125,7 +125,7 @@ public class ConstructFloatingBridge : UnitBaseConstructAction
                 // Skip if gridposition is not Water
                 PathNode pathNode = Pathfinding.Instance.GetNode(tempValidGridposition);
                 var terrain = pathNode.GetTerrain().GetTerrainType();
-                if (terrain != TerrainType.TerrainTypeEnum.StreamShallow) continue;
+                if (terrain != TerrainType.TerrainTypeEnum.StreamShallow && terrain != TerrainType.TerrainTypeEnum.StreamDeep) continue;
 
                 // If floating bridge can be built above DeepStream 
                 // ||terrain != TerrainType.TerrainTypeEnum.StreamDeep

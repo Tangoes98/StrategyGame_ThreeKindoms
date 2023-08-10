@@ -3,17 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class UnitAttackAction : UnitBaseAction
+public class UnitAttackAction : BaseAttackAction
 {
-    Vector3 _position;
-    [SerializeField] int _actionCost;
-    [SerializeField] int _attackRange;
-    [SerializeField] int _damageAmount;
-
     protected override void Awake()
     {
         base.Awake();
-        _position = transform.position;
 
     }
 
@@ -21,15 +15,10 @@ public class UnitAttackAction : UnitBaseAction
     {
         base.Update();
         if (!_isActive) return;
-
-
     }
 
     public override bool IsEnabled() => _isActionEnabled;
-
-
-
-    public override string GetActionName() => "Test_Attack";
+    public override string GetActionName() => _actionName;
     public override int GetActionCost() => _actionCost;
 
 
@@ -75,7 +64,7 @@ public class UnitAttackAction : UnitBaseAction
 
         GridPosition unitGridPosition = _unit.GetUnitGridPosition();
 
-        GridSystemVisual.Instance.ShowGridPositionRange(unitGridPosition, _attackRange);
+        ShowActionGridPositionRange(unitGridPosition, _attackRange, _excludedAttackRange, _unitType);
 
         for (int x = -_attackRange; x <= _attackRange; x++)
         {
