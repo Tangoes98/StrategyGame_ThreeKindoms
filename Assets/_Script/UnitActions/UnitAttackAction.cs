@@ -86,6 +86,9 @@ public class UnitAttackAction : BaseAttackAction
                 if (!LevelGrid.Instance.HasUnitOnGridPosition(avaliableGridPosition)
                     && !LevelGrid.Instance.HasConstructionOnGridPosition(avaliableGridPosition)) continue;
 
+                // Check if the excluded girdposition list includes this gridposition
+                if (_excludedGridPosition.Contains(avaliableGridPosition)) continue;
+
                 // check if both are enemy or friendly unit
                 // Unit targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(avaliableGridPosition);
                 // if (targetUnit.IsEnemyUnit() == _unit.IsEnemyUnit()) continue;

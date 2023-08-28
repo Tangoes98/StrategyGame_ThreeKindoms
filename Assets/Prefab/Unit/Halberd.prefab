@@ -15,7 +15,27 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5068313989518879875, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5837040862265182845, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742879256600154352, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _unitType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742879256600154352, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _attackRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742879256600154352, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _excludedAttackRange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746050098278291534, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

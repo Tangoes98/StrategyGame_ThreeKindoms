@@ -17,6 +17,9 @@ public abstract class BaseAttackAction : UnitBaseAction
     [SerializeField] protected int _excludedAttackRange;
     [SerializeField] protected int _damageAmount;
 
+    protected List<GridPosition> _excludedGridPosition = new();
+
+
 
     protected void ShowActionGridPositionRange(GridPosition unitGridPosition, int range, int excludedRange, UnitTypes type)
     {
@@ -39,6 +42,8 @@ public abstract class BaseAttackAction : UnitBaseAction
                 excludedGridPositionList.Add(validGridPosition);
             }
         }
+
+        _excludedGridPosition = excludedGridPositionList;
 
         for (int x = -range; x <= range; x++)
         {

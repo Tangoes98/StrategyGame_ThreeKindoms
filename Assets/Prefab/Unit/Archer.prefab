@@ -7,9 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2101588425239871664, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2896852594613495132, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_Name
-      value: PlayerUnit
+      value: Archer
+      objectReference: {fileID: 0}
+    - target: {fileID: 7742879256600154352, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: _excludedAttackRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7746050098278291534, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8641345308079538934, guid: 89702ab2483921649ac2f46385bb2e65, type: 3}
       propertyPath: m_RootOrder
