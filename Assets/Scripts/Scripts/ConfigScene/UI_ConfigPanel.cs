@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static System.Net.Mime.MediaTypeNames;
+using Image = UnityEngine.UI.Image;
 
 public class UI_ConfigPanel : BasePanel
 {
@@ -23,8 +24,11 @@ public class UI_ConfigPanel : BasePanel
     {
         base.ShowMe();
         //更新基础信息
-        GetControl<TMP_Text>("ShowDate").text = GameDataMgr.GetInstance().PlayerDataInfo.date;
-        GetControl<TMP_Text>("ShowMoney").text = "金钱：" + GameDataMgr.GetInstance().PlayerDataInfo.money.ToString() + "贯";
+
+        ChangeDate();
+
+        //GetControl<TMP_Text>("ShowMoney").text = "金钱：" + GameDataMgr.GetInstance().PlayerDataInfo.money.ToString() + "贯";
+
     }
 
     public override void HideMe()
@@ -81,6 +85,15 @@ public class UI_ConfigPanel : BasePanel
         UIManager.GetInstance().HidePanel("ConfigPanel");
         Clear();
         MenuIsOpen = false;
+    }
+
+    public void ChangeDate()
+    {
+        string date = GameDataMgr.GetInstance().PlayerDataInfo.date;
+        if (date == "184年秋,汉光和七年")
+        {
+            GetControl<Image>("ImageShowDate").sprite = ResourceManager.GetInstance().Load<Sprite>("UIAssets/BY_B_Time_184");
+        }
     }
 
     //清空缓存池/事件中心

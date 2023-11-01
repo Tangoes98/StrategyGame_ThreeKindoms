@@ -288,13 +288,13 @@ public class UI_TroopLevelUpPanel2 : BasePanel
         ScrollView2.SetActive(false);
         ButtonUnlock2.SetActive(false);
 
-        NextTroopCellInPanel1.transform.localPosition = new Vector3(743, 181, 0);
-        ScrollView1.transform.localPosition = new Vector3(410, 181, 0);
-        ButtonUnlock1.transform.localPosition = new Vector3(625, 181, 0);
+        NextTroopCellInPanel1.transform.localPosition = new Vector3(845, 166, 0);
+        ScrollView1.transform.localPosition = new Vector3(512, 166, 0);
+        ButtonUnlock1.transform.localPosition = new Vector3(727, 166, 0);
     }
 
     /// <summary>
-    /// 第一种面板设置下，设置objects的位置
+    /// 第一种面板设置下，2分支，设置objects的位置
     /// </summary>
     private void SetGameObjectsIn2()
     {
@@ -302,9 +302,9 @@ public class UI_TroopLevelUpPanel2 : BasePanel
         ScrollView2.SetActive(true);
         ButtonUnlock2.SetActive(true);
 
-        NextTroopCellInPanel1.transform.localPosition = new Vector3(743, 266, 0);
-        ScrollView1.transform.localPosition = new Vector3(410, 266, 0);
-        ButtonUnlock1.transform.localPosition = new Vector3(625, 266, 0);
+        NextTroopCellInPanel1.transform.localPosition = new Vector3(845, 247, 0);
+        ScrollView1.transform.localPosition = new Vector3(512, 247, 0);
+        ButtonUnlock1.transform.localPosition = new Vector3(727, 247, 0);
     }
 
     /// <summary>

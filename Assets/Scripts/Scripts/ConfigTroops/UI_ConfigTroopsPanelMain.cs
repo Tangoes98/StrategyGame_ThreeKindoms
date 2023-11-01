@@ -261,8 +261,9 @@ public class UI_ConfigTroopsPanelMain : BasePanel
             if (button != null)
             {
                 Button buttonComponent = button.GetComponent<Button>();
-                TMP_Text buttonText = buttonComponent.GetComponentInChildren<TMP_Text>();
-                buttonText.text = "关闭兵种树";
+                Image buttonImage = buttonComponent.GetComponent<Image>();
+                buttonImage.sprite = ResourceManager.GetInstance().Load<Sprite>("UIAssets/WJ_B_GuanBiBingZhongShu");
+                
             }
 
             UIManager.GetInstance().ShowPanel<UI_TroopLevelUpPanel2>("TroopLevelUpPanel2", E_UI_Layer.Top);
@@ -276,8 +277,8 @@ public class UI_ConfigTroopsPanelMain : BasePanel
             if (button != null)
             {
                 Button buttonComponent = button.GetComponent<Button>();
-                TMP_Text buttonText = buttonComponent.GetComponentInChildren<TMP_Text>();
-                buttonText.text = "打开兵种树";
+                Image buttonImage = buttonComponent.GetComponent<Image>();
+                buttonImage.sprite = ResourceManager.GetInstance().Load<Sprite>("UIAssets/WJ_B_DaKaiBingZhongShu");
             }
 
             UIManager.GetInstance().HidePanel("TroopLevelUpPanel2");

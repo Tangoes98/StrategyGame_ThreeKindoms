@@ -29,11 +29,11 @@ public class UI_ConfigTroopsPanel : BasePanel
                 UIManager.GetInstance().HidePanel("MenuPanel");
                 SceneMgr.GetInstance().LoadSceneAsyn("ConfigurationUnit", AfterLoadFunctions);
                 break;
-            //点击进入关卡选择页面
+            /*//点击进入关卡选择页面
             case "ChooseLevel":
                 UIManager.GetInstance().HidePanel("MenuPanel");
                 SceneMgr.GetInstance().LoadSceneAsyn("LevelSelectScene", AfterLoadFunctions);
-                break;
+                break;*/
             //点击打开菜单面板
             case "OpenMenu":
 

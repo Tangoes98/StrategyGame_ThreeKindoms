@@ -63,7 +63,7 @@ public class UI_GeneralOwnedTroops : BasePanel
 
         for (int i = 0; i < tempInfo.Count; ++i)
         {
-            UI_TroopCell cell = ResourceManager.GetInstance().Load<GameObject>("UI/TroopCell").GetComponent<UI_TroopCell>();
+            UI_TroopCell cell = ResourceManager.GetInstance().Load<GameObject>("UI/TroopCellInTroopSelectPanel").GetComponent<UI_TroopCell>();
             cell.InitInfo(tempInfo[i]);
             cell.transform.SetParent(content, false);
             list.Add(cell);
