@@ -4,5 +4,38 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 05c211b0d592bf245b34f1f03c3f795c
+  - enabled: 1
+    path: Assets/Scenes/Story0.unity
+    guid: f03110d8d279e8b479eade0a65e246e9
+  - enabled: 1
+    path: Assets/Scenes/Intro_Chapter1.unity
+    guid: 6be009f73c3e94d43ada1dc84a837e42
+  - enabled: 1
+    path: Assets/Scenes/Story1.unity
+    guid: df7433283bb355a42ac31e6ebab2ec5a
+  - enabled: 1
+    path: Assets/Scenes/Story2.unity
+    guid: 79f536cdb1a58274fbe8ea68aec100eb
+  - enabled: 1
+    path: Assets/Scenes/ManageSupplies.unity
+    guid: 42cbcfd278bc8754987a3cd677213914
+  - enabled: 1
+    path: Assets/Scenes/LevelSelectScene.unity
+    guid: de2996513513f2f47ab46962f8c6fde1
+  - enabled: 1
+    path: Assets/Scenes/ConfigurationUnit.unity
+    guid: 5267d0e8fd55a754bb93edf282761f2e
+  - enabled: 1
+    path: Assets/Scenes/ConfigTroops.unity
+    guid: a4e9a76f6b19bc144a52c1436685d90f
+  - enabled: 1
+    path: Assets/Scenes/Intro_Chapter2.unity
+    guid: 2ba9383e4059cf84aa03d09a39d46432
+  - enabled: 1
+    path: Assets/Scenes_Tan/TestBattleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

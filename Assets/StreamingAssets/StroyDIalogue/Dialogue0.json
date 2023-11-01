@@ -1,0 +1,228 @@
+{
+  "dialogue": [
+    {
+      "IsOption": "D",
+      "DialogueID": 0,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "午后，蜀地迎来了一个难得的凉爽天气。老者处理完手头的事物，走到门外露台的酒案旁缓缓坐下",
+      "JumpToID": 1
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 1,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "老者揉了揉自己的太阳穴，试图借此缓解下令人烦躁的疲劳",
+      "JumpToID": 2
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 2,
+      "Character": "LiuBei",
+      "PicturePosition": "left",
+      "Content": "孤的精力怎么如此不济了，也罢，就稍微休息一下吧",
+      "JumpToID": 3
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 3,
+      "Character": "LiuBei",
+      "PicturePosition": "left",
+      "Content": "………",
+      "JumpToID": 4
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 4,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "睡梦中，一个声音自老者脑海中响起",
+      "JumpToID": 5
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 5,
+      "Character": "ZhangFei",
+      "PicturePosition": "right",
+      "Content": "大哥，大哥！该你下令啦！",
+      "JumpToID": 6
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 6,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "翼德...还有...云长？孤许久未见你们了...",
+      "JumpToID": 7
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 7,
+      "Character": "GuanYu",
+      "PicturePosition": "right",
+      "Content": "大哥何出此言，自桃园立誓，关某和三弟早已决定与大哥生死相随",
+      "JumpToID": 8
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 8,
+      "Character": "ZhangFei",
+      "PicturePosition": "right",
+      "Content": "是啊，俺们兄弟三人不是一直共进退吗？",
+      "JumpToID": 9
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 9,
+      "Character": "GuanYu",
+      "PicturePosition": "right",
+      "Content": "何况今日只是演武，并非战场.大哥只管操练这些新招的士卒即可",
+      "JumpToID": 10
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 10,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "原...原来如此…愚兄许久未曾上过战场，不免有些生疏了",
+      "JumpToID": 11
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 11,
+      "Character": "ZhangFei",
+      "PicturePosition": "right",
+      "Content": "哈哈，二哥快跟大哥讲讲这行军操练之法，俺老张早就等不及了！",
+      "JumpToID": 12
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 12,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "眼前的军营渐渐模糊，取而代之的是远处的青山",
+      "JumpToID": 13
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 13,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "凉爽的清风吹过老人的面颊，原来之前的一切都是南柯一梦",
+      "JumpToID": 14
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 14,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "原来是做了个梦",
+      "JumpToID": 15
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 15,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "真不愿承认孤年事已高了，处理了些公务便这么疲惫，将来恐怕也上不得战场了…",
+      "JumpToID": 16
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 16,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "二弟三弟不知近来如何，想来也许久未见他们了",
+      "JumpToID": 17
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 17,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "老者一时间有些失神，无数往事涌上心头",
+      "JumpToID": 18
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 18,
+      "Character": "Child",
+      "PicturePosition": "right",
+      "Content": "父王！",
+      "JumpToID": 19
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 19,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "理儿啊，来，坐到为父身边",
+      "JumpToID": 20
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 20,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "来来，尝尝梅子",
+      "JumpToID": 21
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 21,
+      "Character": "Child",
+      "PicturePosition": "right",
+      "Content": "父王，昨日你答应理儿要讲故事",
+      "JumpToID": 22
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 22,
+      "Character": "Chamberlain",
+      "PicturePosition": "right",
+      "Content": "小公子，莫扰了大王休息",
+      "JumpToID": 23
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 23,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "无妨",
+      "JumpToID": 24
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 24,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "理儿可愿听为父年轻时的故事呀？",
+      "JumpToID": 25
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 25,
+      "Character": "Child",
+      "PicturePosition": "right",
+      "Content": "愿意愿意",
+      "JumpToID": 26
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 26,
+      "Character": "Narrotor",
+      "PicturePosition": "no",
+      "Content": "老者面露微笑，虽已是许多许多年前的经历，但那些场景历历在目，恍如昨日…",
+      "JumpToID": 27
+    },
+    {
+      "IsOption": "D",
+      "DialogueID": 27,
+      "Character": "Liubei",
+      "PicturePosition": "left",
+      "Content": "就从为父刚刚从军开始讲起吧…",
+      "JumpToID": 28
+    }
+  ]
+}

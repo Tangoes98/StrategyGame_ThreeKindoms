@@ -1,0 +1,183 @@
+{
+	"expInfo": [{
+			"NeedEXP": 0,
+			"TargetLevel": 1,
+			"EnemyEXP": 200,
+			"EnemyLevel": 1
+		},
+		{
+			"NeedEXP": 380,
+			"TargetLevel": 2,
+			"EnemyEXP": 400,
+			"EnemyLevel": 2
+		},
+		{
+			"NeedEXP": 1080,
+			"TargetLevel": 3,
+			"EnemyEXP": 700,
+			"EnemyLevel": 3
+		},
+		{
+			"NeedEXP": 2340,
+			"TargetLevel": 4,
+			"EnemyEXP": 1100,
+			"EnemyLevel": 4
+		},
+		{
+			"NeedEXP": 4400,
+			"TargetLevel": 5,
+			"EnemyEXP": 1600,
+			"EnemyLevel": 5
+		},
+		{
+			"NeedEXP": 7500,
+			"TargetLevel": 6,
+			"EnemyEXP": 2200,
+			"EnemyLevel": 6
+		},
+		{
+			"NeedEXP": 11880,
+			"TargetLevel": 7,
+			"EnemyEXP": 2900,
+			"EnemyLevel": 7
+		},
+		{
+			"NeedEXP": 17780,
+			"TargetLevel": 8,
+			"EnemyEXP": 3700,
+			"EnemyLevel": 8
+		},
+		{
+			"NeedEXP": 25440,
+			"TargetLevel": 9,
+			"EnemyEXP": 4600,
+			"EnemyLevel": 9
+		},
+		{
+			"NeedEXP": 35100,
+			"TargetLevel": 10,
+			"EnemyEXP": 5600,
+			"EnemyLevel": 10
+		},
+		{
+			"NeedEXP": 47000,
+			"TargetLevel": 11,
+			"EnemyEXP": 6700,
+			"EnemyLevel": 11
+		},
+		{
+			"NeedEXP": 61380,
+			"TargetLevel": 12,
+			"EnemyEXP": 7900,
+			"EnemyLevel": 12
+		},
+		{
+			"NeedEXP": 78480,
+			"TargetLevel": 13,
+			"EnemyEXP": 9200,
+			"EnemyLevel": 13
+		},
+		{
+			"NeedEXP": 98540,
+			"TargetLevel": 14,
+			"EnemyEXP": 10600,
+			"EnemyLevel": 14
+		},
+		{
+			"NeedEXP": 121800,
+			"TargetLevel": 15,
+			"EnemyEXP": 12100,
+			"EnemyLevel": 15
+		},
+		{
+			"NeedEXP": 148500,
+			"TargetLevel": 16,
+			"EnemyEXP": 13700,
+			"EnemyLevel": 16
+		},
+		{
+			"NeedEXP": 178880,
+			"TargetLevel": 17,
+			"EnemyEXP": 15400,
+			"EnemyLevel": 17
+		},
+		{
+			"NeedEXP": 213180,
+			"TargetLevel": 18,
+			"EnemyEXP": 17200,
+			"EnemyLevel": 18
+		},
+		{
+			"NeedEXP": 251640,
+			"TargetLevel": 19,
+			"EnemyEXP": 19100,
+			"EnemyLevel": 19
+		},
+		{
+			"NeedEXP": 294500,
+			"TargetLevel": 20,
+			"EnemyEXP": 21100,
+			"EnemyLevel": 20
+		},
+		{
+			"NeedEXP": 342000,
+			"TargetLevel": 21,
+			"EnemyEXP": 23200,
+			"EnemyLevel": 21
+		},
+		{
+			"NeedEXP": 394380,
+			"TargetLevel": 22,
+			"EnemyEXP": 25400,
+			"EnemyLevel": 22
+		},
+		{
+			"NeedEXP": 451880,
+			"TargetLevel": 23,
+			"EnemyEXP": 27700,
+			"EnemyLevel": 23
+		},
+		{
+			"NeedEXP": 514740,
+			"TargetLevel": 24,
+			"EnemyEXP": 30100,
+			"EnemyLevel": 24
+		},
+		{
+			"NeedEXP": 583200,
+			"TargetLevel": 25,
+			"EnemyEXP": 32600,
+			"EnemyLevel": 25
+		},
+		{
+			"NeedEXP": 657500,
+			"TargetLevel": 26,
+			"EnemyEXP": 35200,
+			"EnemyLevel": 26
+		},
+		{
+			"NeedEXP": 737880,
+			"TargetLevel": 27,
+			"EnemyEXP": 37900,
+			"EnemyLevel": 27
+		},
+		{
+			"NeedEXP": 824580,
+			"TargetLevel": 28,
+			"EnemyEXP": 40700,
+			"EnemyLevel": 28
+		},
+		{
+			"NeedEXP": 917840,
+			"TargetLevel": 29,
+			"EnemyEXP": 43600,
+			"EnemyLevel": 29
+		},
+		{
+			"NeedEXP": 1017900,
+			"TargetLevel": 30,
+			"EnemyEXP": 46600,
+			"EnemyLevel": 30
+		}
+	]
+}

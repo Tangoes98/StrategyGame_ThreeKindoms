@@ -1,0 +1,73 @@
+{
+	"troopLevelUpInfo": [{
+			"MaterialName": ["筒袖铠"],
+			"MaterialID": [69],
+			"Number": [1],
+			"TroopName": "MediumArmoredArcher",
+			"TroopID":7
+		},
+		{
+			"MaterialName": ["两裆铠,战马"],
+			"MaterialID": [68,66],
+			"Number": [1,1],
+			"TroopName": "LightArmoredCavalryArcher",
+			"TroopID":8
+		},
+		{
+			"MaterialName": ["筒袖铠"],
+			"MaterialID": [69],
+			"Number": [1],
+			"TroopName": "MediumArmoredCrossbow ",
+			"TroopID":9
+		},
+		{
+			"MaterialName": ["筒袖铠"],
+			"MaterialID": [69],
+			"Number": [1],
+			"TroopName": "Chu-Ko-Nu",
+			"TroopID":10
+		},
+		{
+			"MaterialName": ["筒袖铠"],
+			"MaterialID": [69],
+			"Number": [1],
+			"TroopName": "MediumArmoredHalberd",
+			"TroopID":11
+		},
+		{
+			"MaterialName": ["筒袖铠"],
+			"MaterialID": [69],
+			"Number": [1],
+			"TroopName": "SpearShieldGuard",
+			"TroopID":12
+		},
+		{
+			"MaterialName": ["两裆铠"],
+			"MaterialID": [68],
+			"Number": [1],
+			"TroopName": "PioneerWarrior",
+			"TroopID":13
+		},
+		{
+			"MaterialName": ["筒袖铠"],
+			"MaterialID": [69],
+			"Number": [1],
+			"TroopName": "MediumArmoredSword",
+			"TroopID":14
+		},
+		{
+			"MaterialName": ["筒袖铠,战马"],
+			"MaterialID": [69,66],
+			"Number": [1,1],
+			"TroopName": "MediumArmoredLancer",
+			"TroopID":15
+		},
+		{
+			"MaterialName": ["筒袖铠,战马"],
+			"MaterialID": [69,66],
+			"Number": [1,1],
+			"TroopName": "MediumArmoredSwordCavalry",
+			"TroopID":16
+		}
+	]
+}

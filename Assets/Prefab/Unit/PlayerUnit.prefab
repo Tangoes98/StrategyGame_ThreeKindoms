@@ -710,6 +710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isActionEnabled: 1
+  _unitType: 0
   _actionName: ATTACK
   _actionCost: 2
   _attackRange: 4

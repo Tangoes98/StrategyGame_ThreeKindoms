@@ -1,0 +1,58 @@
+{
+	"introScripts": [{
+			"DialogueID": 0,
+			"Content": "随着张角病逝，张宝张梁兄弟击败，一时轰轰烈烈的黄巾起义以失败告终.",
+			"JumpToID": 1
+		},
+		{
+			"DialogueID": 1,
+			"Content": "汉帝国虽平定叛乱，但威信亦受到了沉重打击.",
+			"JumpToID": 2
+		},
+		{
+			"DialogueID": 2,
+			"Content": "各地郡守凭借平定黄巾时募集的军队，实力大增，拉开了地方诸侯轻视中央，佣兵自重的序幕.",
+			"JumpToID": 3
+		},
+		{
+			"DialogueID": 3,
+			"Content": "刘备因镇压黄巾有功，获封安喜县尉. 但同年朝廷就过河拆桥，裁汰因讨伐黄巾的军功为官之人.",
+			"JumpToID": 4
+		},
+		{
+			"DialogueID": 4,
+			"Content": "清正为官的刘备无力贿赂前来考绩的督邮，因此位列裁汰名单之中. ",
+			"JumpToID": 5
+		},
+		{
+			"DialogueID": 5,
+			"Content": "刘备怒鞭督邮后，与关羽，张飞等人弃官.",
+			"JumpToID": 6
+		},
+		{
+			"DialogueID": 6,
+			"Content": "此后数年间，朝廷愈加倒行逆施，导致百姓离心. 各地黄巾死灰复燃，盗匪叛贼横行。",
+			"JumpToID": 7
+		},
+		{
+			"DialogueID": 7,
+			"Content": "公元187年，原中山太守张纯及张举等人挑唆幽州乌桓各部反叛. 引外族深入幽州腹地，杀戮吏民，掳掠人口.",
+			"JumpToID": 8
+		},
+		{
+			"DialogueID": 8,
+			"Content": "张纯自号“弥天将军”，张举自称“天子” ，统辖乌桓头领丘力居，苏仆延等人，拥众十余万.",
+			"JumpToID": 9
+		},
+		{
+			"DialogueID": 9,
+			"Content": "正在幽州隐居的刘备等人因勇名被推举，幽州牧刘虞委任公孙瓒，刘备等率兵前往右北平郡平叛.",
+			"JumpToID": 10
+		},
+		{
+			"DialogueID": 10,
+			"Content": "刘备又一次被命运推到了台前…",
+			"JumpToID": 11
+		}
+	]
+}

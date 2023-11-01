@@ -1,0 +1,58 @@
+{
+	"introScripts": [{
+			"DialogueID": 0,
+			"Content": "汉朝自光武帝中兴以来，已经过了一百六十多年.",
+			"JumpToID": 1
+		},
+		{
+			"DialogueID": 1,
+			"Content": "期间宦官逐渐参与朝政.外戚，士人，宦官之间争斗不休. 皇位更替频繁，导致朝政日益衰败.",
+			"JumpToID": 2
+		},
+		{
+			"DialogueID": 2,
+			"Content": "加之地方豪强横征暴敛，兼并土地，连年天灾之下，百姓家破人亡，几无立锥之地.",
+			"JumpToID": 3
+		},
+		{
+			"DialogueID": 3,
+			"Content": "人称大贤良师的钜鹿人张角趁此机会，利用宗教太平道收买人心，积蓄势力.",
+			"JumpToID": 4
+		},
+		{
+			"DialogueID": 4,
+			"Content": "公元184年，张角自称“天公将军”，其弟张宝称“地公将军”，张梁称“人公将军,",
+			"JumpToID": 5
+		},
+		{
+			"DialogueID": 5,
+			"Content": "率领数州数十万太平道徒以“苍天已死，黄天当立”为口号举事.",
+			"JumpToID": 6
+		},
+		{
+			"DialogueID": 6,
+			"Content": "因为起义者皆头戴黄巾，所以被称为“黄巾军”.",
+			"JumpToID": 7
+		},
+		{
+			"DialogueID": 7,
+			"Content": "他们煽动饥民焚烧官府，杀戮官吏，占领州府城邑. 战火迅速蔓延至帝国各处，数日之内天下震动. ",
+			"JumpToID": 8
+		},
+		{
+			"DialogueID": 8,
+			"Content": "朝廷一时间无力镇压，只得命各州募集义军，保境守土，防备黄巾军.",
+			"JumpToID": 9
+		},
+		{
+			"DialogueID": 9,
+			"Content": "素有大志的刘备得到了大商人张世平，苏双的赏识和资助，得以募集一支义兵为国效力.",
+			"JumpToID": 10
+		},
+		{
+			"DialogueID": 10,
+			"Content": "刘备和他的结义兄弟关羽，张飞一起...开始了波澜壮阔的征途.",
+			"JumpToID": 11
+		}
+	]
+}
