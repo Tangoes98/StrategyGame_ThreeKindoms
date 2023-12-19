@@ -38,12 +38,12 @@ public class T_GridSystem
         }
     }
 
-    public Vector3 GetWorldPosition(T_GirdPosition gridPosition)
+    public Vector3 GridToWorldPosition(T_GirdPosition gridPosition)
     {
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize;
     }
 
-    public T_GirdPosition GetGridPosition(Vector3 worldPosition)
+    public T_GirdPosition WorldToGridPosition(Vector3 worldPosition)
     {
         return new T_GirdPosition(Mathf.RoundToInt(worldPosition.x / _cellSize), Mathf.RoundToInt(worldPosition.z / _cellSize));
     }
@@ -63,7 +63,7 @@ public class T_GridSystem
             {
                 var gridPosition = new T_GirdPosition(x, z);
 
-                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GetWorldPosition(gridPosition), Quaternion.identity);
+                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GridToWorldPosition(gridPosition), Quaternion.identity);
 
                 SetGridData(gridObjectPrefab, gridPosition);
             }

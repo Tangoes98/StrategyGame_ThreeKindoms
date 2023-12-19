@@ -20,6 +20,12 @@ public class T_LevelGridManager : MonoBehaviour
 
     #region Public Access Functions
 
+    public Vector3 GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
+    public T_GirdPosition WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
+    public T_GridData GetCurrentGridPositionData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
+
+
+
     #endregion
 
     void Awake()
@@ -31,13 +37,14 @@ public class T_LevelGridManager : MonoBehaviour
         }
         Instance = this;
 
+
+        _gridSystem = new(_gridWidth, _gridHeight, _gridCellSize);
+
+        _gridSystem.CreateGridVisual(_gridObejctVisual);
     }
 
     void Start()
     {
-        _gridSystem = new(_gridWidth, _gridHeight, _gridCellSize);
-
-        _gridSystem.CreateGridVisual(_gridObejctVisual);
 
 
     }
