@@ -18,11 +18,19 @@ public class T_UnitSelection : MonoBehaviour
 
     [SerializeField] LayerMask _unitLayerMask;
 
-    [SerializeField] Transform _selectedUnit;
+    [SerializeField] T_Unit _selectedUnit;
+
+    #region Public Properties
+
+    public T_Unit GetSelectedUnit() => _selectedUnit;
+
+
+    #endregion
 
     void Update()
     {
         SelectUnit();
+        DeselectUnit();
     }
 
 
@@ -40,8 +48,14 @@ public class T_UnitSelection : MonoBehaviour
     {
         if (!RaycastingUnit()) return;
 
-        if (Input.GetMouseButtonDown(0)) _selectedUnit = RaycastingUnit();
+        if (Input.GetMouseButtonDown(0)) _selectedUnit = RaycastingUnit().GetComponent<T_Unit>();
     }
+
+    void DeselectUnit()
+    {
+        if (Input.GetMouseButtonDown(0) && !RaycastingUnit()) _selectedUnit = null;
+    }
+
 
 
 

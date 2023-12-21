@@ -18,11 +18,17 @@ public class T_LevelGridManager : MonoBehaviour
     T_GridSystem _gridSystem;
 
 
-    #region Public Access Functions
+    #region Public Access
+
+    public int GetGridWidth() => _gridWidth;
+    public int GetGridHeight() => _gridHeight;
 
     public Vector3 GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
     public T_GirdPosition WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
-    public T_GridData GetCurrentGridPositionData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
+    public T_GridData GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
+    public T_Pathnode GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
+
+
 
 
 

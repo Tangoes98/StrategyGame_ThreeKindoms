@@ -8,6 +8,7 @@ public class T_GridSystem
     int _width, _height;
     float _cellSize;
     T_GridData[,] _gridDatas;
+    T_Pathnode[,] _pathNodes;
 
 
     public T_GridSystem(int width, int height, float cellSize)
@@ -16,6 +17,7 @@ public class T_GridSystem
         this._height = height;
         this._cellSize = cellSize;
         this._gridDatas = new T_GridData[width, height];
+        this._pathNodes = new T_Pathnode[width, height];
 
 
         for (int i = 0; i < _width; i++)
@@ -24,6 +26,7 @@ public class T_GridSystem
             {
                 var gridPosition = new T_GirdPosition(i, j);
                 _gridDatas[i, j] = new T_GridData(gridPosition);
+                _pathNodes[i, j] = new T_Pathnode(gridPosition);
 
 
 
@@ -52,6 +55,10 @@ public class T_GridSystem
     {
         return _gridDatas[gridPosition.x, gridPosition.z];
     }
+    public T_Pathnode GetPathnode(T_GirdPosition gridPosition)
+    {
+        return _pathNodes[gridPosition.x, gridPosition.z];
+    }
 
 
 
@@ -66,6 +73,7 @@ public class T_GridSystem
                 Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GridToWorldPosition(gridPosition), Quaternion.identity);
 
                 SetGridData(gridObjectPrefab, gridPosition);
+                SetPathNode(gridObjectPrefab, gridPosition);
             }
         }
     }
@@ -73,6 +81,10 @@ public class T_GridSystem
     void SetGridData(Transform gridObject, T_GirdPosition gridPosition)
     {
         gridObject.GetComponentInChildren<T_GridDataVisual>().SetIndividualGridData(GetGridData(gridPosition));
+    }
+    void SetPathNode(Transform gridObject, T_GirdPosition gridPosition)
+    {
+        gridObject.GetComponentInChildren<T_GridDataVisual>().SetPathNode(GetPathnode(gridPosition));
     }
 
 

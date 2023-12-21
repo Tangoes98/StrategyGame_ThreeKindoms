@@ -1,5 +1,6 @@
 using System;
 
+[Serializable]
 public struct T_GirdPosition
 {
     public int x;
