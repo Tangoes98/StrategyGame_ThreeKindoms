@@ -80,11 +80,11 @@ public class T_GridSystem
 
     void SetGridData(Transform gridObject, T_GirdPosition gridPosition)
     {
-        gridObject.GetComponentInChildren<T_GridDataVisual>().SetIndividualGridData(GetGridData(gridPosition));
+        gridObject.GetComponent<T_GridDataVisual>().SetIndividualGridData(GetGridData(gridPosition));
     }
     void SetPathNode(Transform gridObject, T_GirdPosition gridPosition)
     {
-        gridObject.GetComponentInChildren<T_GridDataVisual>().SetPathNode(GetPathnode(gridPosition));
+        gridObject.GetComponent<T_GridDataVisual>().SetPathNode(GetPathnode(gridPosition));
     }
 
 

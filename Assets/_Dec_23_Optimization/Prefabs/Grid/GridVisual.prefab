@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2519624165358585403}
+  - component: {fileID: 3535582682882439336}
   m_Layer: 0
   m_Name: GridVisual
   m_TagString: Untagged
@@ -33,6 +34,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3535582682882439336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566155869095647596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4170f9482a92b59429d3ca10e6060568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gridInfo: {fileID: 7937687738714037074}
+  _PathnodeInfo: {fileID: 5120543865685549228}
 --- !u!1 &2895334957671762005
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +333,6 @@ GameObject:
   - component: {fileID: 6791697511395743280}
   - component: {fileID: 7484511479544576296}
   - component: {fileID: 7937687738714037074}
-  - component: {fileID: 5293020517930030530}
   m_Layer: 0
   m_Name: GridPositionText
   m_TagString: Untagged
@@ -481,17 +495,3 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 7484511479544576296}
   m_maskType: 0
---- !u!114 &5293020517930030530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8894924972757028596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4170f9482a92b59429d3ca10e6060568, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _gridInfo: {fileID: 7937687738714037074}
-  _PathnodeInfo: {fileID: 5120543865685549228}

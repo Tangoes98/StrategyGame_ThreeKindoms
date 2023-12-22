@@ -21,16 +21,29 @@ public class T_Pathnode
 
     #region Publice Properties
 
-    public int GetFCost() => _FCost;
-    public int GetGCost() => _GCost;
-    public int GetHCost() => _HCost;
+    public int G_GetFCost() => _FCost;
+    public int G_GetGCost() => _GCost;
+    public int G_GetHCost() => _HCost;
 
-    public void CalculateFCost() => _FCost = _GCost + _HCost;
-    public void SetGCost(int g) => _GCost = g;
-    public void SetHCost(int h) => _HCost = h;
+    public void G_CalculateFCost() => _FCost = _GCost + _HCost;
+    public void G_SetGCost(int g) => _GCost = g;
+    public void G_SetHCost(int h) => _HCost = h;
 
-    public T_GirdPosition GetGridPosition() => _gridPosition;
+    public T_GirdPosition G_GetGridPosition() => _gridPosition;
+    public void G_ResetCosts() => resetCosts();
 
 
     #endregion
+
+    void resetCosts()
+    {
+        _GCost = 0;
+        _HCost = 0;
+        _FCost = _GCost + _HCost;
+    }
+
+
+
+
+
 }

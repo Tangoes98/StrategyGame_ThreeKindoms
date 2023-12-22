@@ -27,6 +27,7 @@ public class T_LevelGridManager : MonoBehaviour
     public T_GirdPosition WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
     public T_GridData GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
     public T_Pathnode GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
+    
 
 
 
