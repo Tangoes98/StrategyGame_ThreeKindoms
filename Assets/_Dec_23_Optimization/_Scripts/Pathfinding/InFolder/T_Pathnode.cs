@@ -9,12 +9,14 @@ public class T_Pathnode
     int _HCost;
     T_GirdPosition _gridPosition;
 
+    bool _isValid;
+
 
 
     public T_Pathnode(T_GirdPosition gp)
     {
         this._gridPosition = gp;
-
+        this._isValid = true;
 
     }
 
@@ -31,6 +33,9 @@ public class T_Pathnode
 
     public T_GirdPosition G_GetGridPosition() => _gridPosition;
     public void G_ResetCosts() => resetCosts();
+
+    public bool G_IsValidPathNode() => _isValid;
+    public void G_SetIsValidPathNode(bool a) => _isValid = a;
 
 
     #endregion

@@ -14,7 +14,7 @@ public class T_GridDataVisual : MonoBehaviour
 
     void Start()
     {
-        //T_LevelGridManager.Instance.
+        
     }
     void Update()
     {

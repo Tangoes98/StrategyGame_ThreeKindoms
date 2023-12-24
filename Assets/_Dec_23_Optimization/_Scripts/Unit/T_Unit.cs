@@ -55,13 +55,13 @@ public class T_Unit : MonoBehaviour
         _currentGridData = CurrentGridData(_currentGridPosition);
         _oldGridData = _currentGridData;
         _currentGridData.AddUnit(this);
-        _startPosition = _levelGridManagerInstance.GridToWorldPosition(_currentGridPosition);
+        _startPosition = _levelGridManagerInstance.G_GridToWorldPosition(_currentGridPosition);
         this.transform.position = _startPosition;
     }
 
     void UpdateUnitGridPosition()
     {
-        _currentGridPosition = _levelGridManagerInstance.WorldToGridPosition(this.transform.position);
+        _currentGridPosition = _levelGridManagerInstance.G_WorldToGridPosition(this.transform.position);
         //this.transform.position = _levelGridManagerInstance.GridToWorldPosition(_currentGridPosition);
     }
 
@@ -75,7 +75,7 @@ public class T_Unit : MonoBehaviour
         _oldGridPosition = _currentGridPosition;
     }
 
-    T_GridData CurrentGridData(T_GirdPosition gp) => _levelGridManagerInstance.GetGridPosData(gp);
+    T_GridData CurrentGridData(T_GirdPosition gp) => _levelGridManagerInstance.G_GetGridPosData(gp);
 
     #endregion
 

@@ -33,7 +33,10 @@ public class T_Pathfingding : MonoBehaviour
 
     void Start()
     {
-
+        // SetPathNodeAcive(new(0, 1));
+        // SetPathNodeAcive(new(1, 1));
+        // //SetPathNodeAcive(new(2, 0));
+        // SetPathNodeAcive(new(2, 1));
     }
 
     void Update()
@@ -41,6 +44,7 @@ public class T_Pathfingding : MonoBehaviour
         DEBUG_TEST();
     }
 
+    #region ========DEBUG_TEST==========
 
     void DEBUG_TEST()
     {
@@ -55,21 +59,26 @@ public class T_Pathfingding : MonoBehaviour
             // {
             //     GetGridPathNode(item).G_ResetCosts();
             // }
+
             // ResetAllGridPathNodeCosts();
             // PathList.Clear();
-            // PathList = FindPath(TestGridStartPos, TestGridEndPos);
+            // PathList = G_FindPath(TestGridStartPos, TestGridEndPos);
             // T_DrawPathline.Instance.G_DrawPathline(PathList);
 
         }
-        T_GirdPosition mosueGridPos = T_LevelGridManager.Instance.WorldToGridPosition(T_MouseController.Instance.GetMouseWorldPosition());
-        ResetAllGridPathNodeCosts();
-        PathList.Clear();
-        PathList = FindPath(TestGridStartPos, mosueGridPos);
-        T_DrawPathline.Instance.G_DrawPathline(PathList);
+        // T_GirdPosition mosueGridPos = T_LevelGridManager.Instance.WorldToGridPosition(T_MouseController.Instance.GetMouseWorldPosition());
+        // // if (PathList != null) PathList.Clear();
+        // T_DrawPathline.Instance.G_DrawPathline(FindPath(TestGridStartPos, mosueGridPos));
 
     }
 
+    // void SetPathNodeAcive(T_GirdPosition gp)
+    // {
+    //     GetGridPathNode(gp).G_SetIsValidPathNode(false);
+    // }
 
+
+    #endregion
 
 
 
@@ -81,7 +90,7 @@ public class T_Pathfingding : MonoBehaviour
 
 
 
-    #region ========== Public Properties ==========
+    #region ========== Public Method ==========
     public int G_CalculateHCost(T_GirdPosition current, T_GirdPosition end) => CalculateGridPositionDistance(current, end);
     public int G_CalculateGCost(T_GirdPosition current, T_GirdPosition start) => CalculateGridPositionDistance(current, start);
 
@@ -92,7 +101,8 @@ public class T_Pathfingding : MonoBehaviour
 
 
 
-    T_Pathnode GetGridPathNode(T_GirdPosition gp) => T_LevelGridManager.Instance.GetGridPosPathNode(gp);
+    T_Pathnode GetGridPathNode(T_GirdPosition gp) => T_LevelGridManager.Instance.G_GetGridPosPathNode(gp);
+
     int CalculateGridPositionDistance(T_GirdPosition a, T_GirdPosition b)
     {
         int deltaX = Mathf.Abs(a.x - b.x);
@@ -104,6 +114,8 @@ public class T_Pathfingding : MonoBehaviour
 
     List<T_GirdPosition> FindPath(T_GirdPosition start, T_GirdPosition end)
     {
+        ResetAllGridPathNodeCosts();
+
         List<T_GirdPosition> tempPathList = new();
         List<T_GirdPosition> finalPathList = new();
 
@@ -118,6 +130,7 @@ public class T_Pathfingding : MonoBehaviour
         while (tempPathList.Count > 0)
         {
             Debug.Log(currentGridPos);
+
             if (currentGridPos == end)
             {
                 Debug.Log("FindPath");
@@ -129,7 +142,10 @@ public class T_Pathfingding : MonoBehaviour
                 return finalPathList;
             }
 
+
             List<T_GirdPosition> neighbourList = GetNeighbourPathNodeGridList(currentGridPos);
+
+            if (neighbourList.Count < 1) break; // No valid neighbour grid
 
             List<T_Pathnode> neighbourNodeList = CalculateNeighbourGridFCost(neighbourList, currentGridPos, end);
 
@@ -141,6 +157,7 @@ public class T_Pathfingding : MonoBehaviour
 
             currentGridPos = nextGridPos;
         }
+
         Debug.Log("No path found");
         return null;
 
@@ -167,25 +184,32 @@ public class T_Pathfingding : MonoBehaviour
 
 
         if (leftNode.x >= 0) neightbourList.Add(leftNode);
-        if (rightNode.x <= gridWidth) neightbourList.Add(rightNode);
+        if (rightNode.x < gridWidth) neightbourList.Add(rightNode);
 
-        if (upNode.z <= gridHeight) neightbourList.Add(upNode);
+        if (upNode.z < gridHeight) neightbourList.Add(upNode);
         if (downNode.z >= 0) neightbourList.Add(downNode);
 
         // skip checked neighbour node
-        return RemoveCheckedGirdPos(neightbourList);
+        return NeighbourGridPositionValidation(neightbourList);
     }
 
 
-    List<T_GirdPosition> RemoveCheckedGirdPos(List<T_GirdPosition> gridposList)
+    List<T_GirdPosition> NeighbourGridPositionValidation(List<T_GirdPosition> gridposList)
     {
-        List<T_GirdPosition> nonDuplicatedNeighbourGrids = new();
+        List<T_GirdPosition> ValidatedNeighbourGrids = new();
         foreach (T_GirdPosition gridpos in gridposList)
         {
-            // Need to check the condition later
-            if (GetGridPathNode(gridpos).G_GetFCost() == 0) nonDuplicatedNeighbourGrids.Add(gridpos);
+            // Need to Update the condition later
+
+            if (!GetGridPathNode(gridpos).G_IsValidPathNode()) continue;
+
+            if (GetGridPathNode(gridpos).G_GetFCost() != 0) continue;
+
+            ValidatedNeighbourGrids.Add(gridpos);
+
+
         }
-        return nonDuplicatedNeighbourGrids;
+        return ValidatedNeighbourGrids;
     }
 
     void CalculateStartGridPosFCost(T_GirdPosition startGirdpos, T_GirdPosition endingGridpos)
@@ -212,6 +236,8 @@ public class T_Pathfingding : MonoBehaviour
             neighbourNode.G_CalculateFCost();
 
             neighborNodeList.Add(neighbourNode);
+
+            //Debug.Log("Validated neighbour girds: " + neighbourNode.G_GetGridPosition());
         }
 
         return neighborNodeList;
@@ -221,12 +247,12 @@ public class T_Pathfingding : MonoBehaviour
     T_Pathnode GetLowestFCostNode(List<T_Pathnode> pathNodeList)
     {
         T_Pathnode tempLowestFCostNode = pathNodeList[0];
-        int tempLowestFCost = tempLowestFCostNode.G_GetFCost();
 
         for (int i = 0; i < pathNodeList.Count; i++)
         {
-            if (pathNodeList[i].G_GetFCost() > tempLowestFCost) continue;
-            else tempLowestFCostNode = pathNodeList[i];
+            if (pathNodeList[i].G_GetFCost() > tempLowestFCostNode.G_GetFCost()) continue;
+
+            tempLowestFCostNode = pathNodeList[i];
         }
 
         return tempLowestFCostNode;
@@ -234,11 +260,7 @@ public class T_Pathfingding : MonoBehaviour
 
     void CleanTempPathList(List<T_GirdPosition> tempPathList, List<T_GirdPosition> finalPathList)
     {
-        foreach (T_GirdPosition item in tempPathList)
-        {
-            //GetGridPathNode(item).G_ResetCosts();
-            finalPathList.Add(item);
-        }
+        foreach (T_GirdPosition item in tempPathList) finalPathList.Add(item);
     }
 
     void ResetAllGridPathNodeCosts()

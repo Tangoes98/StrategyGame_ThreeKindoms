@@ -17,18 +17,25 @@ public class T_LevelGridManager : MonoBehaviour
 
     T_GridSystem _gridSystem;
 
+    [SerializeField] Transform _gridValidationVisualObject;
+    T_GridValidationVisual[,] _gridValidationVisuals;
 
-    #region Public Access
+
+
+
+    #region ========== Public Methods =================
 
     public int GetGridWidth() => _gridWidth;
     public int GetGridHeight() => _gridHeight;
 
-    public Vector3 GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
-    public T_GirdPosition WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
-    public T_GridData GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
-    public T_Pathnode GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
-    
+    public Vector3 G_GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
+    public T_GirdPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
+    public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
+    public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
 
+    public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
+    public void G_ShowGridValidationVisual_Move(List<T_GirdPosition> gpList) => ShowGridValidationVisual_Move(gpList);
+    public void G_ShowGridValidationVisual_Target(List<T_GirdPosition> gpList) => ShowGridValidationVisual_Target(gpList);
 
 
 
@@ -48,15 +55,74 @@ public class T_LevelGridManager : MonoBehaviour
         _gridSystem = new(_gridWidth, _gridHeight, _gridCellSize);
 
         _gridSystem.CreateGridVisual(_gridObejctVisual);
+
+        InitializeGridValidationVisuals(_gridValidationVisualObject);
     }
 
     void Start()
     {
 
-
     }
 
 
+
+
+
+
+
+    #region ========== GRID VALIDATION VISUAL FUNCTIONS =================
+
+    void InitializeGridValidationVisuals(Transform visualObject)
+    {
+        _gridValidationVisuals = new T_GridValidationVisual[_gridWidth, _gridHeight];
+        for (int i = 0; i < _gridWidth; i++)
+        {
+            for (int j = 0; j < _gridHeight; j++)
+            {
+                var gridPosition = new T_GirdPosition(i, j);
+                Transform obj = GameObject.Instantiate(visualObject, G_GridToWorldPosition(gridPosition), Quaternion.identity);
+
+                T_GridValidationVisual validationVisual = obj.GetComponent<T_GridValidationVisual>();
+
+                _gridValidationVisuals[i, j] = validationVisual;
+            }
+        }
+    }
+
+    T_GridValidationVisual GetGridValidationVisual(T_GirdPosition gp)
+    {
+        return _gridValidationVisuals[gp.x, gp.z];
+    }
+
+    void ClearAllGridValidationVisuals()
+    {
+        foreach (var visual in _gridValidationVisuals)
+        {
+            foreach (var item in visual.G_GetGridValidationVisualDictionary())
+            {
+                item.Value.enabled = false;
+            }
+        }
+    }
+
+    void ShowGridValidationVisual_Move(List<T_GirdPosition> gpList)
+    {
+        ClearAllGridValidationVisuals();
+        foreach (var gp in gpList)
+        {
+            GetGridValidationVisual(gp).G_SetMoveGridVisual(true);
+        }
+    }
+    void ShowGridValidationVisual_Target(List<T_GirdPosition> gpList)
+    {
+        ClearAllGridValidationVisuals();
+        foreach (var gp in gpList)
+        {
+            GetGridValidationVisual(gp).G_SetTargetGridVisual(true);
+        }
+    }
+
+    #endregion
 
 
 

@@ -49,11 +49,17 @@ public class T_DrawPathline : MonoBehaviour
     // Position list count, pos1, pos2...
     void DrawPathLine(List<T_GirdPosition> girdPositions)
     {
+
+        if (girdPositions == null)
+        {
+            ClearLine();
+            return;
+        }
         _line.positionCount = girdPositions.Count;
 
         for (int i = 0; i < _line.positionCount; i++)
         {
-            _line.SetPosition(i, T_LevelGridManager.Instance.GridToWorldPosition(girdPositions[i]));
+            _line.SetPosition(i, T_LevelGridManager.Instance.G_GridToWorldPosition(girdPositions[i]));
         }
 
     }
