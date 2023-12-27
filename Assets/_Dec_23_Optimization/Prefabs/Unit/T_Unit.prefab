@@ -206,9 +206,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9031430550336673323}
-  - component: {fileID: 9031430550336673320}
+  - component: {fileID: 8300304843162244420}
+  - component: {fileID: 486906625392114083}
   m_Layer: 7
-  m_Name: UnitMoveAction
+  m_Name: UnitAction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +230,7 @@ Transform:
   m_Father: {fileID: 9031430550739498424}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9031430550336673320
+--- !u!114 &8300304843162244420
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,11 +242,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206592dcdaa7e7149a1f7336295c5251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actionState: 0
   _moveSpeed: 2
   _rotateSpeed: 1
   _stopDistance: 0.1
   _unit: {fileID: 9031430550739498430}
+  _unitGirdPosition:
+    x: 0
+    z: 0
+  _maxMoveDistance: 2
   _targetPosition: {x: 0, y: 0, z: 0}
+  _currentPositionListIndex: 0
+  _isActionCompleted: 0
+  test_wdList: []
+--- !u!114 &486906625392114083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9031430550336673322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d22ba241ade65b348905f140d3264014, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionState: 0
 --- !u!1 &9031430550739498427
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,7 +19,7 @@ public class T_TEST : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            T_LevelGridManager.Instance.G_GetGridValidationVisual(new T_GirdPosition(1, 1)).G_GetGridValidationVisualDictionary()["MOVE"].enabled = true;
+            // T_LevelGridManager.Instance.G_GetGridValidationVisual(new T_GirdPosition(1, 1)).G_GetGridValidationVisualDictionary()["MOVE"].enabled = true;
 
         }
     }

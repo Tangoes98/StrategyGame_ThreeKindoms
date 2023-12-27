@@ -25,22 +25,29 @@ public class T_LevelGridManager : MonoBehaviour
 
     #region ========== Public Methods =================
 
-    public int GetGridWidth() => _gridWidth;
-    public int GetGridHeight() => _gridHeight;
+    public int G_GetGridWidth() => _gridWidth;
+    public int G_GetGridHeight() => _gridHeight;
+    public bool G_IsValidSystemGrid(T_GirdPosition gp) => _gridSystem.IsValidGridPosition(gp);
 
     public Vector3 G_GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
     public T_GirdPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
     public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
     public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
 
+    public List<T_GirdPosition> G_ConvertListWorldToGridPosition(List<Vector3> worldPositions) => ConvertListWorldToGridPosition(worldPositions);
+    public List<Vector3> G_ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions) => ConvertListGridToWorldPosition(gridPositions);
+
     public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
     public void G_ShowGridValidationVisual_Move(List<T_GirdPosition> gpList) => ShowGridValidationVisual_Move(gpList);
     public void G_ShowGridValidationVisual_Target(List<T_GirdPosition> gpList) => ShowGridValidationVisual_Target(gpList);
+    public void G_ClearAllGridValidationVisuals() => ClearAllGridValidationVisuals();
 
 
 
 
-    #endregion
+
+
+    #endregion ===================================================
 
     void Awake()
     {
@@ -122,9 +129,29 @@ public class T_LevelGridManager : MonoBehaviour
         }
     }
 
-    #endregion
+    #endregion =========================================================
 
 
+    #region ========== Convert List GridPosition and WorldPosition ==========
+    List<T_GirdPosition> ConvertListWorldToGridPosition(List<Vector3> worldPositions)
+    {
+        List<T_GirdPosition> girdPositions = new();
+        foreach (var worldPos in worldPositions)
+        {
+            girdPositions.Add(G_WorldToGridPosition(worldPos));
+        }
+        return girdPositions;
+    }
+    List<Vector3> ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions)
+    {
+        List<Vector3> worldPositions = new();
+        foreach (var gridPos in gridPositions)
+        {
+            worldPositions.Add(G_GridToWorldPosition(gridPos));
+        }
+        return worldPositions;
+    }
+    #endregion =========================================================
 
 
 }

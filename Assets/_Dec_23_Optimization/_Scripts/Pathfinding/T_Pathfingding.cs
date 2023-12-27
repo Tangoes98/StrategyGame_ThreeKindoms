@@ -33,10 +33,6 @@ public class T_Pathfingding : MonoBehaviour
 
     void Start()
     {
-        // SetPathNodeAcive(new(0, 1));
-        // SetPathNodeAcive(new(1, 1));
-        // //SetPathNodeAcive(new(2, 0));
-        // SetPathNodeAcive(new(2, 1));
     }
 
     void Update()
@@ -91,13 +87,14 @@ public class T_Pathfingding : MonoBehaviour
 
 
     #region ========== Public Method ==========
+
     public int G_CalculateHCost(T_GirdPosition current, T_GirdPosition end) => CalculateGridPositionDistance(current, end);
     public int G_CalculateGCost(T_GirdPosition current, T_GirdPosition start) => CalculateGridPositionDistance(current, start);
 
     public List<T_GirdPosition> G_FindPath(T_GirdPosition start, T_GirdPosition end) => FindPath(start, end);
 
 
-    #endregion
+    #endregion ==================================
 
 
 
@@ -174,8 +171,8 @@ public class T_Pathfingding : MonoBehaviour
     List<T_GirdPosition> GetNeighbourPathNodeGridList(T_GirdPosition gp)
     {
         List<T_GirdPosition> neightbourList = new();
-        int gridWidth = T_LevelGridManager.Instance.GetGridWidth();
-        int gridHeight = T_LevelGridManager.Instance.GetGridHeight();
+        int gridWidth = T_LevelGridManager.Instance.G_GetGridWidth();
+        int gridHeight = T_LevelGridManager.Instance.G_GetGridHeight();
 
         T_GirdPosition leftNode = new T_GirdPosition(gp.x - 1, gp.z);
         T_GirdPosition rightNode = new T_GirdPosition(gp.x + 1, gp.z);
@@ -265,8 +262,8 @@ public class T_Pathfingding : MonoBehaviour
 
     void ResetAllGridPathNodeCosts()
     {
-        int width = T_LevelGridManager.Instance.GetGridWidth();
-        int height = T_LevelGridManager.Instance.GetGridHeight();
+        int width = T_LevelGridManager.Instance.G_GetGridWidth();
+        int height = T_LevelGridManager.Instance.G_GetGridHeight();
 
         for (int i = 0; i < width; i++)
         {

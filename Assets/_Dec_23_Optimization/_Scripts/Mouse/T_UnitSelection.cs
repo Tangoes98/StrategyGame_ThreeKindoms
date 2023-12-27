@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class T_UnitSelection : MonoBehaviour
@@ -20,12 +22,15 @@ public class T_UnitSelection : MonoBehaviour
 
     [SerializeField] T_Unit _selectedUnit;
 
-    #region Public Properties
+    #region ========== PUBLIC PROPERTIES ==========
+
+    public event Action E_UnitSelected;
+    public event Action E_UnitDeselected;
 
     public T_Unit GetSelectedUnit() => _selectedUnit;
 
 
-    #endregion
+    #endregion =======================================
 
     void Update()
     {
@@ -48,12 +53,24 @@ public class T_UnitSelection : MonoBehaviour
     {
         if (!RaycastingUnit()) return;
 
-        if (Input.GetMouseButtonDown(0)) _selectedUnit = RaycastingUnit().GetComponent<T_Unit>();
+        if (Input.GetMouseButtonDown(0))
+        {
+            _selectedUnit = RaycastingUnit().GetComponent<T_Unit>();
+
+            E_UnitSelected?.Invoke();
+        }
+
+
+
     }
 
     void DeselectUnit()
     {
-        if (Input.GetMouseButtonDown(0) && !RaycastingUnit()) _selectedUnit = null;
+        if (Input.GetMouseButtonDown(0) && !RaycastingUnit())
+        {
+            _selectedUnit = null;
+            E_UnitDeselected?.Invoke();
+        }
     }
 
 

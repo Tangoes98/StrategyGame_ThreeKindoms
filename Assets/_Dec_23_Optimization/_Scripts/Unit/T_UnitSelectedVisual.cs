@@ -14,11 +14,11 @@ public class T_UnitSelectedVisual : MonoBehaviour
 
     void Update()
     {
-        _unitSelectedVisual.enabled = isSelected();
+        _unitSelectedVisual.enabled = IsSelected();
     }
 
 
-    bool isSelected()
+    bool IsSelected()
     {
         if (T_UnitSelection.Instance.GetSelectedUnit() == _unit) return true;
         else return false;

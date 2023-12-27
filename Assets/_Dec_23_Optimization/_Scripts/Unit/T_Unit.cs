@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class T_Unit : MonoBehaviour
@@ -13,18 +14,20 @@ public class T_Unit : MonoBehaviour
     T_GirdPosition _currentGridPosition;
     T_GridData _oldGridData;
     T_GridData _currentGridData;
-
     Vector3 _startPosition;
 
 
-    #region Public Properties
+    [SerializeField] List<T_UnitActionBase> _unitActions;
+
+
+    #region ========== Public Properties ====================
+
+    public List<T_UnitActionBase> G_GetUnitActions() => _unitActions;
 
 
 
 
-
-
-    #endregion
+    #endregion ==================================================
 
 
 
@@ -34,8 +37,9 @@ public class T_Unit : MonoBehaviour
     void Start()
     {
         _levelGridManagerInstance = T_LevelGridManager.Instance;
-        FirstStartSetUp();
-        SetStartTargetPosition();
+        UnitGridPositionStartup();
+        UnitValidActionStartupCheck();
+
 
     }
 
@@ -46,9 +50,9 @@ public class T_Unit : MonoBehaviour
 
     }
 
-    #region UpdateUnitGirdPosition and GridData
+    #region ========== UpdateUnitGirdPosition and GridData ==========
 
-    void FirstStartSetUp()
+    void UnitGridPositionStartup()
     {
         UpdateUnitGridPosition();
         _oldGridPosition = _currentGridPosition;
@@ -77,24 +81,23 @@ public class T_Unit : MonoBehaviour
 
     T_GridData CurrentGridData(T_GirdPosition gp) => _levelGridManagerInstance.G_GetGridPosData(gp);
 
-    #endregion
+    #endregion ==================================================
 
 
+    #region ================ Unit Action Validation ================
 
-    #region UnitMovement
-
-    void SetStartTargetPosition()
+    void UnitValidActionStartupCheck()
     {
-        T_UnitMovementAction movementAction = this.GetComponentInChildren<T_UnitMovementAction>();
-        movementAction.SetStartTargetPosition(_startPosition);
+        _unitActions = new();
+        T_UnitActionBase[] unitAllActions = GetComponentsInChildren<T_UnitActionBase>();
+        foreach (T_UnitActionBase action in unitAllActions)
+        {
+            if (action.enabled) _unitActions.Add(action);
+        }
     }
-    #endregion
 
 
-
-
-
-
+    #endregion ================================================
 
 
 

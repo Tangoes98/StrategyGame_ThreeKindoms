@@ -60,7 +60,13 @@ public class T_GridSystem
         return _pathNodes[gridPosition.x, gridPosition.z];
     }
 
-
+    public bool IsValidGridPosition(T_GirdPosition gridPosition)
+    {
+        return gridPosition.x >= 0 &&
+                gridPosition.z >= 0 &&
+                gridPosition.x < _width &&
+                gridPosition.z < _height;
+    }
 
     public void CreateGridVisual(Transform objectVisualPrefab)
     {
