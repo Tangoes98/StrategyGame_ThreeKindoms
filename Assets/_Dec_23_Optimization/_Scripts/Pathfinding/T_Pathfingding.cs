@@ -6,11 +6,6 @@ using UnityEngine;
 public class T_Pathfingding : MonoBehaviour
 {
     public static T_Pathfingding Instance;
-
-
-
-
-
     void Awake()
     {
         if (Instance != null)
@@ -37,42 +32,10 @@ public class T_Pathfingding : MonoBehaviour
 
     void Update()
     {
-        DEBUG_TEST();
+
     }
 
     #region ========DEBUG_TEST==========
-
-    void DEBUG_TEST()
-    {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            // CalculateStartGridPosFCost(TestGridStartPos, TestGridEndPos);
-            // testNeighbourList = GetNeighbourPathNodeGridList(TestGridStartPos);
-            // CalculateNeighbourGridFCost(testNeighbourList, TestGridStartPos, TestGridEndPos);
-            // debug only
-
-            // foreach (T_GirdPosition item in PathList)
-            // {
-            //     GetGridPathNode(item).G_ResetCosts();
-            // }
-
-            // ResetAllGridPathNodeCosts();
-            // PathList.Clear();
-            // PathList = G_FindPath(TestGridStartPos, TestGridEndPos);
-            // T_DrawPathline.Instance.G_DrawPathline(PathList);
-
-        }
-        // T_GirdPosition mosueGridPos = T_LevelGridManager.Instance.WorldToGridPosition(T_MouseController.Instance.GetMouseWorldPosition());
-        // // if (PathList != null) PathList.Clear();
-        // T_DrawPathline.Instance.G_DrawPathline(FindPath(TestGridStartPos, mosueGridPos));
-
-    }
-
-    // void SetPathNodeAcive(T_GirdPosition gp)
-    // {
-    //     GetGridPathNode(gp).G_SetIsValidPathNode(false);
-    // }
-
 
     #endregion
 
@@ -91,7 +54,7 @@ public class T_Pathfingding : MonoBehaviour
     public int G_CalculateHCost(T_GirdPosition current, T_GirdPosition end) => CalculateGridPositionDistance(current, end);
     public int G_CalculateGCost(T_GirdPosition current, T_GirdPosition start) => CalculateGridPositionDistance(current, start);
 
-    public List<T_GirdPosition> G_FindPath(T_GirdPosition start, T_GirdPosition end) => FindPath(start, end);
+    public List<T_GirdPosition> G_FindPath(T_GirdPosition start, T_GirdPosition end, List<T_GirdPosition> gpRange) => FindPath(start, end, gpRange);
 
 
     #endregion ==================================
@@ -109,7 +72,7 @@ public class T_Pathfingding : MonoBehaviour
 
 
 
-    List<T_GirdPosition> FindPath(T_GirdPosition start, T_GirdPosition end)
+    List<T_GirdPosition> FindPath(T_GirdPosition start, T_GirdPosition end, List<T_GirdPosition> gpRange)
     {
         ResetAllGridPathNodeCosts();
 
@@ -126,7 +89,7 @@ public class T_Pathfingding : MonoBehaviour
         //for (int i = 0; i < 50; i++)
         while (tempPathList.Count > 0)
         {
-            Debug.Log(currentGridPos);
+            //Debug.Log(currentGridPos);
 
             if (currentGridPos == end)
             {
@@ -140,7 +103,7 @@ public class T_Pathfingding : MonoBehaviour
             }
 
 
-            List<T_GirdPosition> neighbourList = GetNeighbourPathNodeGridList(currentGridPos);
+            List<T_GirdPosition> neighbourList = GetNeighbourPathNodeGridList(currentGridPos, gpRange);
 
             if (neighbourList.Count < 1) break; // No valid neighbour grid
 
@@ -168,7 +131,7 @@ public class T_Pathfingding : MonoBehaviour
     #region ========== Pathfinding Relatied Functions ==========
 
 
-    List<T_GirdPosition> GetNeighbourPathNodeGridList(T_GirdPosition gp)
+    List<T_GirdPosition> GetNeighbourPathNodeGridList(T_GirdPosition gp, List<T_GirdPosition> gpRange)
     {
         List<T_GirdPosition> neightbourList = new();
         int gridWidth = T_LevelGridManager.Instance.G_GetGridWidth();
@@ -187,20 +150,29 @@ public class T_Pathfingding : MonoBehaviour
         if (downNode.z >= 0) neightbourList.Add(downNode);
 
         // skip checked neighbour node
-        return NeighbourGridPositionValidation(neightbourList);
+        return NeighbourGridPositionValidation(neightbourList, gpRange);
     }
 
 
-    List<T_GirdPosition> NeighbourGridPositionValidation(List<T_GirdPosition> gridposList)
+    List<T_GirdPosition> NeighbourGridPositionValidation(List<T_GirdPosition> gridposList, List<T_GirdPosition> gpRange)
     {
         List<T_GirdPosition> ValidatedNeighbourGrids = new();
         foreach (T_GirdPosition gridpos in gridposList)
         {
             // Need to Update the condition later
 
+            // Check if in the gridsystem
+            if (!T_LevelGridManager.Instance.G_IsValidSystemGrid(gridpos)) continue;
+
+            // Check if the gp is avaliable to reach
             if (!GetGridPathNode(gridpos).G_IsValidPathNode()) continue;
 
+            // Check if the grid is already calculated
             if (GetGridPathNode(gridpos).G_GetFCost() != 0) continue;
+
+            // Check if the grid is in provided grid range (When applying unit movement)
+            if (!gpRange.Contains(gridpos)) continue;
+
 
             ValidatedNeighbourGrids.Add(gridpos);
 

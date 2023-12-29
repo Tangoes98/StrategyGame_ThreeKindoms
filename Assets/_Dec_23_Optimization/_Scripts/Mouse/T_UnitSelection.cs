@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class T_UnitSelection : MonoBehaviour
 {
@@ -15,29 +16,43 @@ public class T_UnitSelection : MonoBehaviour
             Destroy(Instance);
         }
         Instance = this;
-
     }
 
     [SerializeField] LayerMask _unitLayerMask;
 
     [SerializeField] T_Unit _selectedUnit;
+    [SerializeField] bool _canSelectUnit;
 
     #region ========== PUBLIC PROPERTIES ==========
 
     public event Action E_UnitSelected;
     public event Action E_UnitDeselected;
 
-    public T_Unit GetSelectedUnit() => _selectedUnit;
+    public T_Unit G_GetSelectedUnit() => _selectedUnit;
+
+    public void G_SetCanSelectUnit(bool value) => _canSelectUnit = value;
 
 
     #endregion =======================================
 
-    void Update()
+    void Start()
     {
-        SelectUnit();
-        DeselectUnit();
+        _canSelectUnit = true;
     }
 
+    void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+
+        if (!_canSelectUnit) return;
+
+        SelectUnit();
+        //DeselectUnit();
+    }
+
+
+
+    // =================================================
 
     // Casting ray to check unit
     Transform RaycastingUnit()

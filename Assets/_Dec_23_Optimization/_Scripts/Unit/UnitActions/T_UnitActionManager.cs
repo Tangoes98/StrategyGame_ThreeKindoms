@@ -20,7 +20,12 @@ public class T_UnitActionManager : MonoBehaviour
 
 
     [SerializeField] T_Unit _currentUnit;
+
+    [Header("DEBUG")]
+    [SerializeField] T_UnitActionBase _currentSelecedAction;
     [SerializeField] List<T_UnitActionBase> _currentActions;
+
+    //event Action<T_UnitActionBase> E_ActionSelected;
 
 
     #region ========== PUBLIC PROPERTIES =================
@@ -29,6 +34,7 @@ public class T_UnitActionManager : MonoBehaviour
 
     public T_Unit G_GetCurrentUnit() => _currentUnit;
     public List<T_UnitActionBase> G_GetCurrentUnitActions() => _currentActions;
+    public void G_SetCurrentSeletedAction(T_UnitActionBase action) => _currentSelecedAction = action;
 
 
 
@@ -38,24 +44,29 @@ public class T_UnitActionManager : MonoBehaviour
 
 
     #region ========= START_UPDATE ==========
-
     void Start()
     {
         T_EventCenter.Instance.EventCenter_UnitSelected += SelectCurrentUnitEvent;
         T_EventCenter.Instance.EventCenter_UnitDeselected += DeselectCurrentUnitEvent;
+
+        T_EventCenter.Instance.EventCenter_ActionSelected += ActionSelectedEvent;
     }
 
     void Update()
     {
         //GetCurrentUnit();
+        // if (!_currentSelecedAction) return;
+        // else E_ActionSelected?.Invoke(_currentSelecedAction);
+
     }
 
     #endregion ====================================
 
 
+    #region ============ Unit Selelction Event ============
     void SelectCurrentUnitEvent()
     {
-        _currentUnit = T_UnitSelection.Instance.GetSelectedUnit();
+        _currentUnit = T_UnitSelection.Instance.G_GetSelectedUnit();
 
         if (!_currentUnit) return;
 
@@ -68,11 +79,26 @@ public class T_UnitActionManager : MonoBehaviour
     {
         _currentUnit = null;
     }
+    #endregion ====================================
+
+
+    #region ============ Unit Action Selection Event ============
+
+    void ActionSelectedEvent(T_UnitActionBase action)
+    {
+        T_LevelGridManager.Instance.G_ClearAllGridValidationVisuals();
+        action.G_SetIsActive(true);
+        action.G_SetActionState(T_UnitActionBase.Action_State.Action_Preview);
+        action.G_PreviewActionValidPosition();
+        T_UnitSelection.Instance.G_SetCanSelectUnit(false);
+
+    }
 
 
 
 
 
+    #endregion ====================================
 
 
 

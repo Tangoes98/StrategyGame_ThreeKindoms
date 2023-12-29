@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class T_EventCenter : MonoBehaviour
@@ -22,7 +23,7 @@ public class T_EventCenter : MonoBehaviour
     {
         T_UnitSelection.Instance.E_UnitSelected += UnitSelectedEvent;
         T_UnitSelection.Instance.E_UnitDeselected += UnitDeselectedEvent;
-
+        T_UnitActionUIManager.Instance.E_ActionSelected += ActionSelectedEvent;
 
 
 
@@ -34,21 +35,17 @@ public class T_EventCenter : MonoBehaviour
 
     public event Action EventCenter_UnitSelected;
     public event Action EventCenter_UnitDeselected;
+    public event Action<T_UnitActionBase> EventCenter_ActionSelected;
 
 
 
 
     #endregion ==============================
-    
-    void UnitSelectedEvent()
-    {
-        EventCenter_UnitSelected?.Invoke();
-    }
 
-    void UnitDeselectedEvent()
-    {
-        EventCenter_UnitDeselected?.Invoke();
-    }
+    void UnitSelectedEvent() => EventCenter_UnitSelected?.Invoke();
 
+    void UnitDeselectedEvent() => EventCenter_UnitDeselected?.Invoke();
+
+    void ActionSelectedEvent(T_UnitActionBase action) => EventCenter_ActionSelected?.Invoke(action);
 
 }

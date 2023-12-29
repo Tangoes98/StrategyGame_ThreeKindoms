@@ -16,24 +16,27 @@ public class T_GridValidationVisual : MonoBehaviour
     Dictionary<string, MeshRenderer> _gridValidationVisualDictionary;
 
 
-    //T_GirdPosition _gridPosition;
+    
+    // Gird Validation Visual Names and Intro: //
+    // MOVE_GRID --> LIGHT GREEN
+    // ATTACK_RANGE --> LIGHT RED
+    // VALID_ATTACK --> BRIGHT RED
 
 
-    #region ========== Public Methods =================
+    #region ========== Public Property =================
 
     public Dictionary<string, MeshRenderer> G_GetGridValidationVisualDictionary() => _gridValidationVisualDictionary;
 
-    public void G_SetMoveGridVisual(bool condition) => _gridValidationVisualDictionary["MOVE"].enabled = condition;
-    public void G_SetTargetGridVisual(bool condition) => _gridValidationVisualDictionary["TARGET"].enabled = condition;
+    public void G_SetMoveGridVisual(bool condition) => _gridValidationVisualDictionary["MOVE_GRID"].enabled = condition;
+    public void G_SetAttackRangeGridVisual(bool condition) => _gridValidationVisualDictionary["ATTACK_RANGE"].enabled = condition;
+
+    public void G_SetGridVisual(string visualName, bool condition) => _gridValidationVisualDictionary[visualName].enabled = condition;
 
 
 
 
-    #endregion
 
-
-
-
+    #endregion ==================================================
 
 
 

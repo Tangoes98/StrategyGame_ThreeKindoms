@@ -242,7 +242,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 206592dcdaa7e7149a1f7336295c5251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionState: 0
+  P_actionState: 0
+  P_actionName: MOVE
+  P_isActive: 0
   _moveSpeed: 2
   _rotateSpeed: 1
   _stopDistance: 0.1
@@ -251,10 +253,9 @@ MonoBehaviour:
     x: 0
     z: 0
   _maxMoveDistance: 2
-  _targetPosition: {x: 0, y: 0, z: 0}
   _currentPositionListIndex: 0
-  _isActionCompleted: 0
-  test_wdList: []
+  _gridPath: []
+  _isUnitMoved: 0
 --- !u!114 &486906625392114083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +268,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d22ba241ade65b348905f140d3264014, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionState: 0
+  P_actionState: 0
+  P_actionName: BASIC_ATTACK
+  P_isActive: 0
+  _attackRange: 5
+  _unit: {fileID: 9031430550739498430}
 --- !u!1 &9031430550739498427
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,3 +334,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a5b190dcc90207478cc50e8cd1bc078, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _unitActions: []

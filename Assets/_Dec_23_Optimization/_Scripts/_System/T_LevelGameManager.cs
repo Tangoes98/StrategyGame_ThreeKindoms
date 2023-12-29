@@ -14,16 +14,18 @@ public class T_LevelGameManager : MonoBehaviour
         }
         Instance = this;
     }
+    
+    public enum Game_State
+    {
+        UnitSelection,
+        ActionPreview,
+        EnemyTurn,
+    }
 
 
-    [SerializeField] bool _isUnitMoveAction;
 
+    #region ===================== Public Properties =======================
 
-
-    #region ===================== Public Access Properties =======================
-
-    public bool GetIsUnitMoveAction() => _isUnitMoveAction;
-    public void SetIsUnitMoveAction(bool isMoveAction) => _isUnitMoveAction = isMoveAction;
 
 
 
@@ -38,7 +40,7 @@ public class T_LevelGameManager : MonoBehaviour
 
     void Start()
     {
-        _isUnitMoveAction = false;
+
     }
 
 

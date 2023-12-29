@@ -25,6 +25,7 @@ public class T_DrawPathline : MonoBehaviour
 
     #region ========== Public Methods =========
     public void G_DrawPathline(List<T_GirdPosition> girdPositions) => DrawPathLine(girdPositions);
+    public void G_ClearPathline() => ClearLine();
 
 
 

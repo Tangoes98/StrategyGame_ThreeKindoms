@@ -5,19 +5,18 @@ using UnityEngine;
 public class T_UnitMovementAction : T_UnitActionBase
 {
     [Header("LOCAL_VARIABLES")]
+    [SerializeField] T_Unit _unit;
     [SerializeField] float _moveSpeed;
     [SerializeField] float _rotateSpeed;
     [SerializeField] float _stopDistance;
-    [SerializeField] T_Unit _unit;
     [SerializeField] T_GirdPosition _unitGirdPosition;
     [SerializeField] int _maxMoveDistance;
 
 
     [Header("DEBUG_VIEW")]
-    [SerializeField] Vector3 _targetPosition;
     [SerializeField] int _currentPositionListIndex;
-    [SerializeField] bool _isActionCompleted;
-    [SerializeField] List<Vector3> test_wdList;
+    [SerializeField] List<T_GirdPosition> _gridPath;
+    [SerializeField] bool _isUnitMoved;
 
 
 
@@ -26,8 +25,7 @@ public class T_UnitMovementAction : T_UnitActionBase
 
 
     #region ========== Publice Properties ==========
-
-    public void SetStartTargetPosition(Vector3 position) => _targetPosition = position;
+    public bool G_IsUnitMoved() => _isUnitMoved;
 
     #endregion ========================================
 
@@ -36,69 +34,99 @@ public class T_UnitMovementAction : T_UnitActionBase
     {
         base.Start();
 
-        _isActionCompleted = true;
-        test_wdList = new();
+        _isUnitMoved = false;
+
         _unitGirdPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(_unit.transform.position);
 
     }
 
 
-    void Update()
+    protected override void Update()
     {
-        if (T_UnitSelection.Instance.GetSelectedUnit() != _unit) return;
+        base.Update();
+        if (!P_isActive) return;
 
-        MovementRangePreview();
-
-        MouseClickToMove();
-
-        if (_isActionCompleted) return;
-
-        MoveByPositionList(test_wdList);
-    }
-
-    #region ============== DEBUG_ONLY ==============
-
-    void MouseClickToMove()
-    {
-        if (Input.GetMouseButtonDown(1))
+        switch (P_actionState)
         {
-            //test_wdList.Clear();
-            _currentPositionListIndex = 0;
+            case Action_State.Action_Selection:
 
 
-            _isActionCompleted = false;
 
-            _targetPosition = T_MouseController.Instance.GetMouseWorldPosition();
 
-            var targetGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(_targetPosition);
-            var startGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(this.transform.position);
+                break;
+            case Action_State.Action_Preview:
 
-            List<T_GirdPosition> gpList = T_Pathfingding.Instance.G_FindPath(startGridPosition, targetGridPosition);
+                CancelSelectedActionCheck();
+                DrawPreviewPathline();
+                if (!CheckActionInput(out T_GirdPosition targetGridPosition)) return;
+                if (!CheckSelectedMovePosition(targetGridPosition)) return;
+                else P_actionState = Action_State.Action_Busy;
 
-            test_wdList = T_LevelGridManager.Instance.G_ConvertListGridToWorldPosition(gpList);
+                break;
 
+            case Action_State.Action_Busy:
+                SetAllActionButtonState(false);
+                TakeAction();
+
+                break;
+
+            case Action_State.Action_Completed:
+                SetAllActionButtonState(true);
+                SetSingleActionButtonState(false);
+                T_LevelGridManager.Instance.G_ClearAllGridValidationVisuals();
+                Debug.Log("MOVEACTION_COMPLETION");
+                P_isActive = false;
+
+                break;
 
         }
-
-
-
-
     }
-    #endregion =================================
 
+    #region ============ Parent Abstract Function Implementation =========
 
-
-    void TakeAction(List<Vector3> positionList)
+    protected override void TakeAction()
     {
-        MoveByPositionList(positionList);
+        Debug.Log("ACTION START: " + P_actionName);
+        MoveByGridPositionList(_gridPath);
+
     }
+    protected override void PreviewActionValidPosition()
+    {
+        MovementRangePreview();
+    }
+
+    #endregion ================================================
 
     void MovementRangePreview()
     {
-        T_LevelGridManager.Instance.G_ShowGridValidationVisual_Move(GetValidMovePositionList());
+        T_LevelGridManager.Instance.G_ShowGridValidationVisuals("MOVE_GRID", ValidMovePositionList());
     }
 
-    List<T_GirdPosition> GetValidMovePositionList()
+    void DrawPreviewPathline()
+    {
+        T_GirdPosition gp = T_MouseController.Instance.G_GetMouseGridPosition();
+        if (!CheckSelectedMovePosition(gp)) return;
+        T_DrawPathline.Instance.G_DrawPathline(_gridPath);
+    }
+
+
+    bool CheckSelectedMovePosition(T_GirdPosition selectedGridPosition)
+    {
+        if (!ValidMovePositionList().Contains(selectedGridPosition))
+        {
+            Debug.Log("NOT VALID POSITION");
+            _gridPath = null;
+            return false;
+        }
+        _currentPositionListIndex = 0;
+        var startGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(this.transform.position);
+        _gridPath = T_Pathfingding.Instance.G_FindPath(startGridPosition, selectedGridPosition, ValidMovePositionList());
+        return true;
+    }
+
+
+
+    List<T_GirdPosition> ValidMovePositionList()
     {
         List<T_GirdPosition> gridPosList = new();
         for (int x = -_maxMoveDistance; x < _maxMoveDistance * 2; x++)
@@ -117,15 +145,15 @@ public class T_UnitMovementAction : T_UnitActionBase
                 if (!T_LevelGridManager.Instance.G_IsValidSystemGrid(ValidGridposition)) continue;
 
                 gridPosList.Add(ValidGridposition);
-
             }
         }
-
         return gridPosList;
     }
 
-    void MoveByPositionList(List<Vector3> positionList)
+    void MoveByGridPositionList(List<T_GirdPosition> gpList)
     {
+        List<Vector3> positionList = T_LevelGridManager.Instance.G_ConvertListGridToWorldPosition(gpList);
+
         if (Vector3.Distance(positionList[_currentPositionListIndex], _unit.transform.position) > _stopDistance)
         {
             //set the direction where unit move to
@@ -143,12 +171,71 @@ public class T_UnitMovementAction : T_UnitActionBase
 
             if (_currentPositionListIndex == positionList.Count)
             {
-                _isActionCompleted = true;
+                _isUnitMoved = true;
+                P_actionState = Action_State.Action_Completed;
             }
         }
     }
 
 
+
+    #region ============== DEBUG_ONLY ==============
+
+    // void MouseClickToMove()
+    // {
+    //     if (Input.GetMouseButtonDown(1))
+    //     {
+    //         //test_wdList.Clear();
+    //         _currentPositionListIndex = 0;
+
+
+    //         P_isActive = true;
+
+    //         _targetPosition = T_MouseController.Instance.G_GetMouseWorldPosition();
+    //         var targetGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(_targetPosition);
+
+    //         if (!ValidMovePositionList().Contains(targetGridPosition))
+    //         {
+    //             Debug.Log("NOT VALID POSITION");
+    //             P_isActive = false;
+    //             return;
+    //         }
+
+    //         var startGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(this.transform.position);
+
+    //         List<T_GirdPosition> gpList = T_Pathfingding.Instance.G_FindPath(startGridPosition, targetGridPosition, ValidMovePositionList());
+
+    //         test_wdList = gpList;
+
+
+    //     }
+    // }
+
+    // void SelectValidMovePosition()
+    // {
+    //     if (Input.GetMouseButtonDown(0))
+    //     {
+    //         _targetPosition = T_MouseController.Instance.G_GetMouseWorldPosition();
+    //         var targetGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(_targetPosition);
+    //         if (!ValidMovePositionList().Contains(targetGridPosition))
+    //         {
+    //             Debug.Log("NOT VALID POSITION");
+    //             P_isActive = false;
+    //             return;
+    //         }
+
+    //         P_isActive = true;
+    //         _currentPositionListIndex = 0;
+    //         var startGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(this.transform.position);
+    //         List<T_GirdPosition> gpList = T_Pathfingding.Instance.G_FindPath(startGridPosition, targetGridPosition, ValidMovePositionList());
+    //         test_wdList = gpList;
+    //     }
+    // }
+
+
+
+
+    #endregion =================================
 
 
 

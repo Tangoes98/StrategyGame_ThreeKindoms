@@ -20,7 +20,7 @@ public class T_UnitSelectedVisual : MonoBehaviour
 
     bool IsSelected()
     {
-        if (T_UnitSelection.Instance.GetSelectedUnit() == _unit) return true;
+        if (T_UnitSelection.Instance.G_GetSelectedUnit() == _unit) return true;
         else return false;
     }
 

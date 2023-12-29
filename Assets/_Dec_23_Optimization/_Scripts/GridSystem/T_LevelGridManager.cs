@@ -25,21 +25,25 @@ public class T_LevelGridManager : MonoBehaviour
 
     #region ========== Public Methods =================
 
+    // ------------ Grid System ------------
     public int G_GetGridWidth() => _gridWidth;
     public int G_GetGridHeight() => _gridHeight;
     public bool G_IsValidSystemGrid(T_GirdPosition gp) => _gridSystem.IsValidGridPosition(gp);
 
+    // -------- Grid/World position --------
     public Vector3 G_GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
     public T_GirdPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
-    public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
-    public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
-
     public List<T_GirdPosition> G_ConvertListWorldToGridPosition(List<Vector3> worldPositions) => ConvertListWorldToGridPosition(worldPositions);
     public List<Vector3> G_ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions) => ConvertListGridToWorldPosition(gridPositions);
 
+    // -------- Grid Data/ Grid Path node --------
+    public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
+    public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
+
+
+    // -------- Grid Validation Visual --------
     public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
-    public void G_ShowGridValidationVisual_Move(List<T_GirdPosition> gpList) => ShowGridValidationVisual_Move(gpList);
-    public void G_ShowGridValidationVisual_Target(List<T_GirdPosition> gpList) => ShowGridValidationVisual_Target(gpList);
+    public void G_ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList) => ShowGridValidationVisuals(visualName, gpList);
     public void G_ClearAllGridValidationVisuals() => ClearAllGridValidationVisuals();
 
 
@@ -112,20 +116,12 @@ public class T_LevelGridManager : MonoBehaviour
         }
     }
 
-    void ShowGridValidationVisual_Move(List<T_GirdPosition> gpList)
+    void ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList)
     {
         ClearAllGridValidationVisuals();
         foreach (var gp in gpList)
         {
-            GetGridValidationVisual(gp).G_SetMoveGridVisual(true);
-        }
-    }
-    void ShowGridValidationVisual_Target(List<T_GirdPosition> gpList)
-    {
-        ClearAllGridValidationVisuals();
-        foreach (var gp in gpList)
-        {
-            GetGridValidationVisual(gp).G_SetTargetGridVisual(true);
+            GetGridValidationVisual(gp).G_SetGridVisual(visualName, true);
         }
     }
 
