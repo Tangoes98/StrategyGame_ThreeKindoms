@@ -120,7 +120,7 @@ public class T_UnitMovementAction : T_UnitActionBase
         }
         _currentPositionListIndex = 0;
         var startGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(this.transform.position);
-        _gridPath = T_Pathfingding.Instance.G_FindPath(startGridPosition, selectedGridPosition, ValidMovePositionList());
+        _gridPath = T_Pathfinding.Instance.G_FindPath(startGridPosition, selectedGridPosition, ValidMovePositionList());
         return true;
     }
 

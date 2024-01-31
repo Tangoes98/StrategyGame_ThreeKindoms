@@ -23,6 +23,10 @@ public class T_MouseController : MonoBehaviour
     {
         // For mouse cursor if possible
         transform.position = G_GetMouseWorldPosition();
+
+        // Check if mouse button is active
+        Is_LMB_Down();
+        Is_RMB_Down();
     }
 
     public Vector3 G_GetMouseWorldPosition()
@@ -38,4 +42,22 @@ public class T_MouseController : MonoBehaviour
     {
         return T_LevelGridManager.Instance.G_WorldToGridPosition(G_GetMouseWorldPosition());
     }
+
+    public static bool Is_LMB_Down()
+    {
+        if (Input.GetMouseButtonDown(0)) return true;
+        else return false;
+    }
+    public static bool Is_RMB_Down()
+    {
+        if (Input.GetMouseButtonDown(1)) return true;
+        else return false;
+    }
+
+
+
+
+
+
+
 }

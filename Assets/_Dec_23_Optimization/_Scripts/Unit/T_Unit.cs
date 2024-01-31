@@ -50,6 +50,12 @@ public class T_Unit : MonoBehaviour
 
     }
 
+    // When the unit is dead
+    void OnDisable()
+    {
+        _currentGridData.RemoveUnit(this);
+    }
+
     #region ========== UpdateUnitGirdPosition and GridData ==========
 
     void UnitGridPositionStartup()

@@ -32,7 +32,7 @@ public class T_Pathnode
     public void G_SetHCost(int h) => _HCost = h;
 
     public T_GirdPosition G_GetGridPosition() => _gridPosition;
-    public void G_ResetCosts() => resetCosts();
+    public void G_ResetCosts() => ResetCosts();
 
     public bool G_IsValidPathNode() => _isValid;
     public void G_SetIsValidPathNode(bool a) => _isValid = a;
@@ -40,7 +40,7 @@ public class T_Pathnode
 
     #endregion
 
-    void resetCosts()
+    void ResetCosts()
     {
         _GCost = 0;
         _HCost = 0;

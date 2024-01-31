@@ -56,7 +56,7 @@ public abstract class T_UnitActionBase : MonoBehaviour
 
     protected void CancelSelectedActionCheck()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (T_MouseController.Is_RMB_Down())
         {
             T_UnitSelection.Instance.G_SetCanSelectUnit(true);
             T_LevelGridManager.Instance.G_ClearAllGridValidationVisuals();
@@ -67,7 +67,7 @@ public abstract class T_UnitActionBase : MonoBehaviour
 
     protected bool CheckActionInput(out T_GirdPosition targetGridPosition)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (T_MouseController.Is_LMB_Down())
         {
             var targetWorldPostiion = T_MouseController.Instance.G_GetMouseWorldPosition();
             targetGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(targetWorldPostiion);

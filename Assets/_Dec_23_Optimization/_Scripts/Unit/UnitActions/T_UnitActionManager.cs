@@ -86,10 +86,15 @@ public class T_UnitActionManager : MonoBehaviour
 
     void ActionSelectedEvent(T_UnitActionBase action)
     {
+        // Clear all grid visuals
         T_LevelGridManager.Instance.G_ClearAllGridValidationVisuals();
+
+        // Enable action
         action.G_SetIsActive(true);
         action.G_SetActionState(T_UnitActionBase.Action_State.Action_Preview);
         action.G_PreviewActionValidPosition();
+
+        // Disable mouse selection
         T_UnitSelection.Instance.G_SetCanSelectUnit(false);
 
     }

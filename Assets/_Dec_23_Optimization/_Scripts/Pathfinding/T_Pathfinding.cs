@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class T_Pathfingding : MonoBehaviour
+public class T_Pathfinding : MonoBehaviour
 {
-    public static T_Pathfingding Instance;
+    public static T_Pathfinding Instance;
     void Awake()
     {
         if (Instance != null)
@@ -128,7 +128,7 @@ public class T_Pathfingding : MonoBehaviour
 
 
 
-    #region ========== Pathfinding Relatied Functions ==========
+    #region ========== Pathfinding Related Functions ==========
 
 
     List<T_GirdPosition> GetNeighbourPathNodeGridList(T_GirdPosition gp, List<T_GirdPosition> gpRange)

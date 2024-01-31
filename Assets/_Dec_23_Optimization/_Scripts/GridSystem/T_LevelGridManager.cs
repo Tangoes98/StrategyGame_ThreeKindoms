@@ -23,7 +23,7 @@ public class T_LevelGridManager : MonoBehaviour
 
 
 
-    #region ========== Public Methods =================
+    #region ========== Public Property =================
 
     // ------------ Grid System ------------
     public int G_GetGridWidth() => _gridWidth;
@@ -39,7 +39,6 @@ public class T_LevelGridManager : MonoBehaviour
     // -------- Grid Data/ Grid Path node --------
     public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
     public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
-
 
     // -------- Grid Validation Visual --------
     public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
@@ -91,7 +90,7 @@ public class T_LevelGridManager : MonoBehaviour
             for (int j = 0; j < _gridHeight; j++)
             {
                 var gridPosition = new T_GirdPosition(i, j);
-                Transform obj = GameObject.Instantiate(visualObject, G_GridToWorldPosition(gridPosition), Quaternion.identity);
+                Transform obj = Instantiate(visualObject, G_GridToWorldPosition(gridPosition), Quaternion.identity);
 
                 T_GridValidationVisual validationVisual = obj.GetComponent<T_GridValidationVisual>();
 

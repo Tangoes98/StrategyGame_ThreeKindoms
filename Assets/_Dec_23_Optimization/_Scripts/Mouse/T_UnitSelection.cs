@@ -68,7 +68,7 @@ public class T_UnitSelection : MonoBehaviour
     {
         if (!RaycastingUnit()) return;
 
-        if (Input.GetMouseButtonDown(0))
+        if (T_MouseController.Is_LMB_Down())
         {
             _selectedUnit = RaycastingUnit().GetComponent<T_Unit>();
 

@@ -64,11 +64,7 @@ public class T_UnitActionUIManager : MonoBehaviour
 
     void Update()
     {
-        // if (!IsMouseClicked()) return;
-
-        // ActionButtonFunction();
-
-        if (Input.GetMouseButtonDown(0)) ActionButtonFunction();
+        if (T_MouseController.Is_LMB_Down()) ActionButtonFunction();
 
     }
 
