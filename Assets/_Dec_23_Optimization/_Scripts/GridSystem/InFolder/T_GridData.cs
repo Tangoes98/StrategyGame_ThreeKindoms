@@ -6,6 +6,8 @@ public class T_GridData
 {
     T_GirdPosition _gridPosition;
     List<T_Unit> _unitList;
+    public List<T_Unit> G_GetUnitList() => _unitList;
+
 
     public T_GirdPosition GridPosition { get { return _gridPosition; } }
 
@@ -43,5 +45,6 @@ public class T_GridData
     {
         _unitList.Remove(unit);
     }
+
 
 }

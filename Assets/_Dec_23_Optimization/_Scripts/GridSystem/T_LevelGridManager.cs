@@ -42,8 +42,15 @@ public class T_LevelGridManager : MonoBehaviour
 
     // -------- Grid Validation Visual --------
     public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
-    public void G_ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList) => ShowGridValidationVisuals(visualName, gpList);
+
     public void G_ClearAllGridValidationVisuals() => ClearAllGridValidationVisuals();
+
+    /// <summary>
+    /// String name: MOVE_GRID, ATTACK_RANGE, VALID_ATTACK
+    /// </summary>
+    /// <param name="visualName">MOVE_GRID, ATTACK_RANGE, VALID_ATTACK</param>
+    /// <param name="gpList"></param>
+    public void G_ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList) => ShowGridValidationVisuals(visualName, gpList);
 
 
 
@@ -117,7 +124,6 @@ public class T_LevelGridManager : MonoBehaviour
 
     void ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList)
     {
-        ClearAllGridValidationVisuals();
         foreach (var gp in gpList)
         {
             GetGridValidationVisual(gp).G_SetGridVisual(visualName, true);

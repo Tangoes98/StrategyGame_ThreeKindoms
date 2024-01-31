@@ -5,7 +5,6 @@ using UnityEngine;
 public class T_UnitMovementAction : T_UnitActionBase
 {
     [Header("LOCAL_VARIABLES")]
-    [SerializeField] T_Unit _unit;
     [SerializeField] float _moveSpeed;
     [SerializeField] float _rotateSpeed;
     [SerializeField] float _stopDistance;
@@ -60,7 +59,7 @@ public class T_UnitMovementAction : T_UnitActionBase
                 DrawPreviewPathline();
                 if (!CheckActionInput(out T_GirdPosition targetGridPosition)) return;
                 if (!CheckSelectedMovePosition(targetGridPosition)) return;
-                else P_actionState = Action_State.Action_Busy;
+                P_actionState = Action_State.Action_Busy;
 
                 break;
 
@@ -129,9 +128,9 @@ public class T_UnitMovementAction : T_UnitActionBase
     List<T_GirdPosition> ValidMovePositionList()
     {
         List<T_GirdPosition> gridPosList = new();
-        for (int x = -_maxMoveDistance; x < _maxMoveDistance * 2; x++)
+        for (int x = -_maxMoveDistance; x <= _maxMoveDistance; x++)
         {
-            for (int z = -_maxMoveDistance; z < _maxMoveDistance * 2; z++)
+            for (int z = -_maxMoveDistance; z <= _maxMoveDistance; z++)
             {
 
                 int tempDistance = Mathf.Abs(x) + Mathf.Abs(z);

@@ -5,9 +5,13 @@ using UnityEngine;
 public class T_UnitBasicAttackAction : T_UnitActionBase
 {
     [Header("LOCAL_VARIABLES")]
-    [SerializeField] T_Unit _unit;
     [SerializeField] int _attackRange;
-    //[SerializeField] T_GirdPosition _unitGirdPosition;
+    T_LevelGridManager _levelGridInstance;
+    T_Unit _OpponentUnit;
+
+    [Header("DEBUG_VIEW")]
+    [SerializeField] List<T_GirdPosition> _opponentUnitGridPos;
+    [SerializeField] int _damageValue;
 
 
 
@@ -16,6 +20,7 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
     protected override void Start()
     {
         base.Start();
+        _levelGridInstance = T_LevelGridManager.Instance;
     }
     protected override void Update()
     {
@@ -34,7 +39,9 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
             case Action_State.Action_Preview:
 
                 CancelSelectedActionCheck();
-
+                if (!CheckActionInput(out T_GirdPosition targetGridPosition)) return;
+                if (!CheckSelectedAttackGridPosition(targetGridPosition)) return;
+                P_actionState = Action_State.Action_Busy;
 
                 break;
 
@@ -60,6 +67,8 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
     protected override void TakeAction()
     {
         Debug.Log("ACTION START: " + P_actionName);
+        DealDamageToOpponentUnit();
+
     }
     protected override void PreviewActionValidPosition()
     {
@@ -70,16 +79,17 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
     #endregion ================================================
     void AttackRangePreview()
     {
-        T_LevelGridManager.Instance.G_ShowGridValidationVisuals("ATTACK_RANGE", ValidMovePositionList());
+        _levelGridInstance.G_ShowGridValidationVisuals("ATTACK_RANGE", ValidGridPositionList());
+        _levelGridInstance.G_ShowGridValidationVisuals("VALID_ATTACK", EnemyUnitGridValidation());
     }
 
-    List<T_GirdPosition> ValidMovePositionList()
+    List<T_GirdPosition> ValidGridPositionList()
     {
         List<T_GirdPosition> gridPosList = new();
         T_GirdPosition unitGp = T_LevelGridManager.Instance.G_WorldToGridPosition(_unit.transform.position);
-        for (int x = -_attackRange; x < _attackRange * 2; x++)
+        for (int x = -_attackRange; x <= _attackRange; x++)
         {
-            for (int z = -_attackRange; z < _attackRange * 2; z++)
+            for (int z = -_attackRange; z <= _attackRange; z++)
             {
 
                 int tempDistance = Mathf.Abs(x) + Mathf.Abs(z);
@@ -90,12 +100,47 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
                 T_GirdPosition ValidGridposition = offsetGridPosition + unitGp;
 
 
-                if (!T_LevelGridManager.Instance.G_IsValidSystemGrid(ValidGridposition)) continue;
+                if (!_levelGridInstance.G_IsValidSystemGrid(ValidGridposition)) continue;
+
+                // Check if the position has enemy unit
+                if (_levelGridInstance.G_GetGridPosData(ValidGridposition).G_GetUnitList().Count > 0)
+                    _opponentUnitGridPos.Add(ValidGridposition);
+
 
                 gridPosList.Add(ValidGridposition);
             }
         }
         return gridPosList;
+    }
+
+    List<T_GirdPosition> EnemyUnitGridValidation()
+    {
+        //TODO: Check if the gridPosition contains enemy unit
+
+        List<T_GirdPosition> gridPosList = new();
+        foreach (var gridPos in _opponentUnitGridPos)
+        {
+            if (gridPos == _unit.G_UnitGridPosition()) continue;
+
+            gridPosList.Add(gridPos);
+        }
+        return gridPosList;
+    }
+
+    bool CheckSelectedAttackGridPosition(T_GirdPosition gridPos)
+    {
+        if (!EnemyUnitGridValidation().Contains(gridPos)) return false;
+        else
+        {
+            _OpponentUnit = _levelGridInstance.G_GetGridPosData(gridPos).G_GetUnitList()[0];
+            return true;
+        }
+    }
+
+    void DealDamageToOpponentUnit()
+    {
+        _OpponentUnit.G_GetHealthSystem().OnDamage(_damageValue);
+        P_actionState = Action_State.Action_Completed;
     }
 
 

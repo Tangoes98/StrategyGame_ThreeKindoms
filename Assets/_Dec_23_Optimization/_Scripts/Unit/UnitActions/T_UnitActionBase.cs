@@ -19,6 +19,7 @@ public abstract class T_UnitActionBase : MonoBehaviour
     [SerializeField] protected string P_actionName;
     // [SerializeField] protected bool P_isCurrentSelectedAction;
     [SerializeField] protected bool P_isActive;
+    protected T_Unit _unit;
 
 
 
@@ -29,7 +30,6 @@ public abstract class T_UnitActionBase : MonoBehaviour
     public void G_SetIsActive(bool condition) => P_isActive = condition;
     public void G_SetActionState(Action_State actionState) => P_actionState = actionState;
 
-    public void G_TakenAction() => TakeAction();
     public void G_PreviewActionValidPosition() => PreviewActionValidPosition();
 
 
@@ -43,6 +43,7 @@ public abstract class T_UnitActionBase : MonoBehaviour
         P_actionState = Action_State.Action_Selection;
         // P_isCurrentSelectedAction = false;
         P_isActive = false;
+        _unit = GetComponentInParent<T_Unit>();
     }
     protected virtual void Update()
     {
@@ -54,6 +55,7 @@ public abstract class T_UnitActionBase : MonoBehaviour
     protected abstract void PreviewActionValidPosition();
 
 
+    // Press RMB to to cancel action selection
     protected void CancelSelectedActionCheck()
     {
         if (T_MouseController.Is_RMB_Down())

@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class T_HealthSystem : MonoBehaviour
 {
     T_Unit _unit;
+    [Header("Required Components")]
+    [SerializeField] Image _healthImage;
 
     [SerializeField] int _health;
     int _maxHealth;
+
+
 
     public event Action E_OnDamaged;
     // public event Action E_OnDead;
@@ -23,7 +28,10 @@ public class T_HealthSystem : MonoBehaviour
     //DEBUG
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T)) Die();
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            OnDamage(5);
+        };
     }
 
 
@@ -32,7 +40,8 @@ public class T_HealthSystem : MonoBehaviour
     public void OnDamage(int damageValue)
     {
         _health -= damageValue;
-        E_OnDamaged?.Invoke();
+        _healthImage.fillAmount = GetHealthValueNormalized();
+        //E_OnDamaged?.Invoke();
         if (_health <= 0) _health = 0;
         if (_health == 0) Die();
     }

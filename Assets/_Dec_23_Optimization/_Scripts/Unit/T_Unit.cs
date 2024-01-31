@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class T_Unit : MonoBehaviour
@@ -15,6 +16,7 @@ public class T_Unit : MonoBehaviour
     T_GridData _oldGridData;
     T_GridData _currentGridData;
     Vector3 _startPosition;
+    T_HealthSystem _healthSystem;
 
 
     [SerializeField] List<T_UnitActionBase> _unitActions;
@@ -23,6 +25,8 @@ public class T_Unit : MonoBehaviour
     #region ========== Public Properties ====================
 
     public List<T_UnitActionBase> G_GetUnitActions() => _unitActions;
+    public T_GirdPosition G_UnitGridPosition() => _currentGridPosition;
+    public T_HealthSystem G_GetHealthSystem() => _healthSystem;
 
 
 
@@ -37,6 +41,7 @@ public class T_Unit : MonoBehaviour
     void Start()
     {
         _levelGridManagerInstance = T_LevelGridManager.Instance;
+        _healthSystem = GetComponentInChildren<T_HealthSystem>();
         UnitGridPositionStartup();
         UnitValidActionStartupCheck();
 
