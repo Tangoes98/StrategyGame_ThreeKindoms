@@ -6,8 +6,8 @@ public class T_MouseController : MonoBehaviour
 {
     public static T_MouseController Instance;
 
-    [SerializeField]
-    LayerMask _mouseLayerMask;
+    [SerializeField] LayerMask _mouseGroundLayerMask;
+    [SerializeField] LayerMask _mouseGridSelectionLayerMask;
 
     void Awake()
     {
@@ -22,25 +22,30 @@ public class T_MouseController : MonoBehaviour
     void Update()
     {
         // For mouse cursor if possible
-        transform.position = G_GetMouseWorldPosition();
+        transform.position = G_GetMouseWorldPosition(_mouseGroundLayerMask);
 
         // Check if mouse button is active
         Is_LMB_Down();
         Is_RMB_Down();
     }
 
-    public Vector3 G_GetMouseWorldPosition()
+    public Vector3 G_GetMouseWorldPosition(LayerMask layerMask)
     {
         // Generate ray from main camera to the world
         // return the world position
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Physics.Raycast(mouseRay, out RaycastHit raycastHit, float.MaxValue, _mouseLayerMask);
+        Physics.Raycast(mouseRay, out RaycastHit raycastHit, float.MaxValue, layerMask);
         return raycastHit.point;
     }
 
+    // Raycast layermask for gird_visuals, return grid_position based on grid_visual_object transform 
     public T_GirdPosition G_GetMouseGridPosition()
     {
-        return T_LevelGridManager.Instance.G_WorldToGridPosition(G_GetMouseWorldPosition());
+        Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(mouseRay, out RaycastHit raycastHit, float.MaxValue, _mouseGridSelectionLayerMask);
+        if (!raycastHit.transform) return new T_GirdPosition(0, 0);
+        Vector3 gridWorldPosition = raycastHit.transform.position;
+        return T_LevelGridManager.Instance.G_WorldToGridPosition(gridWorldPosition);
     }
 
     public static bool Is_LMB_Down()

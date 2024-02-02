@@ -50,6 +50,11 @@ public class T_GridData
 
     public void AddTerrain(T_Terrain terrain) => _terrainList.Add(terrain);
     public void RemoveTerrain(T_Terrain terrain) => _terrainList.Remove(terrain);
+
+    /// <summary>
+    /// Grid position floor height == Terrain list count
+    /// </summary>
+    /// <returns></returns>
     public int GetTerrainListCount() => _terrainList.Count;
 
 

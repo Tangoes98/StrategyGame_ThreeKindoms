@@ -25,23 +25,24 @@ public class T_LevelGridManager : MonoBehaviour
 
     #region ========== Public Property =================
 
-    // ------------ Grid System ------------
+    //* ------------ Grid System ------------
     public int G_GetGridWidth() => _gridWidth;
     public int G_GetGridHeight() => _gridHeight;
     public bool G_IsValidSystemGrid(T_GirdPosition gp) => _gridSystem.IsValidGridPosition(gp);
 
-    // -------- Grid/World position --------
+    //* -------- Grid/World position --------
     public Vector3 G_GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
     public Vector3 G_GridToWorldPositionWithFloor(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPositionIncludesFloor(gridPosition);
     public T_GirdPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
     public List<T_GirdPosition> G_ConvertListWorldToGridPosition(List<Vector3> worldPositions) => ConvertListWorldToGridPosition(worldPositions);
     public List<Vector3> G_ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions) => ConvertListGridToWorldPosition(gridPositions);
+    public bool G_IsGridPositionsOnSameFloorHeight(T_GirdPosition a, T_GirdPosition b, out Vector3 gridOffsetWorldPos) => IsGridPositionsOnSameFloorHeight(a, b, out gridOffsetWorldPos);
 
-    // -------- Grid Data/ Grid Path node --------
+    //* -------- Grid Data/ Grid Path node --------
     public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
     public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
 
-    // -------- Grid Validation Visual --------
+    //* -------- Grid Validation Visual --------
     public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
 
     public void G_ClearAllGridValidationVisuals() => ClearAllGridValidationVisuals();
@@ -52,6 +53,8 @@ public class T_LevelGridManager : MonoBehaviour
     /// <param name="visualName">MOVE_GRID, ATTACK_RANGE, VALID_ATTACK</param>
     /// <param name="gpList"></param>
     public void G_ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList) => ShowGridValidationVisuals(visualName, gpList);
+
+
 
 
 
@@ -155,6 +158,34 @@ public class T_LevelGridManager : MonoBehaviour
         return worldPositions;
     }
     #endregion =========================================================
+
+    #region ================ Compare GridPosition Floor ================
+
+    //* Compare 2 grid positions and output world position with lower grid position (X,Z) and upper grid position (Y)
+    bool IsGridPositionsOnSameFloorHeight(T_GirdPosition a, T_GirdPosition b, out Vector3 gridOffsetWorldPos)
+    {
+        int floorA = G_GetGridPosData(a).GetTerrainListCount();
+        int floorB = G_GetGridPosData(b).GetTerrainListCount();
+
+        if (floorA == floorB)
+        {
+            gridOffsetWorldPos = new Vector3(0, 0, 0);
+            return true;
+        }
+        else if (floorA > floorB)
+        {
+            gridOffsetWorldPos = new Vector3(G_GridToWorldPosition(b).x, floorA, G_GridToWorldPosition(b).z);
+            return false;
+        }
+        else
+        {
+            gridOffsetWorldPos = new Vector3(G_GridToWorldPosition(a).x, floorB, G_GridToWorldPosition(a).z);
+            return false;
+        }
+    }
+
+    #endregion =========================================================
+
 
 
 }

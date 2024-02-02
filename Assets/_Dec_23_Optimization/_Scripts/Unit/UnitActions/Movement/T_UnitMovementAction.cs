@@ -152,11 +152,14 @@ public class T_UnitMovementAction : T_UnitActionBase
     void MoveByGridPositionList(List<T_GirdPosition> gpList)
     {
         List<Vector3> positionList = T_LevelGridManager.Instance.G_ConvertListGridToWorldPosition(gpList);
+        
+        // Unit class will update the vertical position information
+        Vector3 unitHorizontalPosition = new Vector3(_unit.transform.position.x, 0, _unit.transform.position.z);
 
-        if (Vector3.Distance(positionList[_currentPositionListIndex], _unit.transform.position) > _stopDistance)
+        if (Vector3.Distance(positionList[_currentPositionListIndex], unitHorizontalPosition) > _stopDistance)
         {
             //set the direction where unit move to
-            Vector3 targetDirection = (positionList[_currentPositionListIndex] - _unit.transform.position).normalized;
+            Vector3 targetDirection = (positionList[_currentPositionListIndex] - unitHorizontalPosition).normalized;
 
             // unit movement to target direction
             _unit.transform.position += targetDirection * _moveSpeed * Time.deltaTime;

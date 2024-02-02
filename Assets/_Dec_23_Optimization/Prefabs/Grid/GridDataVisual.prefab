@@ -182,7 +182,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2519624165358585403}
   - component: {fileID: 3535582682882439336}
-  m_Layer: 0
+  - component: {fileID: 792828959265636437}
+  m_Layer: 9
   m_Name: GridDataVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,6 +221,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridInfo: {fileID: 8387640762797396039}
   _PathnodeInfo: {fileID: 5120543865685549228}
+--- !u!65 &792828959265636437
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2566155869095647596}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 0.1, z: 2}
+  m_Center: {x: 0, y: 0.0001613833, z: 0}
 --- !u!1 &2895334957671762005
 GameObject:
   m_ObjectHideFlags: 0

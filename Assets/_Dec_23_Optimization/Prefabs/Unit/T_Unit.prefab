@@ -545,9 +545,8 @@ MonoBehaviour:
   P_actionState: 0
   P_actionName: MOVE
   P_isActive: 0
-  _unit: {fileID: 9031430550739498430}
-  _moveSpeed: 2
-  _rotateSpeed: 1
+  _moveSpeed: 4
+  _rotateSpeed: 10
   _stopDistance: 0.1
   _unitGirdPosition:
     x: 0
@@ -571,8 +570,9 @@ MonoBehaviour:
   P_actionState: 0
   P_actionName: BASIC_ATTACK
   P_isActive: 0
-  _unit: {fileID: 9031430550739498430}
   _attackRange: 5
+  _opponentUnitGridPos: []
+  _damageValue: 0
 --- !u!1 &9031430550739498427
 GameObject:
   m_ObjectHideFlags: 0

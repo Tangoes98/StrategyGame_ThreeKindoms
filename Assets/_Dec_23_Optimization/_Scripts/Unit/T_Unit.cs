@@ -10,7 +10,7 @@ public class T_Unit : MonoBehaviour
 
     // unit data has to update to grid data(position, ...)
 
-    T_LevelGridManager _levelGridManagerInstance;
+    T_LevelGridManager _levelGrid;
     T_GirdPosition _oldGridPosition;
     T_GirdPosition _currentGridPosition;
     T_GridData _oldGridData;
@@ -40,7 +40,7 @@ public class T_Unit : MonoBehaviour
 
     void Start()
     {
-        _levelGridManagerInstance = T_LevelGridManager.Instance;
+        _levelGrid = T_LevelGridManager.Instance;
         _healthSystem = GetComponentInChildren<T_HealthSystem>();
         UnitGridPositionStartup();
         UnitValidActionStartupCheck();
@@ -53,6 +53,7 @@ public class T_Unit : MonoBehaviour
         UpdateUnitGridPosition();
         UpdateGridPositionData();
 
+        UpdateUnitVertialWorldPosition();
     }
 
     // When the unit is dead
@@ -63,6 +64,7 @@ public class T_Unit : MonoBehaviour
 
     #region ========== UpdateUnitGirdPosition and GridData ==========
 
+    T_GridData CurrentGridData(T_GirdPosition gp) => _levelGrid.G_GetGridPosData(gp);
     void UnitGridPositionStartup()
     {
         UpdateUnitGridPosition();
@@ -70,14 +72,18 @@ public class T_Unit : MonoBehaviour
         _currentGridData = CurrentGridData(_currentGridPosition);
         _oldGridData = _currentGridData;
         _currentGridData.AddUnit(this);
-        _startPosition = _levelGridManagerInstance.G_GridToWorldPosition(_currentGridPosition);
+        _startPosition = _levelGrid.G_GridToWorldPositionWithFloor(_currentGridPosition);
         this.transform.position = _startPosition;
     }
 
     void UpdateUnitGridPosition()
     {
-        _currentGridPosition = _levelGridManagerInstance.G_WorldToGridPosition(this.transform.position);
-        //this.transform.position = _levelGridManagerInstance.GridToWorldPosition(_currentGridPosition);
+        _currentGridPosition = _levelGrid.G_WorldToGridPosition(this.transform.position);
+    }
+
+    void UpdateUnitVertialWorldPosition()
+    {
+        this.transform.position = new Vector3(transform.position.x, _currentGridData.GetTerrainListCount(), transform.position.z);
     }
 
     void UpdateGridPositionData()
@@ -90,7 +96,6 @@ public class T_Unit : MonoBehaviour
         _oldGridPosition = _currentGridPosition;
     }
 
-    T_GridData CurrentGridData(T_GirdPosition gp) => _levelGridManagerInstance.G_GetGridPosData(gp);
 
     #endregion ==================================================
 

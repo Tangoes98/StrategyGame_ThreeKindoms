@@ -71,8 +71,9 @@ public abstract class T_UnitActionBase : MonoBehaviour
     {
         if (T_MouseController.Is_LMB_Down())
         {
-            var targetWorldPostiion = T_MouseController.Instance.G_GetMouseWorldPosition();
-            targetGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(targetWorldPostiion);
+            // var targetWorldPostiion = T_MouseController.Instance.G_GetMouseWorldPosition();
+            // targetGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(targetWorldPostiion);
+            targetGridPosition = T_MouseController.Instance.G_GetMouseGridPosition();
             T_DrawPathline.Instance.G_ClearPathline();
             return true;
         }
