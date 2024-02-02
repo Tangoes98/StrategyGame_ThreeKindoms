@@ -46,6 +46,14 @@ public class T_GridSystem
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize;
     }
 
+    // GridToWorldPosition with floor info
+    public Vector3 GridToWorldPositionIncludesFloor(T_GirdPosition gridPosition)
+    {
+        var girdData = GetGridData(gridPosition);
+        int floorHeight = girdData.GetTerrainListCount();
+        return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize + new Vector3(0, floorHeight, 0);
+    }
+
     public T_GirdPosition WorldToGridPosition(Vector3 worldPosition)
     {
         return new T_GirdPosition(Mathf.RoundToInt(worldPosition.x / _cellSize), Mathf.RoundToInt(worldPosition.z / _cellSize));
@@ -76,7 +84,7 @@ public class T_GridSystem
             {
                 var gridPosition = new T_GirdPosition(x, z);
 
-                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GridToWorldPosition(gridPosition), Quaternion.identity);
+                Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GridToWorldPositionIncludesFloor(gridPosition), Quaternion.identity);
 
                 SetGridData(gridObjectPrefab, gridPosition);
                 SetPathNode(gridObjectPrefab, gridPosition);

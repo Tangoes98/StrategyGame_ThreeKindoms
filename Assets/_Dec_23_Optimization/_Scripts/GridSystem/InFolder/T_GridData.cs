@@ -6,10 +6,10 @@ public class T_GridData
 {
     T_GirdPosition _gridPosition;
     List<T_Unit> _unitList;
-    public List<T_Unit> G_GetUnitList() => _unitList;
+    List<T_Terrain> _terrainList = new();
 
 
-    public T_GirdPosition GridPosition { get { return _gridPosition; } }
+    // public T_GirdPosition GridPosition { get { return _gridPosition; } }
 
 
 
@@ -33,7 +33,8 @@ public class T_GridData
 
         return _gridPosition.ToString()
             + "\n"
-            + unitString;
+            + unitString
+            + "Floor: " + _terrainList.Count;
     }
 
 
@@ -45,6 +46,13 @@ public class T_GridData
     {
         _unitList.Remove(unit);
     }
+    public List<T_Unit> G_GetUnitList() => _unitList;
+
+    public void AddTerrain(T_Terrain terrain) => _terrainList.Add(terrain);
+    public void RemoveTerrain(T_Terrain terrain) => _terrainList.Remove(terrain);
+    public int GetTerrainListCount() => _terrainList.Count;
+
+
 
 
 }

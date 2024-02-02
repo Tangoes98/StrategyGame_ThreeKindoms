@@ -32,6 +32,7 @@ public class T_LevelGridManager : MonoBehaviour
 
     // -------- Grid/World position --------
     public Vector3 G_GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
+    public Vector3 G_GridToWorldPositionWithFloor(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPositionIncludesFloor(gridPosition);
     public T_GirdPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
     public List<T_GirdPosition> G_ConvertListWorldToGridPosition(List<Vector3> worldPositions) => ConvertListWorldToGridPosition(worldPositions);
     public List<Vector3> G_ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions) => ConvertListGridToWorldPosition(gridPositions);
@@ -71,13 +72,13 @@ public class T_LevelGridManager : MonoBehaviour
 
         _gridSystem = new(_gridWidth, _gridHeight, _gridCellSize);
 
-        _gridSystem.CreateGridVisual(_gridObejctVisual);
 
-        InitializeGridValidationVisuals(_gridValidationVisualObject);
     }
 
     void Start()
     {
+        _gridSystem.CreateGridVisual(_gridObejctVisual);
+        InitializeGridValidationVisuals(_gridValidationVisualObject);
 
     }
 
@@ -97,7 +98,8 @@ public class T_LevelGridManager : MonoBehaviour
             for (int j = 0; j < _gridHeight; j++)
             {
                 var gridPosition = new T_GirdPosition(i, j);
-                Transform obj = Instantiate(visualObject, G_GridToWorldPosition(gridPosition), Quaternion.identity);
+
+                Transform obj = Instantiate(visualObject, G_GridToWorldPositionWithFloor(gridPosition), Quaternion.identity);
 
                 T_GridValidationVisual validationVisual = obj.GetComponent<T_GridValidationVisual>();
 
