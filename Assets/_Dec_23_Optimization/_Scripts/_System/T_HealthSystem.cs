@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using DebugConsole;
 
 public class T_HealthSystem : MonoBehaviour
 {
@@ -31,6 +32,7 @@ public class T_HealthSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             OnDamage(5);
+            T_GameConsole.Instance.G_ConsoleLog("Damage 5");
         };
     }
 
