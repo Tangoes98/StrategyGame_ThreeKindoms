@@ -5,7 +5,6 @@ using TMPro;
 using System;
 using LitJson;
 using System.IO;
-using Unity.VisualScripting;
 
 
 public class DialogueManager2 : MonoBehaviour

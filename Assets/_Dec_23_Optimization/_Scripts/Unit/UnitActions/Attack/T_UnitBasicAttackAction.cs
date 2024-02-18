@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DebugConsole;
 using UnityEngine;
 
 public class T_UnitBasicAttackAction : T_UnitActionBase
@@ -139,8 +141,13 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
 
     void DealDamageToOpponentUnit()
     {
-        _OpponentUnit.G_GetHealthSystem().OnDamage(_damageValue);
+        float damageValue = T_CombatManager.Instance.G_DealDamage(_unit, _OpponentUnit, out float heightMulti, out float moraleMulti);
+        int intDamage = Mathf.RoundToInt(damageValue);
+        _OpponentUnit.G_GetHealthSystem().OnDamage(intDamage);
         P_actionState = Action_State.Action_Completed;
+
+        // log Attacking action to console
+        T_GameConsole.Instance.G_ConsoleLogAttack(_unit, _OpponentUnit, intDamage, heightMulti, moraleMulti);
     }
 
 

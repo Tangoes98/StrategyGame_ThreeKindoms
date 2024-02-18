@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthImage: {fileID: 6469531451412371537}
-  _health: 20
+  _health: 100
 --- !u!1 &9031430550336673322
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,7 +572,7 @@ MonoBehaviour:
   P_isActive: 0
   _attackRange: 5
   _opponentUnitGridPos: []
-  _damageValue: 0
+  _damageValue: 5
 --- !u!1 &9031430550739498427
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,3 +637,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unitActions: []
+  _unitStatSO: {fileID: 0}

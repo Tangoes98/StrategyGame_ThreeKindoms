@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class T_LevelGameManager : MonoBehaviour
+public class T_GameManager : MonoBehaviour
 {
-    public static T_LevelGameManager Instance;
+    public static T_GameManager Instance;
     void Awake()
     {
         if (Instance != null)
@@ -21,6 +21,13 @@ public class T_LevelGameManager : MonoBehaviour
         ActionPreview,
         EnemyTurn,
     }
+
+    // T_Morale t_Morale;
+
+    // public static T GetInstance<T>()
+    // {
+
+    // }
 
 
 

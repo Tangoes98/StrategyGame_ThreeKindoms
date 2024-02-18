@@ -21,12 +21,17 @@ public class T_Unit : MonoBehaviour
 
     [SerializeField] List<T_UnitActionBase> _unitActions;
 
+    [Header("Reference")]
+    [SerializeField] T_UnitStatSO _unitStatSO;
+
 
     #region ========== Public Properties ====================
 
     public List<T_UnitActionBase> G_GetUnitActions() => _unitActions;
     public T_GirdPosition G_UnitGridPosition() => _currentGridPosition;
     public T_HealthSystem G_GetHealthSystem() => _healthSystem;
+    public T_UnitStatSO G_GetUnitStatSO() => _unitStatSO;
+    public int G_GetUnitCurrentFloorHeight() => _currentGridData.GetTerrainListCount();
 
 
 
@@ -97,7 +102,7 @@ public class T_Unit : MonoBehaviour
     }
 
 
-    #endregion ==================================================
+    #endregion
 
 
     #region ================ Unit Action Validation ================

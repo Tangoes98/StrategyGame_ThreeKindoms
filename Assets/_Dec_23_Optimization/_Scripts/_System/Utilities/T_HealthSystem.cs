@@ -32,7 +32,7 @@ public class T_HealthSystem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.T))
         {
             OnDamage(5);
-            T_GameConsole.Instance.G_ConsoleLog("Damage 5");
+            T_GameConsole.Instance.Log("Damage 5");
         };
     }
 

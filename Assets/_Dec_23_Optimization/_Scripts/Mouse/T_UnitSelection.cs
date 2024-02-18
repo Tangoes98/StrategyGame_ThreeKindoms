@@ -38,6 +38,9 @@ public class T_UnitSelection : MonoBehaviour
     void Start()
     {
         _canSelectUnit = true;
+
+        // Events
+        T_TurnSystem.Instance.E_TurnChanged += EventOnTurnChanged;
     }
 
     void Update()
@@ -88,6 +91,15 @@ public class T_UnitSelection : MonoBehaviour
         }
     }
 
+    #region ========== Event Method =========
+
+    void EventOnTurnChanged(bool value)
+    {
+        _canSelectUnit = value;
+    }
+
+
+    #endregion
 
 
 

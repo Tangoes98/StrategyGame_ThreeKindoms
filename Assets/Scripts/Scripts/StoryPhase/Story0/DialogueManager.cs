@@ -5,7 +5,6 @@ using TMPro;
 using System;
 using LitJson;
 using System.IO;
-using Unity.VisualScripting;
 //装载Json的类的list，名字必须与Json文件键值对应
 public class Dialogues
 {
