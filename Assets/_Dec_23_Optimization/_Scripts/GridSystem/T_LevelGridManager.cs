@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class T_LevelGridManager : MonoBehaviour
@@ -61,7 +63,7 @@ public class T_LevelGridManager : MonoBehaviour
 
 
 
-    #endregion ===================================================
+    #endregion
 
     void Awake()
     {
@@ -80,16 +82,26 @@ public class T_LevelGridManager : MonoBehaviour
 
     void Start()
     {
-        _gridSystem.CreateGridVisual(_gridObejctVisual);
-        InitializeGridValidationVisuals(_gridValidationVisualObject);
+        // Wait for 3 second then generate grid visual
+        WaitForHeight(3, GridVisualInit);
+
 
     }
 
+    #region =============== Waiting for GridPosition height information =================
 
+    async void WaitForHeight(int waitTime, Action gridVisualInit)
+    {
+        await Task.Delay(waitTime);
+        gridVisualInit();
+    }
 
-
-
-
+    void GridVisualInit()
+    {
+        _gridSystem.CreateGridVisual(_gridObejctVisual);
+        InitializeGridValidationVisuals(_gridValidationVisualObject);
+    }
+    #endregion
 
     #region ========== GRID VALIDATION VISUAL FUNCTIONS =================
 
@@ -135,7 +147,7 @@ public class T_LevelGridManager : MonoBehaviour
         }
     }
 
-    #endregion =========================================================
+    #endregion 
 
 
     #region ========== Convert List GridPosition and WorldPosition ==========
@@ -157,7 +169,7 @@ public class T_LevelGridManager : MonoBehaviour
         }
         return worldPositions;
     }
-    #endregion =========================================================
+    #endregion 
 
     #region ================ Compare GridPosition Floor ================
 
@@ -184,7 +196,8 @@ public class T_LevelGridManager : MonoBehaviour
         }
     }
 
-    #endregion =========================================================
+    #endregion
+
 
 
 

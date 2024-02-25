@@ -48,7 +48,7 @@ public class T_UnitMovementAction : T_UnitActionBase
         switch (P_actionState)
         {
             case Action_State.Action_Selection:
-
+                T_DrawPathline.Instance.G_ClearPathline();
 
 
 
@@ -152,7 +152,7 @@ public class T_UnitMovementAction : T_UnitActionBase
     void MoveByGridPositionList(List<T_GirdPosition> gpList)
     {
         List<Vector3> positionList = T_LevelGridManager.Instance.G_ConvertListGridToWorldPosition(gpList);
-        
+
         // Unit class will update the vertical position information
         Vector3 unitHorizontalPosition = new Vector3(_unit.transform.position.x, 0, _unit.transform.position.z);
 

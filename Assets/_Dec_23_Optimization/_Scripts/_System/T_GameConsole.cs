@@ -139,21 +139,7 @@ namespace DebugConsole
             {
                 T_Morale.Instance.G_SetCurrentMorale(T_Morale.Instance.G_GetCurrentMorale() - 1);
             }
-            // Debug.Log(char.IsDigit(s));
         }
-
-        // string ReadInputString(string s)
-        // {
-        //     List<char> charList = new();
-        //     foreach (char c in s)
-        //     {
-        //         int outInt;
-        //         if (!int.TryParse(c.ToString(), out outInt)) break;
-        //         charList.Add(c);
-        //         char.
-        //     }
-        //     return new string(charList.ToArray());
-        // }
 
         int StringToInt(string s)
         {
@@ -182,7 +168,6 @@ namespace DebugConsole
 
 
         #endregion
-
         #endregion
 
         #region ==================== Console Button =======================

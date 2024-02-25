@@ -29,11 +29,6 @@ public class T_HealthSystem : MonoBehaviour
     //DEBUG
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            OnDamage(5);
-            T_GameConsole.Instance.Log("Damage 5");
-        };
     }
 
 

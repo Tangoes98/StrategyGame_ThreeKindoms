@@ -2,15 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class T_Terrain : MonoBehaviour
+public abstract class T_Terrain : MonoBehaviour
 {
-    T_GridData _gridData;
+    protected T_GridData _gridData;
+    protected T_Pathnode _gridPathNode;
+    [SerializeField] protected int _terrainMoveCost;
 
 
-    void Start()
+    protected virtual void Start()
     {
         AddTerrainToGridData();
     }
+    protected virtual void Update()
+    {
+    }
+
+    #region ========= Generics =============
+
+    public T G_GetChildTerrainType<T>() where T : T_Terrain => (T)this;
+
+    #endregion
 
     #region ========= GridData =========
 
@@ -23,10 +34,12 @@ public class T_Terrain : MonoBehaviour
         T_LevelGridManager levelGrid = T_LevelGridManager.Instance;
         T_GirdPosition girPos = levelGrid.G_WorldToGridPosition(this.transform.position);
         _gridData = levelGrid.G_GetGridPosData(girPos);
+        _gridPathNode = levelGrid.G_GetGridPosPathNode(girPos);
         _gridData.AddTerrain(this);
     }
 
-    #endregion ====================================
+    #endregion 
+
 
 
 

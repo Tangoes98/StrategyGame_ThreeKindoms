@@ -14,7 +14,7 @@ public class T_GridDataVisual : MonoBehaviour
 
     void Start()
     {
-        
+
     }
     void Update()
     {
@@ -33,10 +33,12 @@ public class T_GridDataVisual : MonoBehaviour
         int gcost = _pathNode.G_GetGCost();
         int hcost = _pathNode.G_GetHCost();
         int fcost = _pathNode.G_GetFCost();
+        int tmcost = _pathNode.G_GetTerrainMoveCost();
         _PathnodeInfo.text =
             $"G:{gcost}\n" +
             $"H:{hcost}\n" +
-            $"F:{fcost}\n";
+            $"F:{fcost}\n" +
+            $"TM:{tmcost}\n";
     }
 
 

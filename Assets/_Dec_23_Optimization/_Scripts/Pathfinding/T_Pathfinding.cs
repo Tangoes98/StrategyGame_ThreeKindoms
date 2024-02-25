@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class T_Pathfinding : MonoBehaviour
 {
+    #region =========== Instance ==============
     public static T_Pathfinding Instance;
     void Awake()
     {
@@ -15,16 +16,22 @@ public class T_Pathfinding : MonoBehaviour
         }
         Instance = this;
     }
+    #endregion
 
-
-
-
+    #region ========== Variables =============
 
     [Header("DEBUG_TEST_DELETE_LATER")]
     [SerializeField] T_GirdPosition TestGridStartPos;
     [SerializeField] T_GirdPosition TestGridEndPos;
     [SerializeField] List<T_GirdPosition> testNeighbourList;
     [SerializeField] List<T_GirdPosition> PathList;
+
+    const int MOVE_STRAIGHT_COST = 10;
+    const int MOVE_DIAGONAL_COST = 14;
+    const int PathfindingDistanceMultiplier = 10;
+    #endregion
+
+    #region ============ Monobehavior ==========
 
     void Start()
     {
@@ -34,22 +41,10 @@ public class T_Pathfinding : MonoBehaviour
     {
 
     }
-
-    #region ========DEBUG_TEST==========
-
     #endregion
 
 
-
-
-    const int MOVE_STRAIGHT_COST = 10;
-    const int MOVE_DIAGONAL_COST = 14;
-    const int PathfindingDistanceMultiplier = 10;
-
-
-
-
-    #region ========== Public Method ==========
+    #region ========== Public ==========
 
     public int G_CalculateHCost(T_GirdPosition current, T_GirdPosition end) => CalculateGridPositionDistance(current, end);
     public int G_CalculateGCost(T_GirdPosition current, T_GirdPosition start) => CalculateGridPositionDistance(current, start);
@@ -70,6 +65,11 @@ public class T_Pathfinding : MonoBehaviour
         return (deltaX + deltaZ) * PathfindingDistanceMultiplier;
     }
 
+    int CalculatePathNodeDistance(T_Pathnode a, T_Pathnode b)
+    {
+        return CalculateGridPositionDistance(a.G_GetGridPosition(), b.G_GetGridPosition());
+    }
+
 
 
     List<T_GirdPosition> FindPath(T_GirdPosition start, T_GirdPosition end, List<T_GirdPosition> gpRange)
@@ -80,8 +80,10 @@ public class T_Pathfinding : MonoBehaviour
         List<T_GirdPosition> finalPathList = new();
 
         T_GirdPosition currentGridPos = start;
+        T_Pathnode targetGridPosPathnode = GetGridPathNode(end);
 
         CalculateStartGridPosFCost(start, end);
+        int totalDistance = CalculateGridPositionDistance(start, end);
 
         tempPathList.Add(start);
         finalPathList.Add(start);
@@ -109,7 +111,11 @@ public class T_Pathfinding : MonoBehaviour
 
             List<T_Pathnode> neighbourNodeList = CalculateNeighbourGridFCost(neighbourList, currentGridPos, end);
 
-            T_Pathnode nextNode = GetLowestFCostNode(neighbourNodeList);
+            T_Pathnode nextNode;
+
+            if (!neighbourNodeList.Contains(targetGridPosPathnode))
+                nextNode = GetLowestFCostNode(neighbourNodeList, totalDistance, targetGridPosPathnode);
+            else nextNode = targetGridPosPathnode;
 
             T_GirdPosition nextGridPos = nextNode.G_GetGridPosition();
 
@@ -201,7 +207,7 @@ public class T_Pathfinding : MonoBehaviour
             T_Pathnode neighbourNode = GetGridPathNode(neighbourGridpos);
             neighbourNode.G_SetHCost(G_CalculateHCost(neighbourGridpos, endingGridpos));
             int tempGCost = G_CalculateGCost(neighbourGridpos, currentGridpos);
-            neighbourNode.G_SetGCost(tempGCost + currentNodeGCost);
+            neighbourNode.G_SetGCost(tempGCost + currentNodeGCost + neighbourNode.G_GetTerrainMoveCost());
             neighbourNode.G_CalculateFCost();
 
             neighborNodeList.Add(neighbourNode);
@@ -213,13 +219,15 @@ public class T_Pathfinding : MonoBehaviour
 
     }
 
-    T_Pathnode GetLowestFCostNode(List<T_Pathnode> pathNodeList)
+    T_Pathnode GetLowestFCostNode(List<T_Pathnode> pathNodeList, int totalDistance, T_Pathnode targetNode)
     {
         T_Pathnode tempLowestFCostNode = pathNodeList[0];
 
         for (int i = 0; i < pathNodeList.Count; i++)
         {
             if (pathNodeList[i].G_GetFCost() > tempLowestFCostNode.G_GetFCost()) continue;
+
+            if (CalculatePathNodeDistance(pathNodeList[i], targetNode) > totalDistance) continue;
 
             tempLowestFCostNode = pathNodeList[i];
         }

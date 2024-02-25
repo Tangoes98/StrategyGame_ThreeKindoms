@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Mono.Cecil;
+using TMPro;
 using UnityEngine;
 
 public class T_TEST : MonoBehaviour
@@ -30,6 +32,21 @@ public class T_TEST : MonoBehaviour
         //     DICE1D6();
         // }
 
+        if (TKeyPressed())
+        {
+            // var gp = new T_GirdPosition(5, 4);
+            // var terrain = T_LevelGridManager.Instance.G_GetGridPosData(gp).GetSurfaceTerrain();
+            // terrain.G_GetChildTerrainType<T_Forest>().G_SetIsFlaming(true);
+
+            // // T_Forest i = (T_Forest)terrain;
+            // // i.G_SetIsFlaming(true);
+
+            // Debug.Log(terrain);
+
+            // //Debug.Log();
+
+        }
+
 
 
     }
@@ -38,6 +55,12 @@ public class T_TEST : MonoBehaviour
     {
         int num = Random.Range(1, 6);
         Debug.Log($"Dice 1d6 , Dice result: {num}");
+    }
+
+    bool TKeyPressed()
+    {
+        if (Input.GetKeyDown(KeyCode.T)) return true;
+        else return false;
     }
 
 

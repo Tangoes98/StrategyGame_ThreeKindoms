@@ -8,6 +8,7 @@ public class T_Pathnode
     int _GCost;
     int _HCost;
     T_GirdPosition _gridPosition;
+    int _terrainMoveCost;
 
     bool _isValid;
 
@@ -26,10 +27,12 @@ public class T_Pathnode
     public int G_GetFCost() => _FCost;
     public int G_GetGCost() => _GCost;
     public int G_GetHCost() => _HCost;
+    public int G_GetTerrainMoveCost() => _terrainMoveCost;
 
     public void G_CalculateFCost() => _FCost = _GCost + _HCost;
     public void G_SetGCost(int g) => _GCost = g;
     public void G_SetHCost(int h) => _HCost = h;
+    public void G_SetTerrainMoveCost(int t) => _terrainMoveCost = t;
 
     public T_GirdPosition G_GetGridPosition() => _gridPosition;
     public void G_ResetCosts() => ResetCosts();

@@ -62,7 +62,6 @@ public abstract class T_UnitActionBase : MonoBehaviour
         {
             T_UnitSelection.Instance.G_SetCanSelectUnit(true);
             T_LevelGridManager.Instance.G_ClearAllGridValidationVisuals();
-            T_DrawPathline.Instance.G_ClearPathline();
             P_actionState = Action_State.Action_Selection;
         }
     }
