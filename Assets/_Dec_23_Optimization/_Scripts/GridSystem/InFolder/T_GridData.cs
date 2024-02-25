@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class T_GridData
 {
-    T_GirdPosition _gridPosition;
+    T_GridPosition _gridPosition;
     List<T_Unit> _unitList;
     List<T_Terrain> _terrainList = new();
     T_Terrain _surfaceTerrain;
@@ -16,7 +16,7 @@ public class T_GridData
 
 
 
-    public T_GridData(T_GirdPosition gp)
+    public T_GridData(T_GridPosition gp)
     {
         this._gridPosition = gp;
         this._unitList = new();

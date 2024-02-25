@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Timers;
 using UnityEngine;
 
 public class T_LevelGridManager : MonoBehaviour
@@ -30,22 +31,27 @@ public class T_LevelGridManager : MonoBehaviour
     //* ------------ Grid System ------------
     public int G_GetGridWidth() => _gridWidth;
     public int G_GetGridHeight() => _gridHeight;
-    public bool G_IsValidSystemGrid(T_GirdPosition gp) => _gridSystem.IsValidGridPosition(gp);
+    public bool G_IsValidSystemGrid(T_GridPosition gp) => _gridSystem.IsValidGridPosition(gp);
+
 
     //* -------- Grid/World position --------
-    public Vector3 G_GridToWorldPosition(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
-    public Vector3 G_GridToWorldPositionWithFloor(T_GirdPosition gridPosition) => _gridSystem.GridToWorldPositionIncludesFloor(gridPosition);
-    public T_GirdPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
-    public List<T_GirdPosition> G_ConvertListWorldToGridPosition(List<Vector3> worldPositions) => ConvertListWorldToGridPosition(worldPositions);
-    public List<Vector3> G_ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions) => ConvertListGridToWorldPosition(gridPositions);
-    public bool G_IsGridPositionsOnSameFloorHeight(T_GirdPosition a, T_GirdPosition b, out Vector3 gridOffsetWorldPos) => IsGridPositionsOnSameFloorHeight(a, b, out gridOffsetWorldPos);
+    public Vector3 G_GridToWorldPosition(T_GridPosition gridPosition) => _gridSystem.GridToWorldPosition(gridPosition);
+    public Vector3 G_GridToWorldPositionWithFloor(T_GridPosition gridPosition) => _gridSystem.GridToWorldPositionIncludesFloor(gridPosition);
+    public T_GridPosition G_WorldToGridPosition(Vector3 worldPosition) => _gridSystem.WorldToGridPosition(worldPosition);
+    public List<T_GridPosition> G_ConvertListWorldToGridPosition(List<Vector3> worldPositions) => ConvertListWorldToGridPosition(worldPositions);
+    public List<Vector3> G_ConvertListGridToWorldPosition(List<T_GridPosition> gridPositions) => ConvertListGridToWorldPosition(gridPositions);
+    public bool G_IsGridPositionsOnSameFloorHeight(T_GridPosition a, T_GridPosition b, out Vector3 gridOffsetWorldPos)
+        => IsGridPositionsOnSameFloorHeight(a, b, out gridOffsetWorldPos);
+    public bool G_IsAbleToClimb(T_GridPosition target, T_GridPosition start) => IsAbleToClimbOver(target, start);
+
 
     //* -------- Grid Data/ Grid Path node --------
-    public T_GridData G_GetGridPosData(T_GirdPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
-    public T_Pathnode G_GetGridPosPathNode(T_GirdPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
+    public T_GridData G_GetGridPosData(T_GridPosition gridPosition) => _gridSystem.GetGridData(gridPosition);
+    public T_Pathnode G_GetGridPosPathNode(T_GridPosition gridPosition) => _gridSystem.GetPathnode(gridPosition);
+
 
     //* -------- Grid Validation Visual --------
-    public T_GridValidationVisual G_GetGridValidationVisual(T_GirdPosition gp) => GetGridValidationVisual(gp);
+    public T_GridValidationVisual G_GetGridValidationVisual(T_GridPosition gp) => GetGridValidationVisual(gp);
 
     public void G_ClearAllGridValidationVisuals() => ClearAllGridValidationVisuals();
 
@@ -54,7 +60,7 @@ public class T_LevelGridManager : MonoBehaviour
     /// </summary>
     /// <param name="visualName">MOVE_GRID, ATTACK_RANGE, VALID_ATTACK</param>
     /// <param name="gpList"></param>
-    public void G_ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList) => ShowGridValidationVisuals(visualName, gpList);
+    public void G_ShowGridValidationVisuals(string visualName, List<T_GridPosition> gpList) => ShowGridValidationVisuals(visualName, gpList);
 
 
 
@@ -101,6 +107,7 @@ public class T_LevelGridManager : MonoBehaviour
         _gridSystem.CreateGridVisual(_gridObejctVisual);
         InitializeGridValidationVisuals(_gridValidationVisualObject);
     }
+
     #endregion
 
     #region ========== GRID VALIDATION VISUAL FUNCTIONS =================
@@ -112,7 +119,7 @@ public class T_LevelGridManager : MonoBehaviour
         {
             for (int j = 0; j < _gridHeight; j++)
             {
-                var gridPosition = new T_GirdPosition(i, j);
+                var gridPosition = new T_GridPosition(i, j);
 
                 Transform obj = Instantiate(visualObject, G_GridToWorldPositionWithFloor(gridPosition), Quaternion.identity);
 
@@ -123,7 +130,7 @@ public class T_LevelGridManager : MonoBehaviour
         }
     }
 
-    T_GridValidationVisual GetGridValidationVisual(T_GirdPosition gp)
+    T_GridValidationVisual GetGridValidationVisual(T_GridPosition gp)
     {
         return _gridValidationVisuals[gp.x, gp.z];
     }
@@ -139,7 +146,7 @@ public class T_LevelGridManager : MonoBehaviour
         }
     }
 
-    void ShowGridValidationVisuals(string visualName, List<T_GirdPosition> gpList)
+    void ShowGridValidationVisuals(string visualName, List<T_GridPosition> gpList)
     {
         foreach (var gp in gpList)
         {
@@ -151,16 +158,16 @@ public class T_LevelGridManager : MonoBehaviour
 
 
     #region ========== Convert List GridPosition and WorldPosition ==========
-    List<T_GirdPosition> ConvertListWorldToGridPosition(List<Vector3> worldPositions)
+    List<T_GridPosition> ConvertListWorldToGridPosition(List<Vector3> worldPositions)
     {
-        List<T_GirdPosition> girdPositions = new();
+        List<T_GridPosition> girdPositions = new();
         foreach (var worldPos in worldPositions)
         {
             girdPositions.Add(G_WorldToGridPosition(worldPos));
         }
         return girdPositions;
     }
-    List<Vector3> ConvertListGridToWorldPosition(List<T_GirdPosition> gridPositions)
+    List<Vector3> ConvertListGridToWorldPosition(List<T_GridPosition> gridPositions)
     {
         List<Vector3> worldPositions = new();
         foreach (var gridPos in gridPositions)
@@ -173,11 +180,16 @@ public class T_LevelGridManager : MonoBehaviour
 
     #region ================ Compare GridPosition Floor ================
 
-    //* Compare 2 grid positions and output world position with lower grid position (X,Z) and upper grid position (Y)
-    bool IsGridPositionsOnSameFloorHeight(T_GirdPosition a, T_GirdPosition b, out Vector3 gridOffsetWorldPos)
+    void GetGridPositionFloor(T_GridPosition a, T_GridPosition b, out int floorA, out int floorB)
     {
-        int floorA = G_GetGridPosData(a).GetTerrainListCount();
-        int floorB = G_GetGridPosData(b).GetTerrainListCount();
+        floorA = G_GetGridPosData(a).GetTerrainListCount();
+        floorB = G_GetGridPosData(b).GetTerrainListCount();
+    }
+
+    //* Compare 2 grid positions and output world position with lower grid position (X,Z) and upper grid position (Y)
+    bool IsGridPositionsOnSameFloorHeight(T_GridPosition a, T_GridPosition b, out Vector3 gridOffsetWorldPos)
+    {
+        GetGridPositionFloor(a, b, out int floorA, out int floorB);
 
         if (floorA == floorB)
         {
@@ -195,6 +207,15 @@ public class T_LevelGridManager : MonoBehaviour
             return false;
         }
     }
+
+    bool IsAbleToClimbOver(T_GridPosition target, T_GridPosition start)
+    {
+        GetGridPositionFloor(target, start, out int floorA, out int floorB);
+
+        if ((floorA - floorB) > 2) return false;
+        else return true;
+    }
+
 
     #endregion
 

@@ -24,7 +24,7 @@ public class T_GridSystem
         {
             for (int j = 0; j < _height; j++)
             {
-                var gridPosition = new T_GirdPosition(i, j);
+                var gridPosition = new T_GridPosition(i, j);
                 _gridDatas[i, j] = new T_GridData(gridPosition);
                 _pathNodes[i, j] = new T_Pathnode(gridPosition);
 
@@ -41,34 +41,34 @@ public class T_GridSystem
         }
     }
 
-    public Vector3 GridToWorldPosition(T_GirdPosition gridPosition)
+    public Vector3 GridToWorldPosition(T_GridPosition gridPosition)
     {
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize;
     }
 
     // GridToWorldPosition with floor info
-    public Vector3 GridToWorldPositionIncludesFloor(T_GirdPosition gridPosition)
+    public Vector3 GridToWorldPositionIncludesFloor(T_GridPosition gridPosition)
     {
         var girdData = GetGridData(gridPosition);
         int floorHeight = girdData.GetTerrainListCount();
         return new Vector3(gridPosition.x, 0, gridPosition.z) * _cellSize + new Vector3(0, floorHeight, 0);
     }
 
-    public T_GirdPosition WorldToGridPosition(Vector3 worldPosition)
+    public T_GridPosition WorldToGridPosition(Vector3 worldPosition)
     {
-        return new T_GirdPosition(Mathf.RoundToInt(worldPosition.x / _cellSize), Mathf.RoundToInt(worldPosition.z / _cellSize));
+        return new T_GridPosition(Mathf.RoundToInt(worldPosition.x / _cellSize), Mathf.RoundToInt(worldPosition.z / _cellSize));
     }
 
-    public T_GridData GetGridData(T_GirdPosition gridPosition)
+    public T_GridData GetGridData(T_GridPosition gridPosition)
     {
         return _gridDatas[gridPosition.x, gridPosition.z];
     }
-    public T_Pathnode GetPathnode(T_GirdPosition gridPosition)
+    public T_Pathnode GetPathnode(T_GridPosition gridPosition)
     {
         return _pathNodes[gridPosition.x, gridPosition.z];
     }
 
-    public bool IsValidGridPosition(T_GirdPosition gridPosition)
+    public bool IsValidGridPosition(T_GridPosition gridPosition)
     {
         return gridPosition.x >= 0 &&
                 gridPosition.z >= 0 &&
@@ -82,7 +82,7 @@ public class T_GridSystem
         {
             for (int z = 0; z < _height; z++)
             {
-                var gridPosition = new T_GirdPosition(x, z);
+                var gridPosition = new T_GridPosition(x, z);
 
                 Transform gridObjectPrefab = GameObject.Instantiate(objectVisualPrefab, GridToWorldPositionIncludesFloor(gridPosition), Quaternion.identity);
 
@@ -92,11 +92,11 @@ public class T_GridSystem
         }
     }
 
-    void SetGridData(Transform gridObject, T_GirdPosition gridPosition)
+    void SetGridData(Transform gridObject, T_GridPosition gridPosition)
     {
         gridObject.GetComponent<T_GridDataVisual>().SetIndividualGridData(GetGridData(gridPosition));
     }
-    void SetPathNode(Transform gridObject, T_GirdPosition gridPosition)
+    void SetPathNode(Transform gridObject, T_GridPosition gridPosition)
     {
         gridObject.GetComponent<T_GridDataVisual>().SetPathNode(GetPathnode(gridPosition));
     }

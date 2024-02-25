@@ -11,8 +11,8 @@ public class T_Unit : MonoBehaviour
     // unit data has to update to grid data(position, ...)
 
     T_LevelGridManager _levelGrid;
-    T_GirdPosition _oldGridPosition;
-    T_GirdPosition _currentGridPosition;
+    T_GridPosition _oldGridPosition;
+    T_GridPosition _currentGridPosition;
     T_GridData _oldGridData;
     T_GridData _currentGridData;
     Vector3 _startPosition;
@@ -28,7 +28,7 @@ public class T_Unit : MonoBehaviour
     #region ========== Public Properties ====================
 
     public List<T_UnitActionBase> G_GetUnitActions() => _unitActions;
-    public T_GirdPosition G_UnitGridPosition() => _currentGridPosition;
+    public T_GridPosition G_UnitGridPosition() => _currentGridPosition;
     public T_HealthSystem G_GetHealthSystem() => _healthSystem;
     public T_UnitStatSO G_GetUnitStatSO() => _unitStatSO;
     public int G_GetUnitCurrentFloorHeight() => _currentGridData.GetTerrainListCount();
@@ -69,7 +69,7 @@ public class T_Unit : MonoBehaviour
 
     #region ========== UpdateUnitGirdPosition and GridData ==========
 
-    T_GridData CurrentGridData(T_GirdPosition gp) => _levelGrid.G_GetGridPosData(gp);
+    T_GridData CurrentGridData(T_GridPosition gp) => _levelGrid.G_GetGridPosData(gp);
     void UnitGridPositionStartup()
     {
         UpdateUnitGridPosition();

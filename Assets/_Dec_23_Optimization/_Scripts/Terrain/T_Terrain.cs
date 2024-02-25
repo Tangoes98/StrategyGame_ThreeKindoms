@@ -32,7 +32,7 @@ public abstract class T_Terrain : MonoBehaviour
     void AddTerrainToGridData()
     {
         T_LevelGridManager levelGrid = T_LevelGridManager.Instance;
-        T_GirdPosition girPos = levelGrid.G_WorldToGridPosition(this.transform.position);
+        T_GridPosition girPos = levelGrid.G_WorldToGridPosition(this.transform.position);
         _gridData = levelGrid.G_GetGridPosData(girPos);
         _gridPathNode = levelGrid.G_GetGridPosPathNode(girPos);
         _gridData.AddTerrain(this);

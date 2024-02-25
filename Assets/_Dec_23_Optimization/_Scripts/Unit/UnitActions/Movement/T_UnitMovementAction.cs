@@ -8,14 +8,16 @@ public class T_UnitMovementAction : T_UnitActionBase
     [SerializeField] float _moveSpeed;
     [SerializeField] float _rotateSpeed;
     [SerializeField] float _stopDistance;
-    [SerializeField] T_GirdPosition _unitGirdPosition;
+    [SerializeField] T_GridPosition _unitGirdPosition;
     [SerializeField] int _maxMoveDistance;
+    // [SerializeField] int _totalMoveableDistance;
 
 
     [Header("DEBUG_VIEW")]
     [SerializeField] int _currentPositionListIndex;
-    [SerializeField] List<T_GirdPosition> _gridPath;
+    [SerializeField] List<T_GridPosition> _gridPath;
     [SerializeField] bool _isUnitMoved;
+    [SerializeField] List<T_GridPosition> _moveableGPList;
 
 
 
@@ -57,7 +59,7 @@ public class T_UnitMovementAction : T_UnitActionBase
 
                 CancelSelectedActionCheck();
                 DrawPreviewPathline();
-                if (!CheckActionInput(out T_GirdPosition targetGridPosition)) return;
+                if (!CheckActionInput(out T_GridPosition targetGridPosition)) return;
                 if (!CheckSelectedMovePosition(targetGridPosition)) return;
                 P_actionState = Action_State.Action_Busy;
 
@@ -89,29 +91,28 @@ public class T_UnitMovementAction : T_UnitActionBase
         MoveByGridPositionList(_gridPath);
 
     }
-    protected override void PreviewActionValidPosition()
-    {
-        MovementRangePreview();
-    }
+    protected override void PreviewActionValidPosition() => MovementRangePreview();
 
     #endregion ================================================
 
     void MovementRangePreview()
     {
-        T_LevelGridManager.Instance.G_ShowGridValidationVisuals("MOVE_GRID", ValidMovePositionList());
+        _moveableGPList = T_Pathfinding.Instance.G_ValidMoveableGPList(PotentialMovePositionList(), _unitGirdPosition, _maxMoveDistance);
+
+        T_LevelGridManager.Instance.G_ShowGridValidationVisuals("MOVE_GRID", _moveableGPList);
     }
 
     void DrawPreviewPathline()
     {
-        T_GirdPosition gp = T_MouseController.Instance.G_GetMouseGridPosition();
+        T_GridPosition gp = T_MouseController.Instance.G_GetMouseGridPosition();
         if (!CheckSelectedMovePosition(gp)) return;
         T_DrawPathline.Instance.G_DrawPathline(_gridPath);
     }
 
 
-    bool CheckSelectedMovePosition(T_GirdPosition selectedGridPosition)
+    bool CheckSelectedMovePosition(T_GridPosition selectedGridPosition)
     {
-        if (!ValidMovePositionList().Contains(selectedGridPosition))
+        if (!_moveableGPList.Contains(selectedGridPosition))
         {
             Debug.Log("NOT VALID POSITION");
             _gridPath = null;
@@ -119,15 +120,15 @@ public class T_UnitMovementAction : T_UnitActionBase
         }
         _currentPositionListIndex = 0;
         var startGridPosition = T_LevelGridManager.Instance.G_WorldToGridPosition(this.transform.position);
-        _gridPath = T_Pathfinding.Instance.G_FindPath(startGridPosition, selectedGridPosition, ValidMovePositionList());
+        _gridPath = T_Pathfinding.Instance.G_FindPath(startGridPosition, selectedGridPosition, _moveableGPList);
         return true;
     }
 
 
 
-    List<T_GirdPosition> ValidMovePositionList()
+    List<T_GridPosition> PotentialMovePositionList()
     {
-        List<T_GirdPosition> gridPosList = new();
+        List<T_GridPosition> gridPosList = new();
         for (int x = -_maxMoveDistance; x <= _maxMoveDistance; x++)
         {
             for (int z = -_maxMoveDistance; z <= _maxMoveDistance; z++)
@@ -137,8 +138,8 @@ public class T_UnitMovementAction : T_UnitActionBase
                 if (tempDistance > _maxMoveDistance) continue;
 
 
-                T_GirdPosition offsetGridPosition = new T_GirdPosition(x, z);
-                T_GirdPosition ValidGridposition = offsetGridPosition + _unitGirdPosition;
+                T_GridPosition offsetGridPosition = new T_GridPosition(x, z);
+                T_GridPosition ValidGridposition = offsetGridPosition + _unitGirdPosition;
 
 
                 if (!T_LevelGridManager.Instance.G_IsValidSystemGrid(ValidGridposition)) continue;
@@ -149,7 +150,7 @@ public class T_UnitMovementAction : T_UnitActionBase
         return gridPosList;
     }
 
-    void MoveByGridPositionList(List<T_GirdPosition> gpList)
+    void MoveByGridPositionList(List<T_GridPosition> gpList)
     {
         List<Vector3> positionList = T_LevelGridManager.Instance.G_ConvertListGridToWorldPosition(gpList);
 

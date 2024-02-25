@@ -12,7 +12,7 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
     T_Unit _OpponentUnit;
 
     [Header("DEBUG_VIEW")]
-    [SerializeField] List<T_GirdPosition> _opponentUnitGridPos;
+    [SerializeField] List<T_GridPosition> _opponentUnitGridPos;
     [SerializeField] int _damageValue;
 
 
@@ -41,7 +41,7 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
             case Action_State.Action_Preview:
 
                 CancelSelectedActionCheck();
-                if (!CheckActionInput(out T_GirdPosition targetGridPosition)) return;
+                if (!CheckActionInput(out T_GridPosition targetGridPosition)) return;
                 if (!CheckSelectedAttackGridPosition(targetGridPosition)) return;
                 P_actionState = Action_State.Action_Busy;
 
@@ -85,10 +85,10 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
         _levelGridInstance.G_ShowGridValidationVisuals("VALID_ATTACK", EnemyUnitGridValidation());
     }
 
-    List<T_GirdPosition> ValidGridPositionList()
+    List<T_GridPosition> ValidGridPositionList()
     {
-        List<T_GirdPosition> gridPosList = new();
-        T_GirdPosition unitGp = T_LevelGridManager.Instance.G_WorldToGridPosition(_unit.transform.position);
+        List<T_GridPosition> gridPosList = new();
+        T_GridPosition unitGp = T_LevelGridManager.Instance.G_WorldToGridPosition(_unit.transform.position);
         for (int x = -_attackRange; x <= _attackRange; x++)
         {
             for (int z = -_attackRange; z <= _attackRange; z++)
@@ -98,8 +98,8 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
                 if (tempDistance > _attackRange) continue;
 
 
-                T_GirdPosition offsetGridPosition = new T_GirdPosition(x, z);
-                T_GirdPosition ValidGridposition = offsetGridPosition + unitGp;
+                T_GridPosition offsetGridPosition = new T_GridPosition(x, z);
+                T_GridPosition ValidGridposition = offsetGridPosition + unitGp;
 
 
                 if (!_levelGridInstance.G_IsValidSystemGrid(ValidGridposition)) continue;
@@ -115,11 +115,11 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
         return gridPosList;
     }
 
-    List<T_GirdPosition> EnemyUnitGridValidation()
+    List<T_GridPosition> EnemyUnitGridValidation()
     {
         //TODO: Check if the gridPosition contains enemy unit
 
-        List<T_GirdPosition> gridPosList = new();
+        List<T_GridPosition> gridPosList = new();
         foreach (var gridPos in _opponentUnitGridPos)
         {
             if (gridPos == _unit.G_UnitGridPosition()) continue;
@@ -129,7 +129,7 @@ public class T_UnitBasicAttackAction : T_UnitActionBase
         return gridPosList;
     }
 
-    bool CheckSelectedAttackGridPosition(T_GirdPosition gridPos)
+    bool CheckSelectedAttackGridPosition(T_GridPosition gridPos)
     {
         if (!EnemyUnitGridValidation().Contains(gridPos)) return false;
         else

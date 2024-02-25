@@ -7,14 +7,15 @@ public class T_Pathnode
     int _FCost;
     int _GCost;
     int _HCost;
-    T_GirdPosition _gridPosition;
+    T_GridPosition _gridPosition;
     int _terrainMoveCost;
+    // int _gridFloorHeight;
 
     bool _isValid;
 
 
 
-    public T_Pathnode(T_GirdPosition gp)
+    public T_Pathnode(T_GridPosition gp)
     {
         this._gridPosition = gp;
         this._isValid = true;
@@ -28,13 +29,15 @@ public class T_Pathnode
     public int G_GetGCost() => _GCost;
     public int G_GetHCost() => _HCost;
     public int G_GetTerrainMoveCost() => _terrainMoveCost;
+    // public int G_GetFloorHeight() => _gridFloorHeight;
 
     public void G_CalculateFCost() => _FCost = _GCost + _HCost;
     public void G_SetGCost(int g) => _GCost = g;
     public void G_SetHCost(int h) => _HCost = h;
     public void G_SetTerrainMoveCost(int t) => _terrainMoveCost = t;
+    // public void G_SetNodeFloorHeight(int value) => _gridFloorHeight = value;
 
-    public T_GirdPosition G_GetGridPosition() => _gridPosition;
+    public T_GridPosition G_GetGridPosition() => _gridPosition;
     public void G_ResetCosts() => ResetCosts();
 
     public bool G_IsValidPathNode() => _isValid;

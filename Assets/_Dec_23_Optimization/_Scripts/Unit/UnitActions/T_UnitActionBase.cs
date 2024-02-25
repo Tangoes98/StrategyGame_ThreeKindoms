@@ -66,7 +66,7 @@ public abstract class T_UnitActionBase : MonoBehaviour
         }
     }
 
-    protected bool CheckActionInput(out T_GirdPosition targetGridPosition)
+    protected bool CheckActionInput(out T_GridPosition targetGridPosition)
     {
         if (T_MouseController.Is_LMB_Down())
         {

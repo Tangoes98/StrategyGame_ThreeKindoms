@@ -26,7 +26,7 @@ public class T_DrawPathline : MonoBehaviour
 
 
     #region ========== Public Methods =========
-    public void G_DrawPathline(List<T_GirdPosition> girdPositions) => DrawPathLine(girdPositions);
+    public void G_DrawPathline(List<T_GridPosition> girdPositions) => DrawPathLine(girdPositions);
     public void G_ClearPathline() => ClearLine();
 
 
@@ -50,7 +50,7 @@ public class T_DrawPathline : MonoBehaviour
     }
 
     // Position list count, pos1, pos2...
-    void DrawPathLine(List<T_GirdPosition> girdPositions)
+    void DrawPathLine(List<T_GridPosition> girdPositions)
     {
         if (girdPositions == null)
         {

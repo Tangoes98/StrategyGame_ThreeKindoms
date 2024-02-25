@@ -21,13 +21,13 @@ public class T_Pathfinding : MonoBehaviour
     #region ========== Variables =============
 
     [Header("DEBUG_TEST_DELETE_LATER")]
-    [SerializeField] T_GirdPosition TestGridStartPos;
-    [SerializeField] T_GirdPosition TestGridEndPos;
-    [SerializeField] List<T_GirdPosition> testNeighbourList;
-    [SerializeField] List<T_GirdPosition> PathList;
+    [SerializeField] T_GridPosition TestGridStartPos;
+    [SerializeField] T_GridPosition TestGridEndPos;
+    [SerializeField] List<T_GridPosition> testNeighbourList;
+    [SerializeField] List<T_GridPosition> PathList;
 
-    const int MOVE_STRAIGHT_COST = 10;
-    const int MOVE_DIAGONAL_COST = 14;
+    // const int MOVE_STRAIGHT_COST = 10;
+    // const int MOVE_DIAGONAL_COST = 14;
     const int PathfindingDistanceMultiplier = 10;
     #endregion
 
@@ -46,19 +46,21 @@ public class T_Pathfinding : MonoBehaviour
 
     #region ========== Public ==========
 
-    public int G_CalculateHCost(T_GirdPosition current, T_GirdPosition end) => CalculateGridPositionDistance(current, end);
-    public int G_CalculateGCost(T_GirdPosition current, T_GirdPosition start) => CalculateGridPositionDistance(current, start);
+    public int G_CalculateHCost(T_GridPosition current, T_GridPosition end) => CalculateGridPositionDistance(current, end);
+    public int G_CalculateGCost(T_GridPosition current, T_GridPosition start) => CalculateGridPositionDistance(current, start);
 
-    public List<T_GirdPosition> G_FindPath(T_GirdPosition start, T_GirdPosition end, List<T_GirdPosition> gpRange) => FindPath(start, end, gpRange);
+    public List<T_GridPosition> G_FindPath(T_GridPosition start, T_GridPosition end, List<T_GridPosition> gpRange) => FindPath(start, end, gpRange);
+    public List<T_GridPosition> G_ValidMoveableGPList(List<T_GridPosition> gpList, T_GridPosition start, int maxDistance)
+        => PotentialMoveabelGridPositionListValidation(gpList, start, maxDistance);
 
 
     #endregion ==================================
 
 
 
-    T_Pathnode GetGridPathNode(T_GirdPosition gp) => T_LevelGridManager.Instance.G_GetGridPosPathNode(gp);
+    T_Pathnode GetGridPathNode(T_GridPosition gp) => T_LevelGridManager.Instance.G_GetGridPosPathNode(gp);
 
-    int CalculateGridPositionDistance(T_GirdPosition a, T_GirdPosition b)
+    int CalculateGridPositionDistance(T_GridPosition a, T_GridPosition b)
     {
         int deltaX = Mathf.Abs(a.x - b.x);
         int deltaZ = Mathf.Abs(a.z - b.z);
@@ -72,14 +74,14 @@ public class T_Pathfinding : MonoBehaviour
 
 
 
-    List<T_GirdPosition> FindPath(T_GirdPosition start, T_GirdPosition end, List<T_GirdPosition> gpRange)
+    List<T_GridPosition> FindPath(T_GridPosition start, T_GridPosition end, List<T_GridPosition> gpRange)
     {
         ResetAllGridPathNodeCosts();
 
-        List<T_GirdPosition> tempPathList = new();
-        List<T_GirdPosition> finalPathList = new();
+        List<T_GridPosition> tempPathList = new();
+        List<T_GridPosition> finalPathList = new();
 
-        T_GirdPosition currentGridPos = start;
+        T_GridPosition currentGridPos = start;
         T_Pathnode targetGridPosPathnode = GetGridPathNode(end);
 
         CalculateStartGridPosFCost(start, end);
@@ -88,7 +90,6 @@ public class T_Pathfinding : MonoBehaviour
         tempPathList.Add(start);
         finalPathList.Add(start);
 
-        //for (int i = 0; i < 50; i++)
         while (tempPathList.Count > 0)
         {
             //Debug.Log(currentGridPos);
@@ -105,7 +106,7 @@ public class T_Pathfinding : MonoBehaviour
             }
 
 
-            List<T_GirdPosition> neighbourList = GetNeighbourPathNodeGridList(currentGridPos, gpRange);
+            List<T_GridPosition> neighbourList = GetNeighbourPathNodeGridList(currentGridPos, gpRange, start);
 
             if (neighbourList.Count < 1) break; // No valid neighbour grid
 
@@ -117,7 +118,7 @@ public class T_Pathfinding : MonoBehaviour
                 nextNode = GetLowestFCostNode(neighbourNodeList, totalDistance, targetGridPosPathnode);
             else nextNode = targetGridPosPathnode;
 
-            T_GirdPosition nextGridPos = nextNode.G_GetGridPosition();
+            T_GridPosition nextGridPos = nextNode.G_GetGridPosition();
 
             tempPathList.Add(nextGridPos);
 
@@ -130,6 +131,23 @@ public class T_Pathfinding : MonoBehaviour
 
     }
 
+    // Based on the unit max moveable distace to get the valid moveable gridpositions list
+    List<T_GridPosition> PotentialMoveabelGridPositionListValidation(List<T_GridPosition> gpList, T_GridPosition start, int maxDistance)
+    {
+        List<T_GridPosition> validList = new();
+        foreach (T_GridPosition gp in gpList)
+        {
+            List<T_GridPosition> pathList = FindPath(start, gp, gpList);
+            if (pathList == null) continue;
+
+            int fCost = GetGridPathNode(pathList[pathList.Count() - 1]).G_GetFCost();
+            if (fCost > maxDistance * PathfindingDistanceMultiplier) continue;
+
+            validList.Add(gp);
+        }
+        return validList;
+    }
+
 
 
 
@@ -137,16 +155,16 @@ public class T_Pathfinding : MonoBehaviour
     #region ========== Pathfinding Related Functions ==========
 
 
-    List<T_GirdPosition> GetNeighbourPathNodeGridList(T_GirdPosition gp, List<T_GirdPosition> gpRange)
+    List<T_GridPosition> GetNeighbourPathNodeGridList(T_GridPosition gp, List<T_GridPosition> gpRange, T_GridPosition startGP)
     {
-        List<T_GirdPosition> neightbourList = new();
+        List<T_GridPosition> neightbourList = new();
         int gridWidth = T_LevelGridManager.Instance.G_GetGridWidth();
         int gridHeight = T_LevelGridManager.Instance.G_GetGridHeight();
 
-        T_GirdPosition leftNode = new T_GirdPosition(gp.x - 1, gp.z);
-        T_GirdPosition rightNode = new T_GirdPosition(gp.x + 1, gp.z);
-        T_GirdPosition upNode = new T_GirdPosition(gp.x, gp.z + 1);
-        T_GirdPosition downNode = new T_GirdPosition(gp.x, gp.z - 1);
+        T_GridPosition leftNode = new T_GridPosition(gp.x - 1, gp.z);
+        T_GridPosition rightNode = new T_GridPosition(gp.x + 1, gp.z);
+        T_GridPosition upNode = new T_GridPosition(gp.x, gp.z + 1);
+        T_GridPosition downNode = new T_GridPosition(gp.x, gp.z - 1);
 
 
         if (leftNode.x >= 0) neightbourList.Add(leftNode);
@@ -156,22 +174,25 @@ public class T_Pathfinding : MonoBehaviour
         if (downNode.z >= 0) neightbourList.Add(downNode);
 
         // skip checked neighbour node
-        return NeighbourGridPositionValidation(neightbourList, gpRange);
+        return NeighbourGridPositionValidation(neightbourList, gpRange, startGP);
     }
 
 
-    List<T_GirdPosition> NeighbourGridPositionValidation(List<T_GirdPosition> gridposList, List<T_GirdPosition> gpRange)
+    List<T_GridPosition> NeighbourGridPositionValidation(List<T_GridPosition> gridposList, List<T_GridPosition> gpRange, T_GridPosition startGP)
     {
-        List<T_GirdPosition> ValidatedNeighbourGrids = new();
-        foreach (T_GirdPosition gridpos in gridposList)
+        List<T_GridPosition> ValidatedNeighbourGrids = new();
+        foreach (T_GridPosition gridpos in gridposList)
         {
-            // Need to Update the condition later
+            //TODO Need to Update the condition later
 
             // Check if in the gridsystem
             if (!T_LevelGridManager.Instance.G_IsValidSystemGrid(gridpos)) continue;
 
             // Check if the gp is avaliable to reach
             if (!GetGridPathNode(gridpos).G_IsValidPathNode()) continue;
+
+            // Check if the neighbour grid is too high
+            if (!T_LevelGridManager.Instance.G_IsAbleToClimb(gridpos, startGP)) continue;
 
             // Check if the grid is already calculated
             if (GetGridPathNode(gridpos).G_GetFCost() != 0) continue;
@@ -187,7 +208,7 @@ public class T_Pathfinding : MonoBehaviour
         return ValidatedNeighbourGrids;
     }
 
-    void CalculateStartGridPosFCost(T_GirdPosition startGirdpos, T_GirdPosition endingGridpos)
+    void CalculateStartGridPosFCost(T_GridPosition startGirdpos, T_GridPosition endingGridpos)
     {
         T_Pathnode startNode = GetGridPathNode(startGirdpos);
         startNode.G_SetGCost(0);
@@ -195,14 +216,14 @@ public class T_Pathfinding : MonoBehaviour
         startNode.G_CalculateFCost();
     }
 
-    List<T_Pathnode> CalculateNeighbourGridFCost(List<T_GirdPosition> gridposList, T_GirdPosition currentGridpos, T_GirdPosition endingGridpos)
+    List<T_Pathnode> CalculateNeighbourGridFCost(List<T_GridPosition> gridposList, T_GridPosition currentGridpos, T_GridPosition endingGridpos)
     {
         T_Pathnode currentNode = GetGridPathNode(currentGridpos);
         int currentNodeGCost = currentNode.G_GetGCost();
 
         List<T_Pathnode> neighborNodeList = new();
 
-        foreach (T_GirdPosition neighbourGridpos in gridposList)
+        foreach (T_GridPosition neighbourGridpos in gridposList)
         {
             T_Pathnode neighbourNode = GetGridPathNode(neighbourGridpos);
             neighbourNode.G_SetHCost(G_CalculateHCost(neighbourGridpos, endingGridpos));
@@ -235,9 +256,9 @@ public class T_Pathfinding : MonoBehaviour
         return tempLowestFCostNode;
     }
 
-    void CleanTempPathList(List<T_GirdPosition> tempPathList, List<T_GirdPosition> finalPathList)
+    void CleanTempPathList(List<T_GridPosition> tempPathList, List<T_GridPosition> finalPathList)
     {
-        foreach (T_GirdPosition item in tempPathList) finalPathList.Add(item);
+        foreach (T_GridPosition item in tempPathList) finalPathList.Add(item);
     }
 
     void ResetAllGridPathNodeCosts()
@@ -249,21 +270,12 @@ public class T_Pathfinding : MonoBehaviour
         {
             for (int j = 0; j < height; j++)
             {
-                T_GirdPosition gridPos = new(i, j);
+                T_GridPosition gridPos = new(i, j);
 
                 GetGridPathNode(gridPos).G_ResetCosts();
             }
         }
     }
-
-
-
-
-
-
-
-
-
     #endregion
 
 

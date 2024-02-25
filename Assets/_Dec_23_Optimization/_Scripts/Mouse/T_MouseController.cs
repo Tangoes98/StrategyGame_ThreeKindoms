@@ -39,11 +39,11 @@ public class T_MouseController : MonoBehaviour
     }
 
     // Raycast layermask for gird_visuals, return grid_position based on grid_visual_object transform 
-    public T_GirdPosition G_GetMouseGridPosition()
+    public T_GridPosition G_GetMouseGridPosition()
     {
         Ray mouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
         Physics.Raycast(mouseRay, out RaycastHit raycastHit, float.MaxValue, _mouseGridSelectionLayerMask);
-        if (!raycastHit.transform) return new T_GirdPosition(0, 0);
+        if (!raycastHit.transform) return new T_GridPosition(0, 0);
         Vector3 gridWorldPosition = raycastHit.transform.position;
         return T_LevelGridManager.Instance.G_WorldToGridPosition(gridWorldPosition);
     }
