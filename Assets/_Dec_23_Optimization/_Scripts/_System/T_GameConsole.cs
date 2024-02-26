@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +45,11 @@ namespace DebugConsole
         public void G_ConsoleLogAttack(T_Unit a, T_Unit b, int damage, float heightMulti, float moraleMulti)
             => AddConsoleLog_OnDamage(a, b, damage, heightMulti, moraleMulti);
 
-        #endregion =========================================================
+        #endregion
+
+
+        #region ============= Monobehaviour =============================
+
         void Awake()
         {
             if (Instance != null)
@@ -79,9 +84,11 @@ namespace DebugConsole
 
 
         }
+        #endregion
 
 
         #region ================== Inputfield Utilities =================
+        //* press "`" to enable the console panel
         void CallConsole()
         {
             if (Input.GetKeyDown(KeyCode.BackQuote))
@@ -91,23 +98,20 @@ namespace DebugConsole
             }
         }
 
+        //* event after "Enter" is pressed
         void OnEndEditing()
         {
-            _inputField.onEndEdit.AddListener((string text) =>
-            {
-                E_onEndEdit?.Invoke(text);
-            });
-            E_onEndEdit += OnEndEditEvent;
+            _inputField.onEndEdit.AddListener(OnEndEditEvent);
         }
 
         void OnEndEditEvent(string s)
         {
             _inputField.text = null;
             AddConsoleLog("Type in " + s);
-
             ConsoleCommand(s);
         }
 
+        //* add tmpro text object to the console
         void AddConsoleLog(string s)
         {
             var logObject = Instantiate(_consoleTextObject, _consoleContentObject);
@@ -119,26 +123,58 @@ namespace DebugConsole
         }
 
         #region ======== Console Commands =========
-        enum ConsoleCommandList
+        enum CommandList
         {
-            ADD_MORALE,
+            AddMorale,
+            SubMorale,
+            SetFire,
+
 
         }
         void ConsoleCommand(string s)
         {
-            // float outFloat = T_CombatManager.Instance.G_GetHeightDamageMultiplier(StringToInt(s));
-            // AddConsoleLog("HeightDamageMultiplier is " + outFloat.ToString());
-            // if (!s.Contains("COMMAND")) return;
-            // Debug.Log("Contains Command");
+            string command = ReadInputCommand(s);
 
-            if (s.Contains("ADDMORALE"))
+            switch (command)
             {
-                T_Morale.Instance.G_SetCurrentMorale(T_Morale.Instance.G_GetCurrentMorale() + 1);
+                case "AddMorale":
+                    Debug.Log("AddMorale");
+                    break;
+                case "SubMorale":
+                    Debug.Log("SubMorale");
+                    break;
+                case "SetFire":
+                    Command_SetFire(s);
+                    break;
             }
-            if (s.Contains("SUBMORALE"))
+
+        }
+
+        string ReadInputCommand(string s)
+        {
+            string[] _strings = Enum.GetNames(typeof(CommandList));
+            string command = "EMPTY";
+
+            foreach (var item in _strings)
             {
-                T_Morale.Instance.G_SetCurrentMorale(T_Morale.Instance.G_GetCurrentMorale() - 1);
+                if (!s.Contains(item)) continue;
+                command = item;
             }
+            return command;
+        }
+        void Command_SetFire(string s)
+        {
+            T_GridPosition gp = CommandInputToGridPosition(s);
+            T_Terrain terrain = T_LevelGridManager.Instance.G_GetGridPosData(gp).GetSurfaceTerrain();
+            terrain.G_GetChildTerrainType<T_Forest>().G_SetIsFlaming(true);
+        }
+
+
+        int CommandInputToCombinedInt(string s)
+        {
+            List<char> intChars = CharToNumberCharList(s);
+            string outString = new(intChars.ToArray());
+            return StringToInt(outString);
         }
 
         int StringToInt(string s)
@@ -146,6 +182,23 @@ namespace DebugConsole
             int outInt;
             if (int.TryParse(s, out outInt)) return outInt;
             else return -1;
+        }
+        List<char> CharToNumberCharList(string s)
+        {
+            List<char> intChars = new();
+            foreach (var item in s.ToArray())
+            {
+                if (!char.IsNumber(item)) continue;
+                intChars.Add(item);
+            }
+            return intChars;
+        }
+        T_GridPosition CommandInputToGridPosition(string s)
+        {
+            List<char> charList = CharToNumberCharList(s);
+            int x = StringToInt(charList[0].ToString());
+            int z = StringToInt(charList[1].ToString());
+            return new T_GridPosition(x, z);
         }
 
         #endregion
@@ -161,11 +214,6 @@ namespace DebugConsole
             AddConsoleLog(s1);
             AddConsoleLog(s2);
         }
-
-
-
-
-
 
         #endregion
         #endregion
